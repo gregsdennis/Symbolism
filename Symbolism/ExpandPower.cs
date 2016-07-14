@@ -1,60 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Symbolism.ExpandProduct;
-
-namespace Symbolism
+﻿namespace Symbolism
 {
-    namespace ExpandPower
-    {
-        public static class Extensions
-        {
-            static int Factorial(int n)
-            {
-                var result = 1;
+	public static partial class Extensions
+	{
+		private static int Factorial(int n)
+		{
+			var result = 1;
 
-                for (var i = 1; i <= n; i++)
-                {
-                    result *= i;
-                }
+			for (var i = 1; i <= n; i++)
+			{
+				result *= i;
+			}
 
-                return result;
-                // return Enumerable.Range(1, n).Aggregate((acc, elt) => acc * elt);
-            }
+			return result;
+			// return Enumerable.Range(1, n).Aggregate((acc, elt) => acc * elt);
+		}
 
-            public static MathObject ExpandPower(this MathObject u, int n)
-            {
-                if (u is Sum)
-                {
-                    var f = (u as Sum).elts[0];
+		public static MathObject ExpandPower(this MathObject u, int n)
+		{
+			var sum = u as Sum;
+			if (sum != null)
+			{
+				var f = sum.Elements[0];
 
-                    var r = u - f;
+				var r = u - f;
 
-                    MathObject s = 0;
+				MathObject s = 0;
 
-                    var k = 0;
+				var k = 0;
 
-                    while (true)
-                    {
-                        if (k > n) return s;
-                        else
-                        {
-                            var c =
-                                Factorial(n)
-                                /
-                                (Factorial(k) * Factorial(n - k));
+				while (true)
+				{
+					if (k > n) return s;
 
-                            s = s + (c * (f ^ (n - k))).ExpandProduct(r.ExpandPower(k));
+					var c = Factorial(n)/(Factorial(k)*Factorial(n - k));
 
-                            k++;
-                        }
-                    }
-                }
-                else return u ^ n;
-            }
-        }
-    }
-    
+					s = s + (c*(f ^ (n - k))).ExpandProduct(r.ExpandPower(k));
+
+					k++;
+				}
+			}
+
+			return u ^ n;
+		}
+	}
 }

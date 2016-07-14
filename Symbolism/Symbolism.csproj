@@ -10,8 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Symbolism</RootNamespace>
     <AssemblyName>Symbolism</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -23,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -32,6 +34,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
@@ -47,9 +50,36 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlgebraicExpand.cs" />
+    <Compile Include="And.cs" />
+    <Compile Include="Bool.cs" />
     <Compile Include="CoefficientGpe.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Difference.cs" />
+    <Compile Include="DoubleFloat.cs" />
+    <Compile Include="Equation.cs" />
+    <Compile Include="Fraction.cs" />
+    <Compile Include="Function.cs" />
+    <Compile Include="Integer.cs" />
+    <Compile Include="ListUtils.cs" />
+    <Compile Include="MathObject.cs" />
+    <Compile Include="Number.cs" />
+    <Compile Include="Or.cs" />
+    <Compile Include="TermSequencer.cs" />
+    <Compile Include="Power.cs" />
+    <Compile Include="Product.cs" />
+    <Compile Include="Quotient.cs" />
+    <Compile Include="Rational.cs" />
     <Compile Include="RationalizeExpression.cs" />
-    <Compile Include="Trigonometric.cs" />
+    <Compile Include="Sum.cs" />
+    <Compile Include="Symbol.cs" />
+    <Compile Include="ToStringForms.cs" />
+    <Compile Include="Asin.cs" />
+    <Compile Include="Atan.cs" />
+    <Compile Include="Atan2.cs" />
+    <Compile Include="Cos.cs" />
+    <Compile Include="Sin.cs" />
+    <Compile Include="Tan.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="DeepSelect.cs" />
     <Compile Include="DegreeGpe.cs" />
     <Compile Include="EliminateVariable.cs" />
@@ -61,8 +91,9 @@
     <Compile Include="SimplifyEquation.cs" />
     <Compile Include="SimplifyLogical.cs" />
     <Compile Include="Substitute.cs" />
-    <Compile Include="Symbolism.cs" />
+    <Compile Include="Functions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Undefined.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

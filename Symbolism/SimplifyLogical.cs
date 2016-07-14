@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
-namespace Symbolism.SimplifyLogical
+namespace Symbolism
 {
-    public static class Extensions
+    public static partial class Extensions
     {
-        static bool HasDuplicates(this IEnumerable<MathObject> ls)
-        {
-            foreach (var elt in ls) if (ls.Count(item => item.Equals(elt)) > 1) return true;
-            
-            return false;
-        }
+	    private static bool HasDuplicates(this IEnumerable<MathObject> ls)
+	    {
+		    var elements = ls as IList<MathObject> ?? ls.ToList();
+		    return elements.Any(elt => elements.Count(item => item.Equals(elt)) > 1);
+	    }
 
-        static IEnumerable<MathObject> RemoveDuplicates(this IEnumerable<MathObject> seq)
+		// TODO: can this be replaced with .Distinct()?
+	    private static IEnumerable<MathObject> RemoveDuplicates(this IEnumerable<MathObject> seq)
         {
             var ls = new List<MathObject>();
 
@@ -22,21 +20,20 @@ namespace Symbolism.SimplifyLogical
                 if (ls.Any(item => item.Equals(elt)) == false)
                     ls.Add(elt);
 
-            return ls;
+		    return ls;
         }
 
         public static MathObject SimplifyLogical(this MathObject expr)
         {
+	        var and = expr as And;
+	        if (and != null && and.Parameters.HasDuplicates())
+                return new And (and.Parameters.RemoveDuplicates());
 
-            if (expr is And && (expr as And).args.HasDuplicates())
-                return new And() { args = (expr as And).args.RemoveDuplicates().ToList() };
+	        var or = expr as Or;
+	        if (or != null && or.Parameters.HasDuplicates())
+		        return new Or (or.Parameters.RemoveDuplicates()).SimplifyLogical();
 
-            if (expr is Or && (expr as Or).args.HasDuplicates())
-                return
-                    new Or() { args = (expr as Or).args.RemoveDuplicates().ToList() }
-                    .SimplifyLogical();
-
-            if (expr is Or) return (expr as Or).Map(elt => elt.SimplifyLogical());
+            if (or != null) return or.Map(elt => elt.SimplifyLogical());
 
             return expr;
         }

@@ -1,49 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Symbolism
 {
-    namespace DeepSelect
-    {
-        public static class Extensions
-        {
-            public static MathObject DeepSelect(this MathObject obj, Func<MathObject, MathObject> proc)
-            {
-                var result = proc(obj);
+	public static partial class Extensions
+	{
+		public static MathObject DeepSelect(this MathObject obj, Func<MathObject, MathObject> proc)
+		{
+			var result = proc(obj);
 
-                if (result is Power)
-                {
-                    return
-                        (result as Power).bas.DeepSelect(proc) ^
-                        (result as Power).exp.DeepSelect(proc);
-                }
+			var power = result as Power;
+			if (power != null)
+				return power.Base.DeepSelect(proc) ^ power.Exponent.DeepSelect(proc);
 
-                if (result is Or)
-                    return (result as Or).Map(elt => elt.DeepSelect(proc));
+			var or = result as Or;
+			if (or != null)
+				return or.Map(elt => elt.DeepSelect(proc));
 
-                if (result is And)
-                    return (result as And).Map(elt => elt.DeepSelect(proc));
+			var and = result as And;
+			if (and != null)
+				return and.Map(elt => elt.DeepSelect(proc));
 
-                if (result is Equation)
-                    return
-                        new Equation(
-                            (result as Equation).a.DeepSelect(proc),
-                            (result as Equation).b.DeepSelect(proc),
-                            (result as Equation).Operator);
-                
-                if (result is Sum)
-                    return
-                        new Sum() { elts = (result as Sum).elts.Select(elt => elt.DeepSelect(proc)).ToList() }.Simplify();
+			var equation = result as Equation;
+			if (equation != null)
+				return new Equation(equation.a.DeepSelect(proc),equation.b.DeepSelect(proc),equation.Operator);
 
-                if (result is Product)
-                    return
-                        new Product() { elts = (result as Product).elts.Select(elt => elt.DeepSelect(proc)).ToList() }.Simplify();
-                
-                return result;
-            }
-        }
-    }
-    
+			var sum = result as Sum;
+			if (sum != null)
+				return new Sum(sum.Elements.Select(elt => elt.DeepSelect(proc)).ToList()).Simplify();
+
+			var product = result as Product;
+			if (product != null)
+				return new Product(product.Elements.Select(elt => elt.DeepSelect(proc)).ToList()).Simplify();
+
+			return result;
+		}
+	}
 }

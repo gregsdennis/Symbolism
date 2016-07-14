@@ -13,9 +13,6 @@
    limitations under the License. */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Utils
 {
@@ -29,7 +26,7 @@ namespace Utils
 
         public static T Disp<T>(this T obj, string format)
         {
-            Console.WriteLine(string.Format(format, obj));
+            Console.WriteLine(format, obj);
             return obj;
         }
     }

@@ -18,407 +18,18 @@ using System.Linq;
 using System.Text;
 
 using Symbolism;
-using Utils;
-
-using Symbolism.Trigonometric;
-
-using Symbolism.Has;
-using Symbolism.Substitute;
-
-using Symbolism.LogicalExpand;
-using Symbolism.SimplifyEquation;
-using Symbolism.SimplifyLogical;
-
-using Symbolism.DegreeGpe;
-using Symbolism.CoefficientGpe;
-using Symbolism.AlgebraicExpand;
-using Symbolism.IsolateVariable;
-using Symbolism.EliminateVariable;
-using Symbolism.DeepSelect;
-
-using Symbolism.RationalizeExpression;
-
-using static Symbolism.Constructors;
-
-using static Symbolism.Trigonometric.Constructors;
+using static Symbolism.Constants;
+using static Symbolism.Functions;
 
 namespace Tests
 {
-    public static class Extensions
-    {
-        public static MathObject AssertEqTo(this MathObject a, MathObject b)
-        {
-            if (!(a == b)) Console.WriteLine((a == b).ToString());
-
-            return a;
-        }
-
-        public static MathObject AssertEqToDouble(this MathObject a, MathObject b, double tolerance = 0.000001)
-        {
-            if (
-                Math.Abs(
-                    ((a as Equation).b as DoubleFloat).val
-                    -
-                    ((b as Equation).b as DoubleFloat).val)
-                > tolerance)
-            {
-                Console.WriteLine("{0} and {1} are not equal", a, b);
-            }
-
-            return a;
-        }
-
-        public static MathObject DispLong(this MathObject obj, int indent = 0, bool comma = false)
-        {
-            if (obj is Or || obj is And)
-            {
-                Console.WriteLine(new String(' ', indent) + (obj as Function).name + "(");
-                                
-                var i = 0;
-
-                foreach (var elt in (obj as Function).args)
-                {
-                    if (i < (obj as Function).args.Count - 1)
-                        elt.DispLong(indent + 2, comma: true);
-                    else
-                        elt.DispLong(indent + 2);
-
-                    i++;
-                }
-
-                Console.WriteLine(new String(' ', indent) + ")" + (comma ? "," : ""));
-            }
-
-            else Console.WriteLine(new String(' ', indent) + obj + (comma ? "," : ""));
-            
-            return obj;
-        }
-
-        public static MathObject MultiplyBothSidesBy(this MathObject obj, MathObject item)
-        {
-            //if (obj is Equation)
-            //    return (obj as Equation).a * item == (obj as Equation).b * item;
-            
-            if (obj is Equation)
-                return new Equation(
-                    (obj as Equation).a * item,
-                    (obj as Equation).b * item,
-                    (obj as Equation).Operator);
-            
-            if (obj is And) return (obj as And).Map(elt => elt.MultiplyBothSidesBy(item));
-
-            throw new Exception();
-        }
-
-        public static MathObject AddToBothSides(this MathObject obj, MathObject item)
-        {
-            if (obj is Equation)
-                return (obj as Equation).a + item == (obj as Equation).b + item;
-
-            throw new Exception();
-        }
-
-
-    }
-
-    public class Obj2
-    {
-        public Symbol ΣFx;
-        public Symbol ΣFy;
-        public Symbol m;
-        public Symbol ax;
-        public Symbol ay;
-
-        public Symbol F1, F2;
-        public Symbol th1, th2;
-        public Symbol F1x, F2x;
-        public Symbol F1y, F2y;
-
-        public Obj2(string name)
-        {
-            ΣFx = new Symbol($"{name}.ΣFx");
-            ΣFy = new Symbol($"{name}.ΣFy");
-
-            m = new Symbol($"{name}.m");
-
-            ax = new Symbol($"{name}.ax");
-            ay = new Symbol($"{name}.ay");
-
-            F1 = new Symbol($"{name}.F1");
-            F2 = new Symbol($"{name}.F2");
-
-            th1 = new Symbol($"{name}.th1");
-            th2 = new Symbol($"{name}.th2");
-
-            F1x = new Symbol($"{name}.F1x");
-            F2x = new Symbol($"{name}.F2x");
-
-            F1y = new Symbol($"{name}.F1y");
-            F2y = new Symbol($"{name}.F2y");
-        }
-
-        public And Equations()
-        {
-            return new And(
-
-                F1x == F1 * cos(th1),
-                F1y == F1 * sin(th1),
-
-                F2x == F2 * cos(th2),
-                F2y == F2 * sin(th2),
-
-                ΣFx == F1x + F2x,
-                ΣFx == m * ax,
-
-                ΣFy == F1y + F2y,
-                ΣFy == m * ay
-
-                );
-        }
-    }
-
-    public class Obj3
-    {
-        public Symbol ΣFx;
-        public Symbol ΣFy;
-        public Symbol m;
-        public Symbol ax;
-        public Symbol ay;
-
-        public Symbol F1, F2, F3;
-        public Symbol th1, th2, th3;
-        public Symbol F1x, F2x, F3x;
-        public Symbol F1y, F2y, F3y;
-
-        public Obj3(string name)
-        {
-            ΣFx = new Symbol($"{name}.ΣFx");
-            ΣFy = new Symbol($"{name}.ΣFy");
-
-            m = new Symbol($"{name}.m");
-
-            ax = new Symbol($"{name}.ax");
-            ay = new Symbol($"{name}.ay");
-
-            F1 = new Symbol($"{name}.F1");
-            F2 = new Symbol($"{name}.F2");
-            F3 = new Symbol($"{name}.F3");
-
-            th1 = new Symbol($"{name}.th1");
-            th2 = new Symbol($"{name}.th2");
-            th3 = new Symbol($"{name}.th3");
-
-            F1x = new Symbol($"{name}.F1x");
-            F2x = new Symbol($"{name}.F2x");
-            F3x = new Symbol($"{name}.F3x");
-
-            F1y = new Symbol($"{name}.F1y");
-            F2y = new Symbol($"{name}.F2y");
-            F3y = new Symbol($"{name}.F3y");
-        }
-
-        public And Equations()
-        {
-            return new And(
-
-                F1x == F1 * cos(th1),
-                F1y == F1 * sin(th1),
-
-                F2x == F2 * cos(th2),
-                F2y == F2 * sin(th2),
-
-                F3x == F3 * cos(th3),
-                F3y == F3 * sin(th3),
-
-                ΣFx == F1x + F2x + F3x,
-                ΣFx == m * ax,
-
-                ΣFy == F1y + F2y + F3y,
-                ΣFy == m * ay
-
-                );
-        }
-    }
-
-    public class Obj5
-    {
-        public Symbol ΣFx;
-        public Symbol ΣFy;
-        public Symbol m;
-        public Symbol ax;
-        public Symbol ay;
-
-        public Symbol F1, F2, F3, F4, F5;
-        public Symbol th1, th2, th3, th4, th5;
-        public Symbol F1x, F2x, F3x, F4x, F5x;
-        public Symbol F1y, F2y, F3y, F4y, F5y;
-
-        public Obj5(string name)
-        {
-            ΣFx = new Symbol($"{name}.ΣFx");
-            ΣFy = new Symbol($"{name}.ΣFy");
-
-            m = new Symbol($"{name}.m");
-
-            ax = new Symbol($"{name}.ax");
-            ay = new Symbol($"{name}.ay");
-
-            F1 = new Symbol($"{name}.F1");
-            F2 = new Symbol($"{name}.F2");
-            F3 = new Symbol($"{name}.F3");
-            F4 = new Symbol($"{name}.F4");
-            F5 = new Symbol($"{name}.F5");
-
-            th1 = new Symbol($"{name}.th1");
-            th2 = new Symbol($"{name}.th2");
-            th3 = new Symbol($"{name}.th3");
-            th4 = new Symbol($"{name}.th4");
-            th5 = new Symbol($"{name}.th5");
-
-            F1x = new Symbol($"{name}.F1x");
-            F2x = new Symbol($"{name}.F2x");
-            F3x = new Symbol($"{name}.F3x");
-            F4x = new Symbol($"{name}.F4x");
-            F5x = new Symbol($"{name}.F5x");
-
-            F1y = new Symbol($"{name}.F1y");
-            F2y = new Symbol($"{name}.F2y");
-            F3y = new Symbol($"{name}.F3y");
-            F4y = new Symbol($"{name}.F4y");
-            F5y = new Symbol($"{name}.F5y");
-        }
-
-        public And Equations()
-        {
-            return new And(
-
-                F1x == F1 * cos(th1),
-                F1y == F1 * sin(th1),
-
-                F2x == F2 * cos(th2),
-                F2y == F2 * sin(th2),
-
-                F3x == F3 * cos(th3),
-                F3y == F3 * sin(th3),
-
-                F4x == F4 * cos(th4),
-                F4y == F4 * sin(th4),
-
-                F5x == F5 * cos(th5),
-                F5y == F5 * sin(th5),
-
-                ΣFx == F1x + F2x + F3x + F4x + F5x,
-                ΣFx == m * ax,
-
-                ΣFy == F1y + F2y + F3y + F4y + F5y,
-                ΣFy == m * ay
-
-                );
-        }
-    }
-    
-    public class KinematicObjectABC
-    {
-        public Symbol xA, yA, vxA, vyA, vA, thA;
-        public Symbol xB, yB, vxB, vyB, vB, thB;
-        public Symbol xC, yC, vxC, vyC, vC, thC;
-
-        public Symbol tAB, tBC, tAC;
-
-        public Symbol ax, ay;
-
-        public KinematicObjectABC(string name)
-        {
-            xA = new Symbol($"{name}.xA");
-            yA = new Symbol($"{name}.yA");
-
-            vxA = new Symbol($"{name}.vxA");
-            vyA = new Symbol($"{name}.vyA");
-
-            vA = new Symbol($"{name}.vA");
-            thA = new Symbol($"{name}.thA");
-
-
-            xB = new Symbol($"{name}.xB");
-            yB = new Symbol($"{name}.yB");
-
-            vxB = new Symbol($"{name}.vxB");
-            vyB = new Symbol($"{name}.vyB");
-
-            vB = new Symbol($"{name}.vB");
-            thB = new Symbol($"{name}.thB");
-
-
-            xC = new Symbol($"{name}.xC");
-            yC = new Symbol($"{name}.yC");
-
-            vxC = new Symbol($"{name}.vxC");
-            vyC = new Symbol($"{name}.vyC");
-
-            vC = new Symbol($"{name}.vC");
-            thC = new Symbol($"{name}.thC");
-
-            tAB = new Symbol($"{name}.tAB");
-            tBC = new Symbol($"{name}.tBC");
-            tAC = new Symbol($"{name}.tAC");
-
-            ax = new Symbol($"{name}.ax");
-            ay = new Symbol($"{name}.ay");
-        }
-
-        public And EquationsAB() =>
-
-            new And(
-
-                vxB == vxA + ax * tAB,
-                vyB == vyA + ay * tAB,
-
-                xB == xA + vxA * tAB + ax * (tAB ^ 2) / 2,
-                yB == yA + vyA * tAB + ay * (tAB ^ 2) / 2
-                
-                );
-
-        public And EquationsBC() =>
-
-            new And(
-
-                vxC == vxB + ax * tBC,
-                vyC == vyB + ay * tBC,
-
-                xC == xB + vxB * tBC + ax * (tBC ^ 2) / 2,
-                yC == yB + vyB * tBC + ay * (tBC ^ 2) / 2
-
-                );
-
-        public And EquationsAC() =>
-
-            new And(
-
-                vxC == vxA + ax * tAC,
-                vyC == vyA + ay * tAC,
-
-                xC == xA + vxA * tAC + ax * (tAC ^ 2) / 2,
-                yC == yA + vyA * tAC + ay * (tAC ^ 2) / 2
-
-                );
-
-        public And TrigEquationsA() =>
-        
-            new And(
-
-                vxA == vA * cos(thA),
-                vyA == vA * sin(thA)
-
-                );
-        
-    }
-    
-    class Program
+	// TODO: break into runnable tests
+	class Program
     {
         static void AssertEqual(DoubleFloat a, DoubleFloat b, double tolerance = 0.00000001)
         {
-            if (Math.Abs(a.val - b.val) > tolerance)
-                Console.WriteLine("{0} and {1} are not equal", a.val, b.val);
+            if (Math.Abs(a.Value - b.Value) > tolerance)
+                Console.WriteLine("{0} and {1} are not equal", a.Value, b.Value);
         }
 
         static void AssertEqual(MathObject a, Double b, double tolerance = 0.00000001)
@@ -426,8 +37,8 @@ namespace Tests
             var x = (DoubleFloat)a;
             var y = new DoubleFloat(b);
 
-            if (Math.Abs(x.val - y.val) > tolerance)
-                Console.WriteLine("{0} and {1} are not equal", x.val, y.val);
+            if (Math.Abs(x.Value - y.Value) > tolerance)
+                Console.WriteLine("{0} and {1} are not equal", x.Value, y.Value);
         }
 
         static void Assert(bool val, string str) { if (!val) Console.WriteLine(str); }
@@ -470,7 +81,7 @@ namespace Tests
                 Func<int, Integer> Int = (n) => new Integer(n);
 
                 {
-                    DoubleFloat.tolerance = 0.000000001;
+                    DoubleFloat.Tolerance = 0.000000001;
 
                     Assert(new DoubleFloat(1.2).Equals(new DoubleFloat(1.2)), "new DoubleFloat(1.2).Equals(new DoubleFloat(1.2))");
 
@@ -480,14 +91,14 @@ namespace Tests
 
                     Assert(new DoubleFloat(1.2).Equals(new DoubleFloat(1.23)) == false, "new DoubleFloat(1.2).Equals(new DoubleFloat(1.23)) == false");
 
-                    DoubleFloat.tolerance = null;
+                    DoubleFloat.Tolerance = null;
                 }
 
                 #region Const
 
                 AssertIsTrue((2 * x * y).Const() == 2);
 
-                AssertIsTrue((x * y / 2).Const() == new Integer(1) / 2);
+                AssertIsTrue((x * y / 2).Const() == new Fraction(1,2));
 
                 AssertIsTrue((0.1 * x * y).Const() == 0.1);
 
@@ -654,7 +265,7 @@ namespace Tests
                 Action<MathObject, string> AssertToStringMatch = 
                     (MathObject obj, string str) => Assert(obj.ToString() == str, $"({str}).ToString()");
                 
-                MathObject.ToStringForm = MathObject.ToStringForms.Full;
+                MathObject.ToStringForm = ToStringForms.Full;
                                 
                 AssertToStringMatch(x + y + z, "x + y + z");
                                 
@@ -681,7 +292,7 @@ namespace Tests
                 Assert((x - (y - z)).ToString() == "x + -1 * (y + -1 * z)", "(x - (y - z)).ToString()");
 
 
-                MathObject.ToStringForm = MathObject.ToStringForms.Standard;
+                MathObject.ToStringForm = ToStringForms.Standard;
                 
                 Assert((x + y).ToString() == "x + y", "(x + y).ToString()");
 
@@ -829,13 +440,13 @@ namespace Tests
                 new And(1, 2, 3, 4, 5, 6).Map(elt => elt * 2)
                     .AssertEqTo(and(2, 4, 6, 8, 10, 12));
 
-                new And(1, 2, 3, 4, 5, 6).Map(elt => (elt is Integer) && (elt as Integer).val % 2 == 0 ? elt : false)
+                new And(1, 2, 3, 4, 5, 6).Map(elt => (elt is Integer) && (elt as Integer).Value % 2 == 0 ? elt : false)
                     .AssertEqTo(false);
 
                 new Or(1, 2, 3).Map(elt => elt * 2)
                     .AssertEqTo(or(2, 4, 6));
 
-                new Or(1, 2, 3, 4, 5, 6).Map(elt => (elt is Integer) && (elt as Integer).val % 2 == 0 ? elt : false)
+                new Or(1, 2, 3, 4, 5, 6).Map(elt => (elt is Integer) && (elt as Integer).Value % 2 == 0 ? elt : false)
                     .AssertEqTo(or(2, 4, 6));
 
                 #endregion Function.Map
@@ -854,7 +465,7 @@ namespace Tests
 
                 var Pi = new Symbol("Pi");
 
-                var half = new Integer(1) / 2;
+                var half = new Fraction(1,2);
 
                 #region Sin
 
@@ -905,7 +516,7 @@ namespace Tests
                     sin( 9 * Pi / 4).AssertEqTo( 1/sqrt(2));
                     sin(11 * Pi / 4).AssertEqTo( 1/sqrt(2));
 
-                    // var half = new Integer(1) / 2;
+                    // var half = new Fraction(1,2);
 
                     sin(-5 * Pi / 6).AssertEqTo(-half);
                     sin(-1 * Pi / 6).AssertEqTo(-half);
@@ -1006,13 +617,13 @@ namespace Tests
 
                 Assert(((a + b) ^ c).Has(elt => elt == a + b), "Has - 5");
 
-                Assert(((a + b) ^ c).Has(elt => (elt is Power) && (elt as Power).exp == c), "Has - 6");
+                Assert(((a + b) ^ c).Has(elt => (elt is Power) && (elt as Power).Exponent == c), "Has - 6");
 
                 Assert((x * (a + b + c)).Has(elt => (elt is Sum) && (elt as Sum).Has(b)), "Has - 7");
 
-                Assert((x * (a + b + c)).Has(elt => (elt is Sum) && (elt as Sum).elts.Any(obj => obj == b)), "Has - 8");
+                Assert((x * (a + b + c)).Has(elt => (elt is Sum) && (elt as Sum).Elements.Any(obj => obj == b)), "Has - 8");
 
-                Assert((x * (a + b + c)).Has(elt => (elt is Product) && (elt as Product).elts.Any(obj => obj == b)) == false, "Has - 9");
+                Assert((x * (a + b + c)).Has(elt => (elt is Product) && (elt as Product).Elements.Any(obj => obj == b)) == false, "Has - 9");
 
                 #endregion
 
@@ -1355,7 +966,7 @@ namespace Tests
                     x + z == 10
                 );
                 
-                var half = new Integer(1) / 2;
+                var half = new Fraction(1,2);
                                 
                 ((x ^ 2) - 4 == 0)
                     .IsolateVariableEq(x)
@@ -1570,7 +1181,7 @@ namespace Tests
 
                 // velocity and position at t = 5.00 s
 
-                DoubleFloat.tolerance = 0.000000001;
+                DoubleFloat.Tolerance = 0.000000001;
 
                 eqs
                     .EliminateVariables(tB, tC, vC, yB, yD)
@@ -1583,7 +1194,7 @@ namespace Tests
                     .SubstituteEqLs(vals)
                     .AssertEqTo(or(yD == 27.499999999, yD == 27.499999999));
 
-                DoubleFloat.tolerance = null;
+                DoubleFloat.Tolerance = null;
             }
 
             #endregion
@@ -1820,7 +1431,7 @@ namespace Tests
                 var zeros = new List<Equation>() { ax == 0, yC == 0 };
                 var vals = new List<Equation>() { yA == 45, vA == 20, thA == (30).ToRadians(), ay == -9.8, Pi == Math.PI };
 
-                DoubleFloat.tolerance = 0.00001;
+                DoubleFloat.Tolerance = 0.00001;
 
                 eqs
                     .EliminateVariables(vC, vxA, vxC, vyC, vyA)
@@ -1855,7 +1466,7 @@ namespace Tests
                     .SubstituteEqLs(vals)
                     .AssertEqTo(or(vC == 35.805027579936315, vC == 35.805027579936322));
 
-                DoubleFloat.tolerance = null;
+                DoubleFloat.Tolerance = null;
             }
 
             #endregion
@@ -1907,7 +1518,7 @@ namespace Tests
 
                 var zeros = vals.Where(eq => eq.b == 0).ToList();
 
-                DoubleFloat.tolerance = 0.00001;
+                DoubleFloat.Tolerance = 0.00001;
 
                 eqs
                     .EliminateVariables(vxB, vyB, tAB)
@@ -1973,7 +1584,7 @@ namespace Tests
                     .SubstituteEqLs(vals)
                     .AssertEqTo(or(vyB == 44.271887242357309, vyB == -44.271887242357309));
 
-                DoubleFloat.tolerance = null;
+                DoubleFloat.Tolerance = null;
             }
 
             #endregion
@@ -2023,7 +1634,7 @@ namespace Tests
 
                 var zeros = vals.Where(eq => eq.b == 0).ToList();
 
-                DoubleFloat.tolerance = 0.00001;
+                DoubleFloat.Tolerance = 0.00001;
 
                 eqs
                     .SubstituteEqLs(zeros)
@@ -2122,7 +1733,7 @@ namespace Tests
                             vyB == -35.010376910485483,
                             vyB != 0));
 
-                DoubleFloat.tolerance = null;
+                DoubleFloat.Tolerance = null;
             }
 
             #endregion
@@ -2176,7 +1787,7 @@ namespace Tests
 
                 var zeros = vals.Where(eq => eq.b == 0).ToList();
 
-                DoubleFloat.tolerance = 0.00001;
+                DoubleFloat.Tolerance = 0.00001;
 
                 eqs
                     .SubstituteEqLs(zeros)
@@ -2214,7 +1825,7 @@ namespace Tests
                             0.1020408163265306 * tan(thB) != 0,
                             thB == -0.88760488150470185));
 
-                DoubleFloat.tolerance = null;
+                DoubleFloat.Tolerance = null;
             }
 
             #endregion
@@ -2229,25 +1840,25 @@ namespace Tests
                 {
                     var items = new List<MathObject>();
 
-                    foreach (var item in (elt as Sum).elts)
+                    foreach (var item in (elt as Sum).Elements)
                     {
                         if (
                             item is Product &&
-                            (item as Product).elts[0] == -1 &&
-                            (item as Product).elts[1] is Cos &&
-                            (item as Product).elts[2] is Sin
+                            (item as Product).Elements[0] == -1 &&
+                            (item as Product).Elements[1] is Cos &&
+                            (item as Product).Elements[2] is Sin
                             )
                         {
-                            var u_ = ((item as Product).elts[1] as Cos).args[0];
-                            var v_ = ((item as Product).elts[2] as Sin).args[0];
+                            var u_ = ((item as Product).Elements[1] as Cos).Parameters[0];
+                            var v_ = ((item as Product).Elements[2] as Sin).Parameters[0];
 
                             Func<MathObject, bool> match = obj =>
                                 obj is Product &&
-                                (obj as Product).elts[0] is Cos &&
-                                (obj as Product).elts[1] is Sin &&
+                                (obj as Product).Elements[0] is Cos &&
+                                (obj as Product).Elements[1] is Sin &&
 
-                                ((obj as Product).elts[1] as Sin).args[0] == u_ &&
-                                ((obj as Product).elts[0] as Cos).args[0] == v_;
+                                ((obj as Product).Elements[1] as Sin).Parameters[0] == u_ &&
+                                ((obj as Product).Elements[0] as Cos).Parameters[0] == v_;
 
                             if (items.Any(obj => match(obj)))
                             {
@@ -2260,7 +1871,7 @@ namespace Tests
                         else items.Add(item);
                     }
 
-                    return new Sum() { elts = items }.Simplify();
+	                return new Sum(items).Simplify();
                 }
 
                 return elt;
@@ -2287,24 +1898,24 @@ namespace Tests
                 {
                     var items = new List<MathObject>();
 
-                    foreach (var item in (elt as Sum).elts)
+                    foreach (var item in (elt as Sum).Elements)
                     {
                         if (
                             item is Product &&
-                            (item as Product).elts[0] is Cos &&
-                            (item as Product).elts[1] is Sin
+                            (item as Product).Elements[0] is Cos &&
+                            (item as Product).Elements[1] is Sin
                             )
                         {
-                            var u_ = ((item as Product).elts[0] as Cos).args[0];
-                            var v_ = ((item as Product).elts[1] as Sin).args[0];
+                            var u_ = ((item as Product).Elements[0] as Cos).Parameters[0];
+                            var v_ = ((item as Product).Elements[1] as Sin).Parameters[0];
 
                             Func<MathObject, bool> match = obj =>
                                 obj is Product &&
-                                (obj as Product).elts[0] is Cos &&
-                                (obj as Product).elts[1] is Sin &&
+                                (obj as Product).Elements[0] is Cos &&
+                                (obj as Product).Elements[1] is Sin &&
 
-                                ((obj as Product).elts[1] as Sin).args[0] == u_ &&
-                                ((obj as Product).elts[0] as Cos).args[0] == v_;
+                                ((obj as Product).Elements[1] as Sin).Parameters[0] == u_ &&
+                                ((obj as Product).Elements[0] as Cos).Parameters[0] == v_;
 
                             if (items.Any(obj => match(obj)))
                             {
@@ -2317,7 +1928,7 @@ namespace Tests
                         else items.Add(item);
                     }
 
-                    return new Sum() { elts = items }.Simplify();
+                    return new Sum(items).Simplify();
                 }
 
                 return elt;
@@ -2345,15 +1956,15 @@ namespace Tests
                         {
                             var items = new List<MathObject>();
 
-                            foreach (var item in (elt as Product).elts)
+                            foreach (var item in (elt as Product).Elements)
                             {
                                 if (item is Sin)
                                 {
-                                    var sym = (item as Sin).args.First();
+                                    var sym = (item as Sin).Parameters.First();
 
-                                    if (items.Any(obj => (obj is Cos) && (obj as Cos).args.First() == sym))
+                                    if (items.Any(obj => (obj is Cos) && (obj as Cos).Parameters.First() == sym))
                                     {
-                                        items = items.Where(obj => ((obj is Cos) && (obj as Cos).args.First() == sym) == false).ToList();
+                                        items = items.Where(obj => ((obj is Cos) && (obj as Cos).Parameters.First() == sym) == false).ToList();
 
                                         items.Add(sin(2 * sym) / 2);
                                     }
@@ -2362,11 +1973,11 @@ namespace Tests
 
                                 else if (item is Cos)
                                 {
-                                    var sym = (item as Cos).args.First();
+                                    var sym = (item as Cos).Parameters.First();
 
-                                    if (items.Any(obj => (obj is Sin) && (obj as Sin).args.First() == sym))
+                                    if (items.Any(obj => (obj is Sin) && (obj as Sin).Parameters.First() == sym))
                                     {
-                                        items = items.Where(obj => ((obj is Sin) && (obj as Sin).args.First() == sym) == false).ToList();
+                                        items = items.Where(obj => ((obj is Sin) && (obj as Sin).Parameters.First() == sym) == false).ToList();
 
                                         items.Add(sin(2 * sym) / 2);
                                     }
@@ -2376,7 +1987,7 @@ namespace Tests
                                 else items.Add(item);
 
                             }
-                            return new Product() { elts = items }.Simplify();
+                            return new Product(items).Simplify();
                         }
                         return elt;
                     };
@@ -2392,15 +2003,15 @@ namespace Tests
             {
                 if (elt is Product)
                 {
-                    if ((elt as Product).elts.Any(obj1 =>
+                    if ((elt as Product).Elements.Any(obj1 =>
                             obj1 is Sin &&
-                            (elt as Product).elts.Any(obj2 => obj2 == 1 / cos((obj1 as Sin).args[0]))))
+                            (elt as Product).Elements.Any(obj2 => obj2 == 1 / cos((obj1 as Sin).Parameters[0]))))
                     {
-                        var sin_ = (elt as Product).elts.First(obj1 =>
+                        var sin_ = (elt as Product).Elements.First(obj1 =>
                             obj1 is Sin &&
-                            (elt as Product).elts.Any(obj2 => obj2 == 1 / cos((obj1 as Sin).args[0])));
+                            (elt as Product).Elements.Any(obj2 => obj2 == 1 / cos((obj1 as Sin).Parameters[0])));
 
-                        var arg = (sin_ as Sin).args[0];
+                        var arg = (sin_ as Sin).Parameters[0];
 
                         return elt * cos(arg) / sin(arg) * tan(arg);
                     }
@@ -2473,8 +2084,6 @@ namespace Tests
                 var ax = new Symbol("ax");
                 var ay = new Symbol("ay");
 
-                var Pi = new Symbol("Pi");
-
                 var eqs = new And(
 
                     vxA == vA * cos(thA),
@@ -2487,45 +2096,56 @@ namespace Tests
                     yB == yA + vyA * tAB + ay * (tAB ^ 2) / 2
                 );
 
-                DoubleFloat.tolerance = 0.00001;
+                DoubleFloat.Tolerance = 0.00001;
 
-                {
-                    var vals = new List<Equation>() { xA == 0, yA == 0, /* vxA vyA */ vA == 25.0, /* thA == 70.0, */ /* xB == 20.497, */ /* yB */ /* vxB */ vyB == 0, /* tAB */ ax == 0, ay == -9.8, Pi == Math.PI };
+	            {
+		            var vals = new List<Equation>
+			            {
+				            xA == 0,
+				            yA == 0,
+				            /* vxA vyA */ vA == 25.0,
+				            /* thA == 70.0, */ /* xB == 20.497, */ /* yB */ /* vxB */ vyB == 0,
+				            /* tAB */ ax == 0,
+				            ay == -9.8,
+				            pi == Math.PI
+			            };
 
                     var zeros = vals.Where(eq => eq.b == 0).ToList();
 
                     {
                         // thA = ... || thA = ...
 
-                        var expr = eqs
-                            .SubstituteEqLs(zeros)
-                            .EliminateVariables(yB, vxA, vyA, vxB, tAB)
-                            .DeepSelect(DoubleAngleFormulaFunc)
-                            .IsolateVariable(thA);
+	                    var sub = eqs.SubstituteEqLs(zeros);
+	                    var elim = sub.EliminateVariables(yB, vxA, vyA, vxB, tAB);
+	                    var sel = elim.DeepSelect(DoubleAngleFormulaFunc);
+	                    var expr = sel.IsolateVariable(thA);
+
+	                    //var expr = eqs.SubstituteEqLs(zeros)
+	                    //              .EliminateVariables(yB, vxA, vyA, vxB, tAB)
+	                    //              .DeepSelect(DoubleAngleFormulaFunc)
+	                    //              .IsolateVariable(thA);
 
                         // th_delta = ...
 
-                        var th1 = ((expr as Or).args[0] as Equation).b;
-                        var th2 = ((expr as Or).args[1] as Equation).b;
+                        var th1 = ((expr as Or).Parameters[0] as Equation).b;
+                        var th2 = ((expr as Or).Parameters[1] as Equation).b;
 
                         var th_delta = new Symbol("th_delta");
 
-                        eqs
-                            .Add(th_delta == (th1 - th2).AlgebraicExpand())
-                            .SubstituteEqLs(zeros)
+	                    and(eqs, th_delta == (th1 - th2).AlgebraicExpand())
+		                    .SubstituteEqLs(zeros)
 
-                            .EliminateVariables(yB, vxA, vyA, vxB, tAB)
+		                    .EliminateVariables(yB, vxA, vyA, vxB, tAB)
 
-                            .DeepSelect(DoubleAngleFormulaFunc)
-                            .EliminateVariable(xB)
+		                    .DeepSelect(DoubleAngleFormulaFunc)
+		                    .EliminateVariable(xB)
 
-                            .AssertEqTo(th_delta == asin(sin(2 * thA)) - Pi / 2)
+		                    .AssertEqTo(th_delta == asin(sin(2*thA)) - pi/2)
 
-                            .SubstituteEq(thA == (70).ToRadians())
-                            .SubstituteEq(Pi == Math.PI)
+		                    .SubstituteEq(thA == (70).ToRadians())
+		                    .SubstituteEq(pi == Math.PI)
 
-                            .AssertEqTo(th_delta == -0.87266462599716454)
-                            ;
+		                    .AssertEqTo(th_delta == -0.87266462599716454);
                     }
 
                     {
@@ -2544,8 +2164,8 @@ namespace Tests
                             .EliminateVariables(thA, tAB)
 
                             .AssertEqTo(or(
-                                tAC == -2 * sin(Pi / 9) * vA / ay,
-                                tAC == -2 * sin(7 * Pi / 18) * vA / ay))
+                                tAC == -2 * sin(pi / 9) * vA / ay,
+                                tAC == -2 * sin(7 * pi / 18) * vA / ay))
 
                             .SubstituteEqLs(vals)
                             .AssertEqTo(
@@ -2555,7 +2175,7 @@ namespace Tests
                     }
                 }
 
-                DoubleFloat.tolerance = null;
+                DoubleFloat.Tolerance = null;
             }
 
             #endregion
@@ -2603,7 +2223,7 @@ namespace Tests
                     yB == yA + vyA * tAB + ay * (tAB ^ 2) / 2
                 );
 
-                DoubleFloat.tolerance = 0.00001;
+                DoubleFloat.Tolerance = 0.00001;
 
                 {
                     var vals = new List<Equation>() { xA == 0, yA == 0, /* vxA vyA */ vA == 300.0, thA == (55).ToRadians(), /* xB yB vxB vyB */ tAB == 42, ax == 0, ay == -9.8, Pi == Math.PI };
@@ -2636,7 +2256,7 @@ namespace Tests
                     }
                 }
 
-                DoubleFloat.tolerance = null;
+                DoubleFloat.Tolerance = null;
             }
 
             #endregion
@@ -2707,7 +2327,7 @@ namespace Tests
 
                 );
 
-                DoubleFloat.tolerance = 0.00001;
+                DoubleFloat.Tolerance = 0.00001;
 
                 {
                     var vals = new List<Equation>() 
@@ -2727,7 +2347,7 @@ namespace Tests
                         .AssertEqTo(thA == new Atan(new Integer(4) / 3));
                 }
 
-                DoubleFloat.tolerance = null;
+                DoubleFloat.Tolerance = null;
             }
 
             #endregion
@@ -2788,7 +2408,7 @@ namespace Tests
                     yB == yA + vyA * tAB + ay * (tAB ^ 2) / 2
                 );
 
-                DoubleFloat.tolerance = 0.00001;
+                DoubleFloat.Tolerance = 0.00001;
 
                 {
                     var vals = new List<Equation>() 
@@ -2839,7 +2459,7 @@ namespace Tests
                     }
                 }
 
-                DoubleFloat.tolerance = null;
+                DoubleFloat.Tolerance = null;
             }
 
             #endregion
@@ -2859,7 +2479,7 @@ namespace Tests
                 // (b) Does the ball approach the crossbar while still 
                 //     rising or while falling ?
                 
-                Func <MathObject, MathObject> sqrt = obj => obj ^ (new Integer(1) / 2);
+                Func <MathObject, MathObject> sqrt = obj => obj ^ (new Fraction(1,2));
 
                 var xA = new Symbol("xA");
                 var yA = new Symbol("yA");
@@ -2902,7 +2522,7 @@ namespace Tests
                     cleared_by == yB - goal_height
                 );
 
-                DoubleFloat.tolerance = 0.00001;
+                DoubleFloat.Tolerance = 0.00001;
 
                 {
                     var vals = new List<Equation>()
@@ -2945,7 +2565,7 @@ namespace Tests
                     }
                 }
 
-                DoubleFloat.tolerance = null;
+                DoubleFloat.Tolerance = null;
             }
 
             #endregion
@@ -3000,7 +2620,7 @@ namespace Tests
                     
                 );
 
-                DoubleFloat.tolerance = 0.00001;
+                DoubleFloat.Tolerance = 0.00001;
 
                 {
                     var vals = new List<Equation>()
@@ -3027,7 +2647,7 @@ namespace Tests
                     }
                 }
 
-                DoubleFloat.tolerance = null;
+                DoubleFloat.Tolerance = null;
             }
 
             #endregion
@@ -3121,7 +2741,7 @@ namespace Tests
 
                 );
 
-                DoubleFloat.tolerance = 0.00001;
+                DoubleFloat.Tolerance = 0.00001;
 
                 {
                     var vals = new List<Equation>()
@@ -3261,7 +2881,7 @@ namespace Tests
                     }
                 }
 
-                DoubleFloat.tolerance = null;
+                DoubleFloat.Tolerance = null;
             }
 
             #endregion
@@ -3337,7 +2957,7 @@ namespace Tests
 
                     );
 
-                DoubleFloat.tolerance = 0.00001;
+                DoubleFloat.Tolerance = 0.00001;
 
                 {
                     var vals = new List<Equation>()
@@ -3523,7 +3143,7 @@ namespace Tests
 
                     );
 
-                DoubleFloat.tolerance = 0.00001;
+                DoubleFloat.Tolerance = 0.00001;
 
                 {
                     var vals = new List<Equation>()
@@ -3675,7 +3295,7 @@ namespace Tests
 
                     );
 
-                DoubleFloat.tolerance = 0.00001;
+                DoubleFloat.Tolerance = 0.00001;
 
                 {
                     var vals = new List<Equation>()
@@ -3813,7 +3433,7 @@ namespace Tests
                     
                     );
 
-                DoubleFloat.tolerance = 0.00001;
+                DoubleFloat.Tolerance = 0.00001;
 
                 {
                     var vals = new List<Equation>()
@@ -3977,7 +3597,7 @@ namespace Tests
                     
                     );
 
-                DoubleFloat.tolerance = 0.00001;
+                DoubleFloat.Tolerance = 0.00001;
 
                 {
                     var vals = new List<Equation>()
@@ -4110,7 +3730,7 @@ namespace Tests
 
                     );
 
-                DoubleFloat.tolerance = 0.00001;
+                DoubleFloat.Tolerance = 0.00001;
 
                 var vals = new List<Equation>
                 {
@@ -4257,7 +3877,7 @@ namespace Tests
                     
                     );
 
-                DoubleFloat.tolerance = 0.00001;
+                DoubleFloat.Tolerance = 0.00001;
 
                 {
                     var vals = new List<Equation>()
@@ -4384,7 +4004,7 @@ namespace Tests
                     
                     );
                 
-                DoubleFloat.tolerance = 0.00001;
+                DoubleFloat.Tolerance = 0.00001;
 
                 {
                     var symbolic_vals = new List<Equation>()
@@ -4579,7 +4199,7 @@ namespace Tests
 
                     );
                 
-                DoubleFloat.tolerance = 0.00001;
+                DoubleFloat.Tolerance = 0.00001;
 
                 {
                     var vals = new List<Equation>()
@@ -4804,7 +4424,7 @@ namespace Tests
                     
                     );
 
-                DoubleFloat.tolerance = 0.00001;
+                DoubleFloat.Tolerance = 0.00001;
 
                 {
                     var vals = new List<Equation>()
@@ -5006,7 +4626,7 @@ namespace Tests
                     Fy_m2 == m2 * ay_m2
                     );
 
-                DoubleFloat.tolerance = 0.00001;
+                DoubleFloat.Tolerance = 0.00001;
 
                 {
                     var vals = new List<Equation>()
@@ -5142,7 +4762,7 @@ namespace Tests
 
                     );
 
-                DoubleFloat.tolerance = 0.00001;
+                DoubleFloat.Tolerance = 0.00001;
 
                 var vals = new List<Equation>()
                 {
@@ -5311,7 +4931,7 @@ namespace Tests
                     g == 9.8
                 };
 
-                DoubleFloat.tolerance = 0.00001;
+                DoubleFloat.Tolerance = 0.00001;
 
                 // a
                 eqs
@@ -5379,7 +4999,7 @@ namespace Tests
 
                     .SubstituteEqLs(numerical_vals);
 
-                DoubleFloat.tolerance = null;
+                DoubleFloat.Tolerance = null;
 
             }
 
@@ -5441,7 +5061,7 @@ namespace Tests
 
                     );
 
-                DoubleFloat.tolerance = 0.00001;
+                DoubleFloat.Tolerance = 0.00001;
 
                 // T1
                 {

@@ -1,65 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Symbolism.ExpandProduct;
-using Symbolism.ExpandPower;
+﻿using System.Linq;
 
 namespace Symbolism
 {
-    namespace AlgebraicExpand
-    {
-        public static class Extensions
-        {
-            public static MathObject AlgebraicExpand(this MathObject u)
-            {
-                if (u is Equation)
-                {
-                    var eq = u as Equation;
+	public static partial class Extensions
+	{
+		public static MathObject AlgebraicExpand(this MathObject u)
+		{
+			var equation = u as Equation;
+			if (equation != null)
+			{
+				var eq = equation;
 
-                    return eq.a.AlgebraicExpand() == eq.b.AlgebraicExpand();
-                }
+				return eq.a.AlgebraicExpand() == eq.b.AlgebraicExpand();
+			}
 
-                if (u is Sum)
-                {
-                    return new Sum()
-                    { elts = (u as Sum).elts.Select(elt => elt.AlgebraicExpand()).ToList() }
-                    .Simplify();
-                }
+			var sum = u as Sum;
+			if (sum != null)
+				return new Sum(sum.Elements.Select(elt => elt.AlgebraicExpand())).Simplify();
 
-                if (u is Product)
-                {
-                    var v = (u as Product).elts[0];
+			var product = u as Product;
+			if (product != null)
+			{
+				var v = product.Elements[0];
 
-                    return v.AlgebraicExpand()
-                        .ExpandProduct( (u / v).AlgebraicExpand() );
-                }
+				return v.AlgebraicExpand()
+				        .ExpandProduct((u/v).AlgebraicExpand());
+			}
 
-                if (u is Power)
-                {
-                    var bas = (u as Power).bas;
-                    var exp = (u as Power).exp;
+			var power = u as Power;
+			if (power != null)
+			{
+				var bas = power.Base;
+				var exp = power.Exponent;
 
-                    if (exp is Integer && (exp as Integer).val >= 2)
-                        return bas.AlgebraicExpand().ExpandPower((exp as Integer).val);
-                    else 
-                        return u;
-                }
+				var integer = exp as Integer;
+				if (integer != null && integer.Value >= 2)
+					return bas.AlgebraicExpand().ExpandPower(integer.Value);
 
-                if (u is Function)
-                {
-                    return new Function() 
-                    { 
-                        name = (u as Function).name,
-                        proc = (u as Function).proc,
-                        args = (u as Function).args.ConvertAll(elt => elt.AlgebraicExpand())
-                    }.Simplify();
-                }
+				return u;
+			}
 
-                return u;
-            }
-        }
-    }
-    
+			var function = u as Function;
+			if (function != null)
+				return function.Map(elt => elt.AlgebraicExpand());
+
+			return u;
+		}
+	}
 }

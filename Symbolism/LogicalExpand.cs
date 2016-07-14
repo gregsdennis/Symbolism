@@ -1,43 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
-namespace Symbolism.LogicalExpand
+namespace Symbolism
 {
-    public static class Extensions
+	public static partial class Extensions
     {
         public static MathObject LogicalExpand(this MathObject obj)
         {
-            if (obj is Or)
-            {
-                return (obj as Or).Map(elt => elt.LogicalExpand());
-            }
-
-            if (obj is And &&
-                (obj as And).args.Any(elt => elt is Or) &&
-                (obj as And).args.Count() > 1)
-            {
-                var before = new List<MathObject>();
-                Or or = null;
-                var after = new List<MathObject>();
-
-                foreach (var elt in (obj as And).args)
-                {
-                    if (elt is Or && or == null) or = elt as Or;
-                    else if (or == null) before.Add(elt);
-                    else after.Add(elt);
-                }
-
-                return
-                    or.Map(or_elt =>
-                        new And(
-                            new And() { args = before }.Simplify().LogicalExpand(),
-                            or_elt,
-                            new And() { args = after }.Simplify().LogicalExpand()).Simplify()).LogicalExpand();
-            }
-
-            return obj;
+	        return TryExpandOr(obj as Or) ?? TryExpandAnd(obj as And) ?? obj;
         }
+
+	    private static MathObject TryExpandOr(Or or)
+	    {
+		    return or?.Map(elt => elt.LogicalExpand());
+	    }
+
+	    private static MathObject TryExpandAnd(And and)
+	    {
+		    if (and == null || !(and.Parameters.OfType<Or>().Any() &&
+		                         and.Parameters.Count() > 1))
+			    return null;
+
+		    var before = new List<MathObject>();
+			Or or = null;
+			var after = new List<MathObject>();
+
+			foreach (var elt in and.Parameters)
+			{
+				if (elt is Or && or == null) or = elt as Or;
+				else if (or == null) before.Add(elt);
+				else after.Add(elt);
+			}
+
+		    return or.Map(or_elt => new And(new And(before).Simplify().LogicalExpand(),
+		                                    or_elt,
+		                                    new And(after).Simplify().LogicalExpand()).Simplify()).LogicalExpand();
+	    }
     }
 }

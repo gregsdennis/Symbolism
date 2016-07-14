@@ -1,39 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 
-namespace Symbolism.SimplifyEquation
+namespace Symbolism
 {
-    public static class Extensions
+    public static partial class Extensions
     {
         public static MathObject SimplifyEquation(this MathObject expr)
         {
-            // 10 * x == 0   ->   x == 0
-            // 10 * x != 0   ->   x == 0
+	        var equation = expr as Equation;
+	        if (equation != null)
+	        {
+				// 10 * x == 0   ->   x == 0
+				// 10 * x != 0   ->   x == 0
 
-            if (expr is Equation &&
-                (expr as Equation).a is Product &&
-                ((expr as Equation).a as Product).elts.Any(elt => elt is Number) &&
-                ((expr as Equation).b == 0))
-                return new Equation(
-                    new Product() { elts = ((expr as Equation).a as Product).elts.Where(elt => !(elt is Number)).ToList() }.Simplify(),
-                    0,
-                    (expr as Equation).Operator).Simplify();
+				var product = equation.a as Product;
+		        if (product != null && product.Elements.OfType<Number>().Any() && equation.b == 0)
+			        return new Equation(new Product(product.Elements.Where(elt => !(elt is Number)).ToList()).Simplify(),
+			                            0,
+			                            equation.Operator).Simplify();
+				// x ^ 2 == 0   ->   x == 0
+				// x ^ 2 != 0   ->   x == 0
 
-            // x ^ 2 == 0   ->   x == 0
-            // x ^ 2 != 0   ->   x == 0
+				if (equation.b == 0)
+	            {
+		            var power = equation.a as Power;
+		            if (power != null)
+		            {
+			            var integer = power.Exponent as Integer;
+			            if (integer != null && integer.Value > 0)
+							return power.Base == 0;
+		            }
+	            }
+	        }
 
-            if (expr is Equation &&
-                (expr as Equation).b == 0 &&
-                (expr as Equation).a is Power &&
-                ((expr as Equation).a as Power).exp is Integer &&
-                (((expr as Equation).a as Power).exp as Integer).val > 0)
-                return ((expr as Equation).a as Power).bas == 0;
+	        var and = expr as And;
+	        if (and != null) return and.Map(elt => elt.SimplifyEquation());
 
-            if (expr is And) return (expr as And).Map(elt => elt.SimplifyEquation());
-
-            if (expr is Or) return (expr as Or).Map(elt => elt.SimplifyEquation());
+	        var or = expr as Or;
+	        if (or != null) return or.Map(elt => elt.SimplifyEquation());
 
             return expr;
         }

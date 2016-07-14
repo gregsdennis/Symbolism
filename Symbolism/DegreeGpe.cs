@@ -1,38 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using Symbolism.Has;
 
 namespace Symbolism
 {
-    namespace DegreeGpe
-    {
-        public static class Extensions
-        {
-            public static int DegreeMonomialGpe(this MathObject u, List<MathObject> v)
-            {
-                if (v.All(u.FreeOf)) return 0;
+	public static partial class Extensions
+	{
+		public static int DegreeMonomialGpe(this MathObject u, List<MathObject> v)
+		{
+			if (v.All(u.FreeOf)) return 0;
 
-                if (v.Contains(u)) return 1;
+			if (v.Contains(u)) return 1;
 
-                if (u is Power && ((Power)u).exp is Integer && ((Integer)((Power)u).exp).val > 1)
-                    return ((Integer)((Power)u).exp).val;
+			var power = u as Power;
+			if (power != null)
+			{
+				var exp = power.Exponent as Integer;
+				if (exp != null && exp.Value > 1)
+					return exp.Value;
+			}
 
-                if (u is Product)
-                    return ((Product)u).elts.Select(elt => elt.DegreeMonomialGpe(v)).Sum();
+			var product = u as Product;
+			if (product != null)
+				return product.Elements.Select(elt => elt.DegreeMonomialGpe(v)).Sum();
 
-                return 0;
-            }
+			return 0;
+		}
 
-            public static int DegreeGpe(this MathObject u, List<MathObject> v)
-            {
-                if (u is Sum)
-                    return ((Sum)u).elts.Select(elt => elt.DegreeMonomialGpe(v)).Max();
+		public static int DegreeGpe(this MathObject u, List<MathObject> v)
+		{
+			var sum = u as Sum;
+			if (sum != null)
+				return sum.Elements.Select(elt => elt.DegreeMonomialGpe(v)).Max();
 
-                return u.DegreeMonomialGpe(v);
-            }
-        }
-    }
+			return u.DegreeMonomialGpe(v);
+		}
+	}
 }
