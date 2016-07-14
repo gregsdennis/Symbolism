@@ -11,7 +11,7 @@ namespace Symbolism
 			if (ls.Length == 0) return true;
 
 			if (ls.Length == 1) return ls.First();
-            
+			
 			if (ls.Any(elt => elt == false)) return false;
 
 			if (ls.Any(elt => elt == true))

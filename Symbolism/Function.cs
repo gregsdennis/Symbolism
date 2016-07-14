@@ -36,9 +36,9 @@ namespace Symbolism
 		}
 
 		public MathObject Simplify() => Procedure == null ? this : Procedure(Parameters.ToArray());
-        
+		
 		public override string FullForm() => $"{Name}({string.Join(", ", Parameters)})";
-        
+		
 		public MathObject Clone() => MemberwiseClone() as MathObject;
 		public virtual MathObject Map(Func<MathObject, MathObject> map)
 		{

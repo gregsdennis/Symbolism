@@ -3,15 +3,8 @@ using System.Linq;
 
 namespace Symbolism
 {
-	// TODO: this should be internal (need to fix test proj first)
-	public static class TermSequencer
+	internal static class TermSequencer
 	{
-		public static MathObject Const(this MathObject u)
-		{
-			var product = u as Product;
-			return product != null && product.Elements[0] is Number ? product.Elements[0] : 1;
-		}
-
 		private static bool O3(IReadOnlyList<MathObject> uElts, IReadOnlyList<MathObject> vElts)
 		{
 			if (!uElts.Any()) return true;
@@ -101,7 +94,8 @@ namespace Symbolism
 				return ComesBefore(u, new Product(v));
 
 			if (uPow != null && (vSum != null || vFunc != null || vSym != null))
-				return ComesBefore(uPow.Base, v);
+				// do not simplify this; it dictates logic flow.
+				return ComesBefore(uPow, new Power(v, 1));
 
 			if (uSum != null && (vFunc != null || vSym != null))
 				return ComesBefore(u, new Sum(v));

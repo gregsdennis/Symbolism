@@ -37,7 +37,7 @@ namespace Tests
 				var function = (Function) obj;
 
 				Console.WriteLine(new string(' ', indent) + function.Name + "(");
-                                
+								
 				var i = 0;
 
 				foreach (var elt in function.Parameters)
@@ -54,7 +54,7 @@ namespace Tests
 			}
 
 			else Console.WriteLine(new string(' ', indent) + obj + (comma ? "," : ""));
-            
+			
 			return obj;
 		}
 

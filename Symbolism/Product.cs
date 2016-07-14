@@ -20,30 +20,32 @@ namespace Symbolism
 
 		public override string StandardForm()
 		{
-			if (Denominator() == 1)
-			{
-				if (this.Const() < 0 && this / this.Const() is Sum) return $"-({this * -1})";
+			var expr_b = Denominator();
 
-				if (this.Const() < 0) return $"-{this * -1}";
+			if (expr_b == 1)
+			{
+				var coefficient = this.Coefficient();
+				if (coefficient < 0 && this/coefficient is Sum) return $"-({this*-1})";
+
+				if (coefficient < 0) return $"-{this*-1}";
 
 				return string.Join(" * ",
 				                   // ReSharper disable once TryCastAlwaysSucceeds
 				                   // NOTE: elt is less likely to be a power, so we allow the precedence to try to handle it without casting first
-				                   Elements.Select(elt => elt.Precedence < Precedence || (elt is Power && (elt as Power).Exponent != new Fraction(1, 2))
+				                   Elements.Select(elt => elt.Precedence < Precedence || (elt is Power && (elt as Power).Exponent != new Integer(1)/2)
 					                                          ? $"({elt})"
 					                                          : $"{elt}"));
 			}
 
 			var expr_a = Numerator();
-			var expr_b = Denominator();
 
-			var expr_a_ = expr_a is Sum || (expr_a is Power && (expr_a as Power).Exponent != new Fraction(1,2)) ? $"({expr_a})" : $"{expr_a}";
+			var expr_a_ = expr_a is Sum || (expr_a is Power && (expr_a as Power).Exponent != new Integer(1)/2) ? $"({expr_a})" : $"{expr_a}";
 
-			var expr_b_ = expr_b is Sum || expr_b is Product || (expr_b is Power && (expr_b as Power).Exponent != new Fraction(1,2)) ? $"({expr_b})" : $"{expr_b}";
-            
+			var expr_b_ = expr_b is Sum || expr_b is Product || (expr_b is Power && (expr_b as Power).Exponent != new Integer(1)/2) ? $"({expr_b})" : $"{expr_b}";
+
 			return $"{expr_a_} / {expr_b_}";
 		}
-        
+
 		public override int GetHashCode() => Elements.GetHashCode();
 
 		public override bool Equals(object obj) => Equals(obj as Product);
@@ -139,7 +141,7 @@ namespace Symbolism
 				//////////////////////////////////////////////////////////////////////
 
 				if ((i0 != null || f0 != null) &&
-				    (i1 != null || f1 != null))
+					(i1 != null || f1 != null))
 				{
 					var P = Rational.SimplifyRNE(new Product(elts[0], elts[1]));
 
@@ -170,10 +172,10 @@ namespace Symbolism
 
 			if (prod0 != null)
 				return MergeProducts(prod0.Elements,
-				                     RecursiveSimplify(elts.Skip(1).ToList()));
+									 RecursiveSimplify(elts.Skip(1).ToList()));
 
 			return MergeProducts(new List<MathObject> {elts[0]},
-			                     RecursiveSimplify(elts.Skip(1).ToList()));
+								 RecursiveSimplify(elts.Skip(1).ToList()));
 		}
 
 		public MathObject Simplify()

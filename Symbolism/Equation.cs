@@ -2,7 +2,7 @@ using System;
 
 namespace Symbolism
 {
-	public class Equation : MathObject
+	public class Equation : MathObject, IEquatable<Equation>
 	{
 		public enum Operators { Equal, NotEqual, LessThan, GreaterThan }
 
@@ -17,7 +17,7 @@ namespace Symbolism
 			b = y;
 			Operator = op;
 		}
-        
+		
 		public override string FullForm()
 		{
 			if (Operator == Operators.Equal) return a + " == " + b;
@@ -27,13 +27,16 @@ namespace Symbolism
 			throw new Exception();
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object obj) => Equals(obj as Equation);
+
+		public bool Equals(Equation obj)
 		{
-			var equation = obj as Equation;
-			return equation != null &&
-			       a.Equals(equation.a) &&
-			       b.Equals(equation.b) &&
-			       Operator == equation.Operator;
+			if (ReferenceEquals(null, obj)) return false;
+			if (ReferenceEquals(this, obj)) return true;
+
+			return a.Equals(obj.a) &&
+			       b.Equals(obj.b) &&
+			       Operator == obj.Operator;
 		}
 
 		private bool ToBoolean()
@@ -65,7 +68,7 @@ namespace Symbolism
 
 			throw new Exception();
 		}
-        
+		
 		public static implicit operator bool(Equation eq)
 		{
 			if (eq.Operator == Operators.Equal)
@@ -92,7 +95,7 @@ namespace Symbolism
 
 			throw new Exception();
 		}
-        
+		
 		public MathObject Simplify()
 		{
 			if (a is Number && b is Number) return (bool)this;
@@ -101,6 +104,6 @@ namespace Symbolism
 		}
 
 		public override int GetHashCode() => new { a, b }.GetHashCode();
-        
+		
 	}
 }

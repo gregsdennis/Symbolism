@@ -120,7 +120,7 @@ namespace Symbolism
 				Fraction fp = p as Fraction, fq = q as Fraction;
 
 				if ((ip != null || fp != null) &&
-				    (iq != null || fq != null))
+					(iq != null || fq != null))
 				{
 					var P = Rational.SimplifyRNE(new Sum(p, q));
 
@@ -136,7 +136,7 @@ namespace Symbolism
 				var pTerm = Term(p);
 				if (pTerm == Term(q))
 				{
-					var res = pTerm*(p.Const() + q.Const());
+					var res = pTerm*(p.Coefficient() + q.Coefficient());
 
 					if (res == 0) return new List<MathObject>();
 
@@ -167,22 +167,22 @@ namespace Symbolism
 		}
 
 		public override string FullForm() => string.Join(" + ", _elements.ConvertAll(elt => elt.Precedence < Precedence
-			                                                                                   ? $"({elt})"
-			                                                                                   : $"{elt}"));
+																							   ? $"({elt})"
+																							   : $"{elt}"));
 
 		public override string StandardForm()
 		{
 			var result = string.Join(" ", _elements.ConvertAll(elt =>
 				{
-					var elt_ = elt.Const() < 0 ? elt*-1 : elt;
+					var elt_ = elt.Coefficient() < 0 ? elt*-1 : elt;
 
-					var elt__ = elt.Const() < 0 && elt_ is Sum || (elt is Power && (elt as Power).Exponent != new Fraction(1,2))
-						            ? $"({elt_})"
-						            : $"{elt_}";
+					var elt__ = elt.Coefficient() < 0 && elt_ is Sum || (elt is Power && (elt as Power).Exponent != new Fraction(1,2))
+									? $"({elt_})"
+									: $"{elt_}";
 
-					return elt.Const() < 0 ? $"- {elt__}" : $"+ {elt__}";
+					return elt.Coefficient() < 0 ? $"- {elt__}" : $"+ {elt__}";
 				}));
-            
+			
 			if (result.StartsWith("+ ")) return result.Remove(0, 2); // "+ x + y"   ->   "x + y"
 
 			if (result.StartsWith("- ")) return result.Remove(1, 1); // "- x + y"   ->   "-x + y"

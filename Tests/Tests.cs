@@ -32,7 +32,7 @@ namespace Tests
                 Console.WriteLine("{0} and {1} are not equal", a.Value, b.Value);
         }
 
-        static void AssertEqual(MathObject a, Double b, double tolerance = 0.00000001)
+        static void AssertEqual(MathObject a, double b, double tolerance = 0.00000001)
         {
             var x = (DoubleFloat)a;
             var y = new DoubleFloat(b);
@@ -94,294 +94,294 @@ namespace Tests
                     DoubleFloat.Tolerance = null;
                 }
 
-                #region Const
+				#region Const
 
-                AssertIsTrue((2 * x * y).Const() == 2);
+				//AssertIsTrue((2 * x * y).Const() == 2);
 
-                AssertIsTrue((x * y / 2).Const() == new Fraction(1,2));
+				//AssertIsTrue((x * y / 2).Const() == new Fraction(1,2));
 
-                AssertIsTrue((0.1 * x * y).Const() == 0.1);
+				//AssertIsTrue((0.1 * x * y).Const() == 0.1);
 
-                AssertIsTrue((x * y).Const() == 1);
+				//AssertIsTrue((x * y).Const() == 1);
 
-                #endregion
-            
-                #region Simplify
+				#endregion
 
-                AssertIsTrue(x + x == 2 * x);
+				#region Simplify
 
-                AssertIsTrue(x + x == 2 * x);
+				//AssertIsTrue(x + x == 2 * x);
 
-                AssertIsTrue(x + x + x == 3 * x);
+				//AssertIsTrue(x + x == 2 * x);
 
-                AssertIsTrue(5 + x + 2 == 7 + x);
+				//AssertIsTrue(x + x + x == 3 * x);
 
-                AssertIsTrue(3 + x + 5 + x == 8 + 2 * x);
+				//AssertIsTrue(5 + x + 2 == 7 + x);
 
-                AssertIsTrue(4 * x + 3 * x == 7 * x);
+				//AssertIsTrue(3 + x + 5 + x == 8 + 2 * x);
 
-                AssertIsTrue(x + y + z + x + y + z == 2 * x + 2 * y + 2 * z);
+				//AssertIsTrue(4 * x + 3 * x == 7 * x);
 
-                AssertIsTrue(10 - x == 10 + x * -1);
+				//AssertIsTrue(x + y + z + x + y + z == 2 * x + 2 * y + 2 * z);
 
-                AssertIsTrue(x * y / 3 == Int(1) / 3 * x * y);
+				//AssertIsTrue(10 - x == 10 + x * -1);
 
-                AssertIsTrue(x / y == x * (y ^ -1));
+				//AssertIsTrue(x * y / 3 == Int(1) / 3 * x * y);
 
-                AssertIsTrue(x / 3 == x * (Int(1) / 3));
+				//AssertIsTrue(x / y == x * (y ^ -1));
 
-                AssertIsTrue(6 * x * y / 3 == 2 * x * y);
+				//AssertIsTrue(x / 3 == x * (Int(1) / 3));
 
-                AssertIsTrue((((x ^ Int(1) / 2) ^ Int(1) / 2) ^ 8) == (x ^ 2));
+				//AssertIsTrue(6 * x * y / 3 == 2 * x * y);
 
-                AssertIsTrue(((((x * y) ^ (Int(1) / 2)) * (z ^ 2)) ^ 2) == (x * y * (z ^ 4)));
+				//AssertIsTrue((((x ^ Int(1) / 2) ^ Int(1) / 2) ^ 8) == (x ^ 2));
 
-                AssertIsTrue(x / x == 1);
+				//AssertIsTrue(((((x * y) ^ (Int(1) / 2)) * (z ^ 2)) ^ 2) == (x * y * (z ^ 4)));
 
-                AssertIsTrue(x / y * y / x == 1);
+				//AssertIsTrue(x / x == 1);
 
-                AssertIsTrue((x ^ 2) * (x ^ 3) == (x ^ 5));
+				//AssertIsTrue(x / y * y / x == 1);
 
-                AssertIsTrue(x + y + x + z + 5 + z == 5 + 2 * x + y + 2 * z);
+				//AssertIsTrue((x ^ 2) * (x ^ 3) == (x ^ 5));
 
-                AssertIsTrue(((Int(1) / 2) * x + (Int(3) / 4) * x) == Int(5) / 4 * x);
+				//AssertIsTrue(x + y + x + z + 5 + z == 5 + 2 * x + y + 2 * z);
 
-                AssertIsTrue(1.2 * x + 3 * x == 4.2 * x);
+				//AssertIsTrue(((Int(1) / 2) * x + (Int(3) / 4) * x) == Int(5) / 4 * x);
 
-                AssertIsTrue(3 * x + 1.2 * x == 4.2 * x);
+				//AssertIsTrue(1.2 * x + 3 * x == 4.2 * x);
 
-                AssertIsTrue(1.2 * x * 3 * y == 3.5999999999999996 * x * y);
+				//AssertIsTrue(3 * x + 1.2 * x == 4.2 * x);
 
-                AssertIsTrue(3 * x * 1.2 * y == 3.5999999999999996 * x * y);
+				//AssertIsTrue(1.2 * x * 3 * y == 3.5999999999999996 * x * y);
 
-                AssertIsTrue(3.4 * x * 1.2 * y == 4.08 * x * y);
+				//AssertIsTrue(3 * x * 1.2 * y == 3.5999999999999996 * x * y);
 
-                AssertIsTrue((a == b) == (a == b));
+				//AssertIsTrue(3.4 * x * 1.2 * y == 4.08 * x * y);
 
-                #endregion
+				//AssertIsTrue((a == b) == (a == b));
 
-                #region Power.Simplify
+				#endregion
 
-                AssertIsTrue((0 ^ x) == 0);
-                AssertIsTrue((1 ^ x) == 1);
-                AssertIsTrue((x ^ 0) == 1);
-                AssertIsTrue((x ^ 1) == x);
+				#region Power.Simplify
 
-                #endregion
+				//AssertIsTrue((0 ^ x) == 0);
+				//AssertIsTrue((1 ^ x) == 1);
+				//AssertIsTrue((x ^ 0) == 1);
+				//AssertIsTrue((x ^ 1) == x);
 
-                // Product.Simplify
+				#endregion
 
-                AssertIsTrue(x * 0 == 0);
+				// Product.Simplify
 
-                // Difference
+				//AssertIsTrue(x * 0 == 0);
 
-                AssertIsTrue(-x == -1 * x);
+				// Difference
 
-                AssertIsTrue(x - y == x + -1 * y);
+				//AssertIsTrue(-x == -1 * x);
 
-                #region Substitute
+				//AssertIsTrue(x - y == x + -1 * y);
 
-                AssertIsTrue(Int(10).Substitute(Int(10), 20) == 20);
-                AssertIsTrue(Int(10).Substitute(Int(15), 20) == 10);
+				#region Substitute
 
-                AssertIsTrue(new DoubleFloat(1.0).Substitute(new DoubleFloat(1.0), 2.0) == 2.0);
-                AssertIsTrue(new DoubleFloat(1.0).Substitute(new DoubleFloat(1.5), 2.0) == 1.0);
+				//AssertIsTrue(Int(10).Substitute(Int(10), 20) == 20);
+				//AssertIsTrue(Int(10).Substitute(Int(15), 20) == 10);
 
-                AssertIsTrue((Int(1) / 2).Substitute(Int(1) / 2, Int(3) / 4) == Int(3) / 4);
-                AssertIsTrue((Int(1) / 2).Substitute(Int(1) / 3, Int(3) / 4) == Int(1) / 2);
+				//AssertIsTrue(new DoubleFloat(1.0).Substitute(new DoubleFloat(1.0), 2.0) == 2.0);
+				//AssertIsTrue(new DoubleFloat(1.0).Substitute(new DoubleFloat(1.5), 2.0) == 1.0);
 
-                AssertIsTrue(x.Substitute(x, y) == y);
-                AssertIsTrue(x.Substitute(y, y) == x);
+				//AssertIsTrue((Int(1) / 2).Substitute(Int(1) / 2, Int(3) / 4) == Int(3) / 4);
+				//AssertIsTrue((Int(1) / 2).Substitute(Int(1) / 3, Int(3) / 4) == Int(1) / 2);
 
-                AssertIsTrue((x ^ y).Substitute(x, 10) == (10 ^ y));
-                AssertIsTrue((x ^ y).Substitute(y, 10) == (x ^ 10));
+				//AssertIsTrue(x.Substitute(x, y) == y);
+				//AssertIsTrue(x.Substitute(y, y) == x);
 
-                AssertIsTrue((x ^ y).Substitute(x ^ y, 10) == 10);
+				//AssertIsTrue((x ^ y).Substitute(x, 10) == (10 ^ y));
+				//AssertIsTrue((x ^ y).Substitute(y, 10) == (x ^ 10));
 
-                AssertIsTrue((x * y * z).Substitute(x, y) == ((y ^ 2) * z));
-                AssertIsTrue((x * y * z).Substitute(x * y * z, x) == x);
+				//AssertIsTrue((x ^ y).Substitute(x ^ y, 10) == 10);
 
-                AssertIsTrue((x + y + z).Substitute(x, y) == ((y * 2) + z));
-                AssertIsTrue((x + y + z).Substitute(x + y + z, x) == x);
+				//AssertIsTrue((x * y * z).Substitute(x, y) == ((y ^ 2) * z));
+				//AssertIsTrue((x * y * z).Substitute(x * y * z, x) == x);
 
-                AssertIsTrue(
-                    ((((x * y) ^ (Int(1) / 2)) * (z ^ 2)) ^ 2)
-                        .Substitute(x, 10)
-                        .Substitute(y, 20)
-                        .Substitute(z, 3)
-                        == 16200
-                        );
+				//AssertIsTrue((x + y + z).Substitute(x, y) == ((y * 2) + z));
+				//AssertIsTrue((x + y + z).Substitute(x + y + z, x) == x);
 
-                #region Equation.Substitute
+				//AssertIsTrue(
+				//    ((((x * y) ^ (Int(1) / 2)) * (z ^ 2)) ^ 2)
+				//        .Substitute(x, 10)
+				//        .Substitute(y, 20)
+				//        .Substitute(z, 3)
+				//        == 16200
+				//        );
 
-                AssertIsTrue((x == y).Substitute(y, z) == (x == z));
+				#region Equation.Substitute
 
-                AssertIsTrue((x != y).Substitute(y, z) == (x != z));
+				//AssertIsTrue((x == y).Substitute(y, z) == (x == z));
 
-                (x == 0).Substitute(x, 0).AssertEqTo(true);
+				//AssertIsTrue((x != y).Substitute(y, z) == (x != z));
 
-                (x == 0).Substitute(x, 1).AssertEqTo(false);
+				//(x == 0).Substitute(x, 0).AssertEqTo(true);
 
-                (x != 0).Substitute(x, 0).AssertEqTo(false);
+				//(x == 0).Substitute(x, 1).AssertEqTo(false);
 
-                (x != 0).Substitute(x, 1).AssertEqTo(true);
+				//(x != 0).Substitute(x, 0).AssertEqTo(false);
 
-                #endregion
+				//(x != 0).Substitute(x, 1).AssertEqTo(true);
 
-                #endregion
+				#endregion
 
-                AssertIsTrue(sin(new DoubleFloat(3.14159 / 2)) == 0.99999999999911982);
+				#endregion
 
-                AssertIsTrue(sin(x + y) + sin(x + y) == 2 * sin(x + y));
+				//AssertIsTrue(sin(new DoubleFloat(3.14159 / 2)) == 0.99999999999911982);
 
-                AssertIsTrue(sin(x + x) == sin(2 * x));
+				//AssertIsTrue(sin(x + y) + sin(x + y) == 2 * sin(x + y));
 
-                AssertIsTrue(sin(x + x).Substitute(x, 1) == sin(Int(2)));
+				//AssertIsTrue(sin(x + x) == sin(2 * x));
 
-                AssertIsTrue(sin(x + x).Substitute(x, 1.0) == 0.90929742682568171);
+				//AssertIsTrue(sin(x + x).Substitute(x, 1) == sin(Int(2)));
 
-                AssertIsTrue(sin(2 * x).Substitute(x, y) == sin(2 * y));
+				//AssertIsTrue(sin(x + x).Substitute(x, 1.0) == 0.90929742682568171);
 
-                // Product.RecursiveSimplify
+				//AssertIsTrue(sin(2 * x).Substitute(x, y) == sin(2 * y));
 
-                AssertIsTrue(1 * x == x);
+				// Product.RecursiveSimplify
 
-                AssertIsTrue(x * 1 == x);
+				//AssertIsTrue(1 * x == x);
 
-                AssertIsTrue(x != y);
+				//AssertIsTrue(x * 1 == x);
 
-                AssertIsTrue(x != 10);
+				//AssertIsTrue(x != y);
 
-                // ==(double a, MathObject b)
+				//AssertIsTrue(x != 10);
 
-                AssertIsTrue(1.0 == new DoubleFloat(3.0) - 2.0);
+				// ==(double a, MathObject b)
 
-                AssertIsTrue((a == b) != (a != b));
-                
-                (sqrt(a * b) * (sqrt(a * b) / a) / c)
-                    .AssertEqTo(b / c);
+				//AssertIsTrue(1.0 == new DoubleFloat(3.0) - 2.0);
 
+				//AssertIsTrue((a == b) != (a != b));
 
-                Action<MathObject, string> AssertToStringMatch = 
-                    (MathObject obj, string str) => Assert(obj.ToString() == str, $"({str}).ToString()");
-                
-                MathObject.ToStringForm = ToStringForms.Full;
+				//(sqrt(a * b) * (sqrt(a * b) / a) / c)
+				//    .AssertEqTo(b / c);
+
+
+				Action<MathObject, string> AssertToStringMatch =
+					(MathObject obj, string str) => Assert(obj.ToString() == str, $"({str}).ToString()");
+
+				//MathObject.ToStringForm = ToStringForms.Full;
+
+				//AssertToStringMatch(x + y + z, "x + y + z");
+
+				//AssertToStringMatch(x + y * z, "x + y * z");
+
+				//AssertToStringMatch((x + y) * z, "(x + y) * z");
+
+				//Assert((sin(x) * cos(y)).ToString() == "cos(y) * sin(x)", "(sin(x) * cos(y)).ToString()");
+
+				//AssertToStringMatch(and(x, y, z), "and(x, y, z)");
+
+				//AssertToStringMatch(x ^ y, "x ^ y");
+
+				//AssertToStringMatch((x * y) ^ (x + z), "(x * y) ^ (x + z)");
+
+
+
+				//Assert((x - y).ToString() == "x + -1 * y", "(x - y).ToString()");
+
+				//Assert((x - y - z).ToString() == "x + -1 * y + -1 * z", "(x - y - z).ToString()");
+
+				//Assert((x / y).ToString() == "x * y ^ -1", "(x / y).ToString()");
+
+				//Assert((x - (y - z)).ToString() == "x + -1 * (y + -1 * z)", "(x - (y - z)).ToString()");
+
+
+				//MathObject.ToStringForm = ToStringForms.Standard;
+
+				//Assert((x + y).ToString() == "x + y", "(x + y).ToString()");
+
+				//Assert((x - y).ToString() == "x - y", "(x - y).ToString()");
+
+				//Assert((x - y - z).ToString() == "x - y - z", "(x - y - z).ToString()");
+
+				//Assert((-x - y - z).ToString() == "-x - y - z", "(x - y - z).ToString()");
+
+				//Assert((2 * x - 3 * y - 4 * z).ToString() == "2 * x - 3 * y - 4 * z", "(2 * x - 3 * y - 4 * z).ToString()");
+
+				//Assert((x - (y - z)).ToString() == "x - (y - z)", "(x - (y - z)).ToString()");
+
+				//Assert((x - y + z).ToString() == "x - y + z", "(x - y + z).ToString()");
+
+				//Assert((-x).ToString() == "-x", "(-x).ToString()");
+
+				//Assert((x / y).ToString() == "x / y", "(x / y).ToString()");
+
+				//Assert((x / (y + z)).ToString() == "x / (y + z)", "(x / (y + z)).ToString()");
+
+				//Assert(((x + y) / (x + z)).ToString() == "(x + y) / (x + z)", "((x + y) / (x + z)).ToString()");
+
+				//Assert((-x * y).ToString() == "-x * y", "(-x * y).ToString()");
+
+				//Assert((x * -y).ToString() == "-x * y", "(x * -y).ToString()");
+
+
+				//Assert(sin(x / y).ToString() == "sin(x / y)", "sin(x / y).ToString()");
+
+				//Assert(
+				//    (x == -sqrt(2 * y * (-z * a + y * (b ^ 2) / 2 - c * y * d + c * y * z * sin(x))) / y).ToString() ==
+				//    "x == -sqrt(2 * y * ((b ^ 2) * y / 2 - c * d * y - a * z + c * sin(x) * y * z)) / y",
+				//    "(x == -sqrt(2 * y * (-z * a + y * (b ^ 2) / 2 - c * y * d + c * y * z * sin(x))) / y).ToString()");
+
+				//Assert((x * (y ^ z)).ToString() == "x * (y ^ z)", "(x * (y ^ z)).ToString()");
+
+				//Assert((x + (y ^ z)).ToString() == "x + (y ^ z)", "((x + (y ^ z)).ToString()");
+
+				//Assert(sqrt(x).ToString() == "sqrt(x)", "sqrt(x).ToString()");
+
+				//Assert(sqrt(x).FullForm().ToString() == "x ^ 1/2", "sqrt(x).FullForm()");
+
+				//Assert((x ^ (new Integer(1) / 3)).ToString() == "x ^ 1/3", "(x ^ (new Integer(1) / 3)).ToString()");
+
+    //            Assert(and(and(x, y), and(x, z)).SimplifyLogical().ToString() == "and(x, y, z)", 
+    //                "and(and(x, y), and(x, z)).SimplifyLogical().ToString()");
+
+    //            AssertToStringMatch(x == sqrt(2 * (y * z - cos(a) * y * z)), "x == sqrt(2 * (y * z - cos(a) * y * z))");
                                 
-                AssertToStringMatch(x + y + z, "x + y + z");
-                                
-                AssertToStringMatch(x + y * z, "x + y * z");
-                                                
-                AssertToStringMatch((x + y) * z, "(x + y) * z");
+                //AssertToStringMatch(
+                //     a == (-c * cos(d) - b * c * sin(d) + x * y + b * x * z) / (-y - z),
+                //    "a == (-c * cos(d) - b * c * sin(d) + x * y + b * x * z) / (-y - z)");
                 
-                Assert((sin(x) * cos(y)).ToString() == "cos(y) * sin(x)", "(sin(x) * cos(y)).ToString()");
-                                
-                AssertToStringMatch(and(x, y, z), "and(x, y, z)");
-                                
-                AssertToStringMatch(x ^ y, "x ^ y");
-                                
-                AssertToStringMatch((x * y) ^ (x + z), "(x * y) ^ (x + z)");
+                //AssertToStringMatch(
+                //     x == -(sin(y) / cos(y) + sqrt((sin(y) ^ 2) / (cos(y) ^ 2))) * (z ^ 2) / a,
+                //    "x == -(sin(y) / cos(y) + sqrt((sin(y) ^ 2) / (cos(y) ^ 2))) * (z ^ 2) / a");
 
+				//AssertToStringMatch(x * sqrt(y), "x * sqrt(y)");
 
-                
-                Assert((x - y).ToString() == "x + -1 * y", "(x - y).ToString()");
+				//AssertToStringMatch(x / sqrt(y), "x / sqrt(y)");
 
-                Assert((x - y - z).ToString() == "x + -1 * y + -1 * z", "(x - y - z).ToString()");
+				//AssertToStringMatch(sqrt(y) / x, "sqrt(y) / x");
 
-                Assert((x / y).ToString() == "x * y ^ -1", "(x / y).ToString()");
-                
-                Assert((x - (y - z)).ToString() == "x + -1 * (y + -1 * z)", "(x - (y - z)).ToString()");
+				//AssertToStringMatch((x ^ 2) / (y ^ 3), "(x ^ 2) / (y ^ 3)");
 
+				//AssertToStringMatch(
+				//	 x == y * sqrt(-8 * a / (y * (z ^ 2))) * (z ^ 2) / (4 * a),
+				//	"x == y * sqrt(-8 * a / (y * (z ^ 2))) * (z ^ 2) / (4 * a)");
 
-                MathObject.ToStringForm = ToStringForms.Standard;
-                
-                Assert((x + y).ToString() == "x + y", "(x + y).ToString()");
+				//AssertToStringMatch(-(-1 + x), "-(-1 + x)");
 
-                Assert((x - y).ToString() == "x - y", "(x - y).ToString()");
-                    
-                Assert((x - y - z).ToString() == "x - y - z", "(x - y - z).ToString()");
-                    
-                Assert((-x - y - z).ToString() == "-x - y - z", "(x - y - z).ToString()");
-                    
-                Assert((2 * x - 3 * y - 4 * z).ToString() == "2 * x - 3 * y - 4 * z", "(2 * x - 3 * y - 4 * z).ToString()");
-                    
-                Assert((x - (y - z)).ToString() == "x - (y - z)", "(x - (y - z)).ToString()");
-                
-                Assert((x - y + z).ToString() == "x - y + z", "(x - y + z).ToString()");
-                    
-                Assert((-x).ToString() == "-x", "(-x).ToString()");
-                    
-                Assert((x / y).ToString() == "x / y", "(x / y).ToString()");
-                    
-                Assert((x / (y + z)).ToString() == "x / (y + z)", "(x / (y + z)).ToString()");
-                                        
-                Assert(((x + y) / (x + z)).ToString() == "(x + y) / (x + z)", "((x + y) / (x + z)).ToString()");
-                                        
-                Assert((-x * y).ToString() == "-x * y", "(-x * y).ToString()");
+				#region Equation.ToString
 
-                Assert((x * -y).ToString() == "-x * y", "(x * -y).ToString()");
+				//Assert((x == y).ToString() == "x == y", "x == y");
 
+				//Assert((x != y).ToString() == "x != y", "x != y");
 
-                Assert(sin(x / y).ToString() == "sin(x / y)", "sin(x / y).ToString()");
-                                                
-                Assert(
-                    (x == -sqrt(2 * y * (-z * a + y * (b ^ 2) / 2 - c * y * d + c * y * z * sin(x))) / y).ToString() ==
-                    "x == -sqrt(2 * y * ((b ^ 2) * y / 2 - c * d * y - a * z + c * sin(x) * y * z)) / y",
-                    "(x == -sqrt(2 * y * (-z * a + y * (b ^ 2) / 2 - c * y * d + c * y * z * sin(x))) / y).ToString()");
-                
-                Assert((x * (y ^ z)).ToString() == "x * (y ^ z)", "(x * (y ^ z)).ToString()");
+				#endregion
 
-                Assert((x + (y ^ z)).ToString() == "x + (y ^ z)", "((x + (y ^ z)).ToString()");
-                
-                Assert(sqrt(x).ToString() == "sqrt(x)", "sqrt(x).ToString()");
-                
-                Assert(sqrt(x).FullForm().ToString() == "x ^ 1/2", "sqrt(x).FullForm()");
-                
-                Assert((x ^ (new Integer(1) / 3)).ToString() == "x ^ 1/3", "(x ^ (new Integer(1) / 3)).ToString()");
+				#region Function.ToString
 
-                Assert(and(and(x, y), and(x, z)).SimplifyLogical().ToString() == "and(x, y, z)", 
-                    "and(and(x, y), and(x, z)).SimplifyLogical().ToString()");
+				//Assert(new And().ToString() == "and()", "and()");
 
-                AssertToStringMatch(x == sqrt(2 * (y * z - cos(a) * y * z)), "x == sqrt(2 * (y * z - cos(a) * y * z))");
-                                
-                AssertToStringMatch(
-                     a == (-c * cos(d) - b * c * sin(d) + x * y + b * x * z) / (-y - z),
-                    "a == (-c * cos(d) - b * c * sin(d) + x * y + b * x * z) / (-y - z)");
-                
-                AssertToStringMatch(
-                     x == -(sin(y) / cos(y) + sqrt((sin(y) ^ 2) / (cos(y) ^ 2))) * (z ^ 2) / a,
-                    "x == -(sin(y) / cos(y) + sqrt((sin(y) ^ 2) / (cos(y) ^ 2))) * (z ^ 2) / a");
-                                
-                AssertToStringMatch(x * sqrt(y), "x * sqrt(y)");
-                                
-                AssertToStringMatch(x / sqrt(y), "x / sqrt(y)");
+				#endregion
 
-                AssertToStringMatch(sqrt(y) / x, "sqrt(y) / x");
-                
-                AssertToStringMatch((x ^ 2) / (y ^ 3), "(x ^ 2) / (y ^ 3)");
-                                                               
-                AssertToStringMatch(
-                     x == y * sqrt(-8 * a / (y * (z ^ 2))) * (z ^ 2) / (4 * a),
-                    "x == y * sqrt(-8 * a / (y * (z ^ 2))) * (z ^ 2) / (4 * a)");
-                
-                AssertToStringMatch(-(-1 + x), "-(-1 + x)");
-                
-                #region Equation.ToString
+				#region Equation.Simplify
 
-                Assert((x == y).ToString() == "x == y", "x == y");
-
-                Assert((x != y).ToString() == "x != y", "x != y");
-
-                #endregion
-
-                #region Function.ToString
-
-                Assert(new And().ToString() == "and()", "and()");
-               
-                #endregion
-
-                #region Equation.Simplify
-
-                (new Integer(0) == new Integer(0)).Simplify().AssertEqTo(true);
+				(new Integer(0) == new Integer(0)).Simplify().AssertEqTo(true);
 
                 (new Integer(0) == new Integer(1)).Simplify().AssertEqTo(false);
 

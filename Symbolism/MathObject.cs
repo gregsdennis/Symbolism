@@ -119,6 +119,8 @@ namespace Symbolism
 		}
 
 		// TODO: this should only be part of fractions (or an extension method).
+		//		 this is part of the simplification logic for Product.  It definitely
+		//		 should not be public...
 		public virtual MathObject Numerator() => this;
 
 		public virtual MathObject Denominator() => 1;
