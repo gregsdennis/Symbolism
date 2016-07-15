@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using static Symbolism.Functions;
@@ -230,6 +231,33 @@ namespace Symbolism.Tests
 		public void NestedAnd()
 		{
 			Assert.AreEqual(and(x, y, z), and(and(x, y), and(x, z)).SimplifyLogical());
+		}
+		[TestMethod]
+		[MethodImpl(MethodImplOptions.NoOptimization)]
+		public void EqualityTrue()
+		{
+			Assert.AreEqual(true, (new Integer(0) == new Integer(0)).Simplify());
+		}
+		[TestMethod]
+		public void EqualityFalse()
+		{
+			Assert.AreEqual(false, (new Integer(0) == new Integer(1)).Simplify());
+		}
+		[TestMethod]
+		public void InequalityTrue()
+		{
+			Assert.AreEqual(true, (new Integer(0) != new Integer(1)).Simplify());
+		}
+		[TestMethod]
+		[MethodImpl(MethodImplOptions.NoOptimization)]
+		public void InequalityFalse()
+		{
+			Assert.AreEqual(false, (new Integer(0) != new Integer(0)).Simplify());
+		}
+		[TestMethod]
+		public void AdditionIsNotMultiplication()
+		{
+			Assert.AreNotEqual(x + y, x * y);
 		}
 	}
 }

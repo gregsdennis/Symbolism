@@ -83,13 +83,13 @@ namespace Tests
                 {
                     DoubleFloat.Tolerance = 0.000000001;
 
-                    Assert(new DoubleFloat(1.2).Equals(new DoubleFloat(1.2)), "new DoubleFloat(1.2).Equals(new DoubleFloat(1.2))");
+                    //Assert(new DoubleFloat(1.2).Equals(new DoubleFloat(1.2)), "new DoubleFloat(1.2).Equals(new DoubleFloat(1.2))");
 
-                    Assert(new DoubleFloat(1.20000001).Equals(new DoubleFloat(1.20000002)) == false, "new DoubleFloat(1.20000001).Equals(new DoubleFloat(1.20000002)) == false");
+                    //Assert(new DoubleFloat(1.20000001).Equals(new DoubleFloat(1.20000002)) == false, "new DoubleFloat(1.20000001).Equals(new DoubleFloat(1.20000002)) == false");
 
-                    Assert(new DoubleFloat(1.2000000000001).Equals(new DoubleFloat(1.200000000002)), "new DoubleFloat(1.2000000000001).Equals(new DoubleFloat(1.200000000002))");
+                    //Assert(new DoubleFloat(1.2000000000001).Equals(new DoubleFloat(1.200000000002)), "new DoubleFloat(1.2000000000001).Equals(new DoubleFloat(1.200000000002))");
 
-                    Assert(new DoubleFloat(1.2).Equals(new DoubleFloat(1.23)) == false, "new DoubleFloat(1.2).Equals(new DoubleFloat(1.23)) == false");
+                    //Assert(new DoubleFloat(1.2).Equals(new DoubleFloat(1.23)) == false, "new DoubleFloat(1.2).Equals(new DoubleFloat(1.23)) == false");
 
                     DoubleFloat.Tolerance = null;
                 }
@@ -262,8 +262,8 @@ namespace Tests
 				//    .AssertEqTo(b / c);
 
 
-				Action<MathObject, string> AssertToStringMatch =
-					(MathObject obj, string str) => Assert(obj.ToString() == str, $"({str}).ToString()");
+				//Action<MathObject, string> AssertToStringMatch =
+				//	(MathObject obj, string str) => Assert(obj.ToString() == str, $"({str}).ToString()");
 
 				//MathObject.ToStringForm = ToStringForms.Full;
 
@@ -381,87 +381,87 @@ namespace Tests
 
 				#region Equation.Simplify
 
-				(new Integer(0) == new Integer(0)).Simplify().AssertEqTo(true);
+				//(new Integer(0) == new Integer(0)).Simplify().AssertEqTo(true);
 
-                (new Integer(0) == new Integer(1)).Simplify().AssertEqTo(false);
+    //            (new Integer(0) == new Integer(1)).Simplify().AssertEqTo(false);
 
-                (new Integer(0) != new Integer(1)).Simplify().AssertEqTo(true);
+    //            (new Integer(0) != new Integer(1)).Simplify().AssertEqTo(true);
 
-                (new Integer(0) != new Integer(0)).Simplify().AssertEqTo(false);
+    //            (new Integer(0) != new Integer(0)).Simplify().AssertEqTo(false);
 
                 #endregion
 
                 #region And
 
-                and().AssertEqTo(true);
+                //and().AssertEqTo(true);
 
-                and(10).AssertEqTo(10);
+                //and(10).AssertEqTo(10);
 
-                and(true).AssertEqTo(true);
+                //and(true).AssertEqTo(true);
 
-                and(false).AssertEqTo(false);
+                //and(false).AssertEqTo(false);
 
-                and(10, 20, 30).AssertEqTo(and(10, 20, 30));
+                //and(10, 20, 30).AssertEqTo(and(10, 20, 30));
 
-                and(10, false, 20).AssertEqTo(false);
+                //and(10, false, 20).AssertEqTo(false);
 
-                and(10, true, 20).AssertEqTo(and(10, 20));
+                //and(10, true, 20).AssertEqTo(and(10, 20));
 
-                and(10, and(20, 30), 40)
+                //and(10, and(20, 30), 40)
                     
-                    .AssertEqTo(and(10, 20, 30, 40));
+                //    .AssertEqTo(and(10, 20, 30, 40));
 
                 #endregion
 
                 #region Or
 
-                or(10).AssertEqTo(10);
+                //or(10).AssertEqTo(10);
 
-                or(true).AssertEqTo(true);
+                //or(true).AssertEqTo(true);
 
-                or(false).AssertEqTo(false);
+                //or(false).AssertEqTo(false);
 
-                or(10, 20, false).AssertEqTo(or(10, 20));
+                //or(10, 20, false).AssertEqTo(or(10, 20));
 
-                or(false, false).AssertEqTo(false);
+                //or(false, false).AssertEqTo(false);
 
-                or(10, true, 20, false).AssertEqTo(true);
+                //or(10, true, 20, false).AssertEqTo(true);
 
-                or(10, false, 20).AssertEqTo(or(10, 20));
+                //or(10, false, 20).AssertEqTo(or(10, 20));
 
-                or(10, or(20, 30), 40)
+                //or(10, or(20, 30), 40)
                     
-                    .AssertEqTo(or(10, 20, 30, 40));
+                //    .AssertEqTo(or(10, 20, 30, 40));
 
                 #endregion
 
                 #region Function.Map
 
-                new And(1, 2, 3, 4, 5, 6).Map(elt => elt * 2)
-                    .AssertEqTo(and(2, 4, 6, 8, 10, 12));
+                //new And(1, 2, 3, 4, 5, 6).Map(elt => elt * 2)
+                //    .AssertEqTo(and(2, 4, 6, 8, 10, 12));
 
-                new And(1, 2, 3, 4, 5, 6).Map(elt => (elt is Integer) && (elt as Integer).Value % 2 == 0 ? elt : false)
-                    .AssertEqTo(false);
+                //new And(1, 2, 3, 4, 5, 6).Map(elt => (elt is Integer) && (elt as Integer).Value % 2 == 0 ? elt : false)
+                //    .AssertEqTo(false);
 
-                new Or(1, 2, 3).Map(elt => elt * 2)
-                    .AssertEqTo(or(2, 4, 6));
+                //new Or(1, 2, 3).Map(elt => elt * 2)
+                //    .AssertEqTo(or(2, 4, 6));
 
-                new Or(1, 2, 3, 4, 5, 6).Map(elt => (elt is Integer) && (elt as Integer).Value % 2 == 0 ? elt : false)
-                    .AssertEqTo(or(2, 4, 6));
+                //new Or(1, 2, 3, 4, 5, 6).Map(elt => (elt is Integer) && (elt as Integer).Value % 2 == 0 ? elt : false)
+                //    .AssertEqTo(or(2, 4, 6));
 
                 #endregion Function.Map
 
                 #region Sum
 
-                Assert((x + y).Equals(x * y) == false, "(x + y).Equals(x * y)");
+                //Assert((x + y).Equals(x * y) == false, "(x + y).Equals(x * y)");
 
                 #endregion
                 
-                {
-                    (x < y).Substitute(x, 10).Substitute(y, 20).AssertEqTo(true);
+                //{
+                //    (x < y).Substitute(x, 10).Substitute(y, 20).AssertEqTo(true);
 
-                    (x > y).Substitute(x, 10).Substitute(y, 20).AssertEqTo(false);
-                }
+                //    (x > y).Substitute(x, 10).Substitute(y, 20).AssertEqTo(false);
+                //}
 
                 var Pi = new Symbol("Pi");
 
@@ -472,88 +472,88 @@ namespace Tests
 
 
                 {
-                    sin(0).AssertEqTo(0);
+                    //sin(0).AssertEqTo(0);
 
-                    sin(Pi).AssertEqTo(0);
+                    //sin(Pi).AssertEqTo(0);
 
-                    sin(-10).AssertEqTo(-sin(10));
+                    //sin(-10).AssertEqTo(-sin(10));
 
-                    sin(-x).AssertEqTo(-sin(x));
+                    //sin(-x).AssertEqTo(-sin(x));
 
-                    sin(-5 * x).AssertEqTo(-sin(5 * x));
+                    //sin(-5 * x).AssertEqTo(-sin(5 * x));
 
                     // sin(k/n pi) for n = 1 2 3 4 6
 
-                    sin(-2 * Pi).AssertEqTo(0);
-                    sin(-1 * Pi).AssertEqTo(0);
-                    sin( 2 * Pi).AssertEqTo(0);
-                    sin( 3 * Pi).AssertEqTo(0);
+                    //sin(-2 * Pi).AssertEqTo(0);
+                    //sin(-1 * Pi).AssertEqTo(0);
+                    //sin( 2 * Pi).AssertEqTo(0);
+                    //sin( 3 * Pi).AssertEqTo(0);
 
-                    sin(-7 * Pi / 2).AssertEqTo(1);
-                    sin(-5 * Pi / 2).AssertEqTo(-1);
-                    sin(-3 * Pi / 2).AssertEqTo(1);
-                    sin(-1 * Pi / 2).AssertEqTo(-1);
-                    sin( 1 * Pi / 2).AssertEqTo(1);
-                    sin( 3 * Pi / 2).AssertEqTo(-1);
-                    sin( 5 * Pi / 2).AssertEqTo(1);
-                    sin( 7 * Pi / 2).AssertEqTo(-1);
+                    //sin(-7 * Pi / 2).AssertEqTo(1);
+                    //sin(-5 * Pi / 2).AssertEqTo(-1);
+                    //sin(-3 * Pi / 2).AssertEqTo(1);
+                    //sin(-1 * Pi / 2).AssertEqTo(-1);
+                    //sin( 1 * Pi / 2).AssertEqTo(1);
+                    //sin( 3 * Pi / 2).AssertEqTo(-1);
+                    //sin( 5 * Pi / 2).AssertEqTo(1);
+                    //sin( 7 * Pi / 2).AssertEqTo(-1);
                     
-                    sin(-4 * Pi / 3).AssertEqTo( sqrt(3)/2);
-                    sin(-2 * Pi / 3).AssertEqTo(-sqrt(3)/2);
-                    sin(-1 * Pi / 3).AssertEqTo(-sqrt(3)/2);
-                    sin( 1 * Pi / 3).AssertEqTo( sqrt(3)/2);
-                    sin( 2 * Pi / 3).AssertEqTo( sqrt(3)/2);
-                    sin( 4 * Pi / 3).AssertEqTo(-sqrt(3)/2);
-                    sin( 5 * Pi / 3).AssertEqTo(-sqrt(3)/2);
-                    sin( 7 * Pi / 3).AssertEqTo( sqrt(3)/2);
+                    //sin(-4 * Pi / 3).AssertEqTo( sqrt(3)/2);
+                    //sin(-2 * Pi / 3).AssertEqTo(-sqrt(3)/2);
+                    //sin(-1 * Pi / 3).AssertEqTo(-sqrt(3)/2);
+                    //sin( 1 * Pi / 3).AssertEqTo( sqrt(3)/2);
+                    //sin( 2 * Pi / 3).AssertEqTo( sqrt(3)/2);
+                    //sin( 4 * Pi / 3).AssertEqTo(-sqrt(3)/2);
+                    //sin( 5 * Pi / 3).AssertEqTo(-sqrt(3)/2);
+                    //sin( 7 * Pi / 3).AssertEqTo( sqrt(3)/2);
 
-                    sin(-3 * Pi / 4).AssertEqTo(-1/sqrt(2));
-                    sin(-1 * Pi / 4).AssertEqTo(-1/sqrt(2));
-                    sin( 1 * Pi / 4).AssertEqTo( 1/sqrt(2));
-                    sin( 3 * Pi / 4).AssertEqTo( 1/sqrt(2));
-                    sin( 5 * Pi / 4).AssertEqTo(-1/sqrt(2));
-                    sin( 7 * Pi / 4).AssertEqTo(-1/sqrt(2));
-                    sin( 9 * Pi / 4).AssertEqTo( 1/sqrt(2));
-                    sin(11 * Pi / 4).AssertEqTo( 1/sqrt(2));
+                    //sin(-3 * Pi / 4).AssertEqTo(-1/sqrt(2));
+                    //sin(-1 * Pi / 4).AssertEqTo(-1/sqrt(2));
+                    //sin( 1 * Pi / 4).AssertEqTo( 1/sqrt(2));
+                    //sin( 3 * Pi / 4).AssertEqTo( 1/sqrt(2));
+                    //sin( 5 * Pi / 4).AssertEqTo(-1/sqrt(2));
+                    //sin( 7 * Pi / 4).AssertEqTo(-1/sqrt(2));
+                    //sin( 9 * Pi / 4).AssertEqTo( 1/sqrt(2));
+                    //sin(11 * Pi / 4).AssertEqTo( 1/sqrt(2));
 
                     // var half = new Fraction(1,2);
 
-                    sin(-5 * Pi / 6).AssertEqTo(-half);
-                    sin(-1 * Pi / 6).AssertEqTo(-half);
-                    sin( 1 * Pi / 6).AssertEqTo( half);
-                    sin( 5 * Pi / 6).AssertEqTo( half);
-                    sin( 7 * Pi / 6).AssertEqTo(-half);
-                    sin(11 * Pi / 6).AssertEqTo(-half);
-                    sin(13 * Pi / 6).AssertEqTo( half);
-                    sin(17 * Pi / 6).AssertEqTo( half);
+                    //sin(-5 * Pi / 6).AssertEqTo(-half);
+                    //sin(-1 * Pi / 6).AssertEqTo(-half);
+                    //sin( 1 * Pi / 6).AssertEqTo( half);
+                    //sin( 5 * Pi / 6).AssertEqTo( half);
+                    //sin( 7 * Pi / 6).AssertEqTo(-half);
+                    //sin(11 * Pi / 6).AssertEqTo(-half);
+                    //sin(13 * Pi / 6).AssertEqTo( half);
+                    //sin(17 * Pi / 6).AssertEqTo( half);
 
                     // sin(a/b pi) where a/b > 1/2 (i.e. not in first quadrant)
 
-                    sin(15 * Pi / 7).AssertEqTo( sin(1 * Pi / 7));
-                    sin( 8 * Pi / 7).AssertEqTo(-sin(1 * Pi / 7));
-                    sin( 4 * Pi / 7).AssertEqTo( sin(3 * Pi / 7));
+                    //sin(15 * Pi / 7).AssertEqTo( sin(1 * Pi / 7));
+                    //sin( 8 * Pi / 7).AssertEqTo(-sin(1 * Pi / 7));
+                    //sin( 4 * Pi / 7).AssertEqTo( sin(3 * Pi / 7));
 
                     // sin( a + b + ... + n * pi ) where abs(n) >= 2
 
-                    sin(x - 3 * Pi).AssertEqTo(sin(x + Pi));
-                    sin(x - 2 * Pi).AssertEqTo(sin(x));
-                    sin(x + 2 * Pi).AssertEqTo(sin(x));
-                    sin(x + 3 * Pi).AssertEqTo(sin(x + Pi));
-                    sin(x + 7 * Pi / 2).AssertEqTo(sin(x + 3 * Pi / 2));
+                    //sin(x - 3 * Pi).AssertEqTo(sin(x + Pi));
+                    //sin(x - 2 * Pi).AssertEqTo(sin(x));
+                    //sin(x + 2 * Pi).AssertEqTo(sin(x));
+                    //sin(x + 3 * Pi).AssertEqTo(sin(x + Pi));
+                    //sin(x + 7 * Pi / 2).AssertEqTo(sin(x + 3 * Pi / 2));
 
                     // sin( a + b + ... + n/2 * pi )
 
-                    sin(x - 3 * Pi / 2).AssertEqTo( cos(x));
-                    sin(x - 1 * Pi / 2).AssertEqTo(-cos(x));
-                    sin(x + 1 * Pi / 2).AssertEqTo( cos(x));
-                    sin(x + 3 * Pi / 2).AssertEqTo(-cos(x));
+                    //sin(x - 3 * Pi / 2).AssertEqTo( cos(x));
+                    //sin(x - 1 * Pi / 2).AssertEqTo(-cos(x));
+                    //sin(x + 1 * Pi / 2).AssertEqTo( cos(x));
+                    //sin(x + 3 * Pi / 2).AssertEqTo(-cos(x));
                 }
 
 
                 {
-                    sin(Pi + x).AssertEqTo(-sin(x));
+                    //sin(Pi + x).AssertEqTo(-sin(x));
                     
-                    sin(Pi + x + y).AssertEqTo(-sin(x + y));
+                    //sin(Pi + x + y).AssertEqTo(-sin(x + y));
                 }
 
                 {
@@ -572,34 +572,34 @@ namespace Tests
                 {
                     // var Pi = new Symbol("Pi");
 
-                    cos(0).AssertEqTo(1);
+                    //cos(0).AssertEqTo(1);
 
-                    cos(Pi).AssertEqTo(-1);
+                    //cos(Pi).AssertEqTo(-1);
 
-                    cos(-10).AssertEqTo(cos(10));
+                    //cos(-10).AssertEqTo(cos(10));
 
-                    cos(-10 * x).AssertEqTo(cos(10 * x));
+                    //cos(-10 * x).AssertEqTo(cos(10 * x));
 
-                    cos(3 * Pi).AssertEqTo(-1);
+                    //cos(3 * Pi).AssertEqTo(-1);
 
-                    cos(2 * Pi * 3 / 4).AssertEqTo(0);
+                    //cos(2 * Pi * 3 / 4).AssertEqTo(0);
 
                     // cos( a + b + ... + n * pi ) where abs(n) >= 2
 
-                    cos(x - 3 * Pi).AssertEqTo(cos(x + Pi));
-                    cos(x + 3 * Pi).AssertEqTo(cos(x + Pi));
+                    //cos(x - 3 * Pi).AssertEqTo(cos(x + Pi));
+                    //cos(x + 3 * Pi).AssertEqTo(cos(x + Pi));
 
-                    cos(x - 2 * Pi).AssertEqTo(cos(x));
-                    cos(x + 2 * Pi).AssertEqTo(cos(x));
+                    //cos(x - 2 * Pi).AssertEqTo(cos(x));
+                    //cos(x + 2 * Pi).AssertEqTo(cos(x));
 
-                    cos(x + Pi * 7 / 2).AssertEqTo(cos(x + Pi * 3 / 2));
+                    //cos(x + Pi * 7 / 2).AssertEqTo(cos(x + Pi * 3 / 2));
 
                     // cos( a + b + ... + n/2 * pi )
 
-                    cos(x - Pi * 3 / 2).AssertEqTo(-sin(x));
-                    cos(x - Pi * 1 / 2).AssertEqTo(sin(x));
-                    cos(x + Pi * 1 / 2).AssertEqTo(-sin(x));
-                    cos(x + Pi * 3 / 2).AssertEqTo(sin(x));
+                    //cos(x - Pi * 3 / 2).AssertEqTo(-sin(x));
+                    //cos(x - Pi * 1 / 2).AssertEqTo(sin(x));
+                    //cos(x + Pi * 1 / 2).AssertEqTo(-sin(x));
+                    //cos(x + Pi * 3 / 2).AssertEqTo(sin(x));
                 }
 
 
@@ -607,35 +607,35 @@ namespace Tests
                 
                 #region Has
 
-                Assert(a.Has(elt => elt == a), "a.Has(elt => elt == a)");
+                //Assert(a.Has(elt => elt == a), "a.Has(elt => elt == a)");
 
-                Assert(a.Has(elt => elt == b) == false, "a.Has(elt => elt == b) == false");
+                //Assert(a.Has(elt => elt == b) == false, "a.Has(elt => elt == b) == false");
 
-                Assert((a == b).Has(elt => elt == a), "Has - 3");
+                //Assert((a == b).Has(elt => elt == a), "Has - 3");
 
-                Assert((a == b).Has(elt => elt == c) == false, "Has - 4");
+                //Assert((a == b).Has(elt => elt == c) == false, "Has - 4");
 
-                Assert(((a + b) ^ c).Has(elt => elt == a + b), "Has - 5");
+                //Assert(((a + b) ^ c).Has(elt => elt == a + b), "Has - 5");
 
-                Assert(((a + b) ^ c).Has(elt => (elt is Power) && (elt as Power).Exponent == c), "Has - 6");
+                //Assert(((a + b) ^ c).Has(elt => (elt is Power) && (elt as Power).Exponent == c), "Has - 6");
 
-                Assert((x * (a + b + c)).Has(elt => (elt is Sum) && (elt as Sum).Has(b)), "Has - 7");
+                //Assert((x * (a + b + c)).Has(elt => (elt is Sum) && (elt as Sum).Has(b)), "Has - 7");
 
-                Assert((x * (a + b + c)).Has(elt => (elt is Sum) && (elt as Sum).Elements.Any(obj => obj == b)), "Has - 8");
+                //Assert((x * (a + b + c)).Has(elt => (elt is Sum) && (elt as Sum).Elements.Any(obj => obj == b)), "Has - 8");
 
-                Assert((x * (a + b + c)).Has(elt => (elt is Product) && (elt as Product).Elements.Any(obj => obj == b)) == false, "Has - 9");
+                //Assert((x * (a + b + c)).Has(elt => (elt is Product) && (elt as Product).Elements.Any(obj => obj == b)) == false, "Has - 9");
 
                 #endregion
 
                 #region FreeOf
 
-                Assert((a + b).FreeOf(b) == false, "(a + b).FreeOf(b)");
-                Assert((a + b).FreeOf(c) == true, "(a + b).FreeOf(c)");
-                Assert(((a + b) * c).FreeOf(a + b) == false, "((a + b) * c).FreeOf(a + b)");
-                Assert((sin(x) + 2 * x).FreeOf(sin(x)) == false, "(sin(x) + 2 * x).FreeOf(sin(x))");
-                Assert(((a + b + c) * d).FreeOf(a + b) == true, "((a + b + c) * d).FreeOf(a + b)");
-                Assert(((y + 2 * x - y) / x).FreeOf(x) == true, "((y + 2 * x - y) / x).FreeOf(x)");
-                Assert(((x * y) ^ 2).FreeOf(x * y) == true, "((x * y) ^ 2).FreeOf(x * y)");
+                //Assert((a + b).FreeOf(b) == false, "(a + b).FreeOf(b)");
+                //Assert((a + b).FreeOf(c) == true, "(a + b).FreeOf(c)");
+                //Assert(((a + b) * c).FreeOf(a + b) == false, "((a + b) * c).FreeOf(a + b)");
+                //Assert((sin(x) + 2 * x).FreeOf(sin(x)) == false, "(sin(x) + 2 * x).FreeOf(sin(x))");
+                //Assert(((a + b + c) * d).FreeOf(a + b) == true, "((a + b + c) * d).FreeOf(a + b)");
+                //Assert(((y + 2 * x - y) / x).FreeOf(x) == true, "((y + 2 * x - y) / x).FreeOf(x)");
+                //Assert(((x * y) ^ 2).FreeOf(x * y) == true, "((x * y) ^ 2).FreeOf(x * y)");
 
                 #endregion
 

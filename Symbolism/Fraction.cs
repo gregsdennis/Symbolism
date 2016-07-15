@@ -15,14 +15,14 @@ namespace Symbolism
 
 		public override DoubleFloat ToDouble() => new DoubleFloat((double)numerator.Value / denominator.Value);
 		//////////////////////////////////////////////////////////////////////
-        
+		
 		public override bool Equals(object obj) =>
 			numerator == (obj as Fraction)?.numerator
 			&&
 			denominator == (obj as Fraction)?.denominator;            
-        
+		
 		public override int GetHashCode() => new { numerator, denominator }.GetHashCode();
-        
+		
 		public override MathObject Numerator() => numerator;
 
 		public override MathObject Denominator() => denominator;

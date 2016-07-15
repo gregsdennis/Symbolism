@@ -14,6 +14,10 @@
 
 namespace Symbolism
 {
+	// ReSharper disable InconsistentNaming
+	// These use non-standard naming conventions,
+	// but it actually makes the code look nicer,
+	// so we're using it.
 	public static class Functions
 	{
 		public static MathObject sqrt(MathObject obj) => obj ^ new Fraction(1, 2);

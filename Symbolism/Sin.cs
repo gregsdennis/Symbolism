@@ -26,7 +26,7 @@ namespace Symbolism
 			var prod0 = u as Product;
 			if (prod0 != null)
 			{
-				if (prod0.Elements[0] is Number && prod0.Elements[0] < 0) return -new Sin(-u);
+				if (prod0.Elements[0] is Number && prod0.Elements[0] < 0) return -new Sin(-u).Simplify();
 
 				if ((prod0.Elements[0] is Integer || prod0.Elements[0] is Fraction) &&
 				    prod0.Elements[0] > half &&
@@ -34,13 +34,13 @@ namespace Symbolism
 				{
 					var n = prod0.Elements[0];
 
-					if (n > 2) return new Sin(Cos.Mod(n, 2)*pi);
+					if (n > 2) return new Sin(Cos.Mod(n, 2)*pi).Simplify();
 
-					if (n > 1) return -new Sin(n*pi - pi);
+					if (n > 1) return -new Sin(n*pi - pi).Simplify();
 
-					if (n > half) return new Sin((1 - n)*pi);
+					if (n > half) return new Sin((1 - n)*pi).Simplify();
 
-					return new Sin(n*pi);
+					return new Sin(n*pi).Simplify();
 				}
 
 				// sin(k/n pi)
@@ -93,7 +93,7 @@ namespace Symbolism
 			var sum = u as Sum;
 			if (sum != null)
 			{
-				if (sum.Elements.Any(elt => elt == pi)) return -new Sin(u - pi);
+				if (sum.Elements.Any(elt => elt == pi)) return -new Sin(u - pi).Simplify();
 
 				// sin(x + n pi)
 
@@ -115,7 +115,7 @@ namespace Symbolism
 					{
 						var n = piProd.Elements[0];
 
-						return new Sin(u - pi_elt + Cos.Mod(n, 2)*pi);
+						return new Sin(u - pi_elt + Cos.Mod(n, 2)*pi).Simplify();
 					}
 				}
 
@@ -143,8 +143,8 @@ namespace Symbolism
 						var n = divPi.Elements[0].Numerator();
 						var mod = Cos.Mod(n, 4);
 
-						if (mod == 1) return new Cos(other_elts);
-						if (mod == 3) return -new Cos(other_elts);
+						if (mod == 1) return new Cos(other_elts).Simplify();
+						if (mod == 3) return -new Cos(other_elts).Simplify();
 					}
 				}
 			}

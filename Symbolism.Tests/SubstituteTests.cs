@@ -133,5 +133,15 @@ namespace Symbolism.Tests
 		{
 			Assert.AreEqual(sin(2 * y), sin(2 * x).Substitute(x, y));
 		}
+		[TestMethod]
+		public void Replace_Symbol_Inequality1()
+		{
+			Assert.AreEqual(true, (x < y).Substitute(x, 10).Substitute(y, 20));
+		}
+		[TestMethod]
+		public void Replace_Symbol_Inequality2()
+		{
+			Assert.AreEqual(false, (x > y).Substitute(x, 10).Substitute(y, 20));
+		}
 	}
 }

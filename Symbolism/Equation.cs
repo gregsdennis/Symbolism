@@ -4,7 +4,13 @@ namespace Symbolism
 {
 	public class Equation : MathObject, IEquatable<Equation>
 	{
-		public enum Operators { Equal, NotEqual, LessThan, GreaterThan }
+		public enum Operators
+		{
+			Equal,
+			NotEqual,
+			LessThan,
+			GreaterThan
+		}
 
 		public readonly MathObject a;
 		public readonly MathObject b;

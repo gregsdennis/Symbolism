@@ -1,5 +1,9 @@
 ﻿namespace Symbolism
 {
+	// ReSharper disable InconsistentNaming
+	// These use non-standard naming conventions,
+	// but it actually makes the code look nicer,
+	// so we're using it.
 	public static class Constants
 	{
 		public static readonly Symbol pi = new Symbol("pi");

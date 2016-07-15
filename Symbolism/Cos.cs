@@ -43,7 +43,7 @@ namespace Symbolism
 				return new DoubleFloat(Math.Cos(d0.Value));
 
 			var n0 = u as Number;
-			if (n0 != null && u < 0) return new Cos(-u);
+			if (n0 != null && u < 0) return new Cos(-u).Simplify();
 
 			var prod0 = u as Product;
 			if (prod0 != null)
@@ -61,13 +61,13 @@ namespace Symbolism
 				{
 					var n = prod0.Elements[0];
 
-					if (n > 2) return new Cos(Mod(n, 2)*pi);
+					if (n > 2) return new Cos(Mod(n, 2)*pi).Simplify();
 
-					if (n > 1) return -new Cos(n*pi - pi);
+					if (n > 1) return -new Cos(n*pi - pi).Simplify();
 
-					if (n > half) return -new Cos(pi - n*pi);
+					if (n > half) return -new Cos(pi - n*pi).Simplify();
 
-					return new Cos(n*pi);
+					return new Cos(n*pi).Simplify();
 				}
 
 				// cos(k/n Pi)
@@ -125,7 +125,7 @@ namespace Symbolism
 			if (sum != null)
 			{
 				if (sum.Elements.Any(elt => elt == pi))
-					return -new Cos(u - pi);
+					return -new Cos(u - pi).Simplify();
 
 				// cos(n Pi + x + y)
 
@@ -148,7 +148,7 @@ namespace Symbolism
 					{
 						var n = piProd.Elements[0];
 
-						return new Cos(u - pi_elt + Mod(n, 2)*pi);
+						return new Cos(u - pi_elt + Mod(n, 2)*pi).Simplify();
 					}
 				}
 

@@ -45,11 +45,20 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="CosTests.cs" />
+    <Compile Include="FreeOfTests.cs" />
+    <Compile Include="FunctionTests.cs" />
+    <Compile Include="HasTests.cs" />
+    <Compile Include="OrTests.cs" />
+    <Compile Include="AndTests.cs" />
+    <Compile Include="DoubleFloatTests.cs" />
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Helpers\KinematicObjectABC.cs" />
     <Compile Include="Helpers\Obj2.cs" />
@@ -59,6 +68,7 @@
     <Compile Include="Helpers\Symbols.cs" />
     <Compile Include="CoefficientTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SinTests.cs" />
     <Compile Include="StringTests.cs" />
     <Compile Include="SubstituteTests.cs" />
   </ItemGroup>
