@@ -4,7 +4,7 @@ namespace Symbolism
 {
 	public static partial class Extensions
 	{
-		public static Tuple<MathObject, int> CoefficientMonomialGpe(this MathObject u, MathObject x)
+		private static Tuple<MathObject, int> CoefficientMonomialGpe(this MathObject u, MathObject x)
 		{
 			if (u == x) return Tuple.Create((MathObject) 1, 1);
 
@@ -43,6 +43,7 @@ namespace Symbolism
 			return u.FreeOf(x) ? Tuple.Create(u, 0) : null;
 		}
 
+		// NOTE: what does GPE stand for?
 		public static MathObject CoefficientGpe(this MathObject u, MathObject x, int j)
 		{
 			var sum = u as Sum;

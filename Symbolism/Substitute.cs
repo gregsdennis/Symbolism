@@ -46,25 +46,15 @@ namespace Symbolism
 			return obj;
 		}
 
-		public static MathObject SubstituteEq(this MathObject obj, Equation eq)
+		public static MathObject Substitute(this MathObject obj, Equation eq)
 		{
 			return obj.Substitute(eq.a, eq.b);
 		}
 
-		public static MathObject SubstituteEqLs(this MathObject obj, List<Equation> eqs)
+		// TODO: create params and IEnumerable<> versions of this.
+		public static MathObject Substitute(this MathObject obj, List<Equation> eqs)
 		{
-			return eqs.Aggregate(obj, (a, eq) => a.SubstituteEq(eq));
+			return eqs.Aggregate(obj, (a, eq) => a.Substitute(eq));
 		}
-
-		public static MathObject Substitute(this MathObject obj, MathObject a, int b)
-		{
-			return obj.Substitute(a, new Integer(b));
-		}
-
-		public static MathObject Substitute(this MathObject obj, MathObject a, double b)
-		{
-			return obj.Substitute(a, new DoubleFloat(b));
-		}
-
 	}
 }

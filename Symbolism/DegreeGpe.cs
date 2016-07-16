@@ -5,7 +5,7 @@ namespace Symbolism
 {
 	public static partial class Extensions
 	{
-		public static int DegreeMonomialGpe(this MathObject u, List<MathObject> v)
+		private static int DegreeMonomialGpe(this MathObject u, List<MathObject> v)
 		{
 			if (v.All(u.FreeOf)) return 0;
 
@@ -26,6 +26,7 @@ namespace Symbolism
 			return 0;
 		}
 
+		// NOTE: what does GPE stand for?
 		public static int DegreeGpe(this MathObject u, List<MathObject> v)
 		{
 			var sum = u as Sum;

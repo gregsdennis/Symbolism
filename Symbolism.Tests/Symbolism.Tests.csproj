@@ -52,10 +52,17 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="AlgebraicExpandTests.cs" />
+    <Compile Include="CoefficientGpeTests.cs" />
     <Compile Include="CosTests.cs" />
+    <Compile Include="DegreeGpeTests.cs" />
+    <Compile Include="EliminateVariableTests.cs" />
     <Compile Include="FreeOfTests.cs" />
     <Compile Include="FunctionTests.cs" />
     <Compile Include="HasTests.cs" />
+    <Compile Include="Helpers\Constants.cs" />
+    <Compile Include="IsolateVariableTests.cs" />
+    <Compile Include="LogicalExpandTests.cs" />
     <Compile Include="OrTests.cs" />
     <Compile Include="AndTests.cs" />
     <Compile Include="DoubleFloatTests.cs" />
@@ -64,6 +71,7 @@
     <Compile Include="Helpers\Obj2.cs" />
     <Compile Include="Helpers\Obj3.cs" />
     <Compile Include="Helpers\Obj5.cs" />
+    <Compile Include="PseExamples.cs" />
     <Compile Include="SimplifyTests.cs" />
     <Compile Include="Helpers\Symbols.cs" />
     <Compile Include="CoefficientTests.cs" />
@@ -71,6 +79,7 @@
     <Compile Include="SinTests.cs" />
     <Compile Include="StringTests.cs" />
     <Compile Include="SubstituteTests.cs" />
+    <Compile Include="CheckVariableTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Symbolism\Symbolism.csproj">

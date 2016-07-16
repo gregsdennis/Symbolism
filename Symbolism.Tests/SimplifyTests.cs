@@ -259,5 +259,25 @@ namespace Symbolism.Tests
 		{
 			Assert.AreNotEqual(x + y, x * y);
 		}
+		[TestMethod]
+		public void Equation()
+		{
+			Assert.AreNotEqual(x == 0, 2 * x == 0);
+		}
+		[TestMethod]
+		public void Inequality()
+		{
+			Assert.AreNotEqual(x != 0, 2 * x != 0);
+		}
+		[TestMethod]
+		public void Equation2()
+		{
+			Assert.AreNotEqual(x == 0, (x ^ 2) == 0);
+		}
+		[TestMethod]
+		public void LogicalRemoveDuplicates()
+		{
+			Assert.AreNotEqual(and(a, b, c), and(a, b, c, a));
+		}
 	}
 }

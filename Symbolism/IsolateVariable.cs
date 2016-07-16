@@ -93,7 +93,7 @@ namespace Symbolism
 
 			// a x^2 + b x + c == 0
 
-			if (eq.a.AlgebraicExpand().DegreeGpe(new List<MathObject>() {sym}) == 2)
+			if (eq.a.AlgebraicExpand().DegreeGpe(new List<MathObject> {sym}) == 2)
 			{
 				var a = eq.a.AlgebraicExpand().CoefficientGpe(sym, 2);
 				var b = eq.a.AlgebraicExpand().CoefficientGpe(sym, 1);
@@ -101,27 +101,10 @@ namespace Symbolism
 
 				if (a == null || b == null || c == null) return eq;
 
-				return new Or(
-
-					new And(
-						sym == (-b + (((b ^ 2) - 4*a*c) ^ (new Fraction(1,2))))/(2*a),
-						(a != 0).Simplify()
-						).Simplify(),
-
-					new And(
-						sym == (-b - (((b ^ 2) - 4*a*c) ^ (new Fraction(1,2))))/(2*a),
-						(a != 0).Simplify()
-						).Simplify(),
-
-					new And(sym == -c/b, a == 0, (b != 0).Simplify()).Simplify(),
-
-					new And(
-						(a == 0).Simplify(),
-						(b == 0).Simplify(),
-						(c == 0).Simplify()
-						).Simplify()
-
-					).Simplify();
+				return new Or(new And(sym == (-b + (((b ^ 2) - 4*a*c) ^ new Fraction(1, 2)))/(2*a), (a != 0).Simplify()).Simplify(),
+				              new And(sym == (-b - (((b ^ 2) - 4*a*c) ^ new Fraction(1, 2)))/(2*a), (a != 0).Simplify()).Simplify(),
+				              new And(sym == -c/b, a == 0, (b != 0).Simplify()).Simplify(),
+				              new And((a == 0).Simplify(), (b == 0).Simplify(), (c == 0).Simplify()).Simplify()).Simplify();
 			}
 
 

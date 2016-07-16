@@ -20,6 +20,7 @@ namespace Symbolism
 	// so we're using it.
 	public static class Functions
 	{
+		// TODO: sqrt should be a proper function that simplifies to the expression below.
 		public static MathObject sqrt(MathObject obj) => obj ^ new Fraction(1, 2);
 
 		public static MathObject and(params MathObject[] ls) => new And(ls).Simplify();
