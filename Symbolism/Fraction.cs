@@ -1,5 +1,8 @@
+using System.Diagnostics;
+
 namespace Symbolism
 {
+	[DebuggerDisplay("{StandardForm()}")]
 	public class Fraction : Number
 	{
 		// TODO: encapsulate these (conflict with MathObject.Numerator() and MathObject.Denominator())

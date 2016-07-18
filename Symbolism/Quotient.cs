@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Symbolism
 {
+	[DebuggerDisplay("{StandardForm()}")]
 	class Quotient : MathObject
 	{
 		public List<MathObject> Elements { get; }

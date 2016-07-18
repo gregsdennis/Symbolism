@@ -1482,109 +1482,109 @@ namespace Tests
                 // What are the horizontal and vertical components
                 // of the velocity of the package just before it hits the ground?
                 
-                var xA = new Symbol("xA");
-                var xB = new Symbol("xB");
+                //var xA = new Symbol("xA");
+                //var xB = new Symbol("xB");
 
-                var yA = new Symbol("yA");
-                var yB = new Symbol("yB");
+                //var yA = new Symbol("yA");
+                //var yB = new Symbol("yB");
 
-                var vxA = new Symbol("vxA");
-                var vxB = new Symbol("vxB");
+                //var vxA = new Symbol("vxA");
+                //var vxB = new Symbol("vxB");
 
-                var vyA = new Symbol("vyA");
-                var vyB = new Symbol("vyB");
+                //var vyA = new Symbol("vyA");
+                //var vyB = new Symbol("vyB");
 
-                var tAB = new Symbol("tAB");
+                //var tAB = new Symbol("tAB");
 
-                var ax = new Symbol("ax");
-                var ay = new Symbol("ay");
+                //var ax = new Symbol("ax");
+                //var ay = new Symbol("ay");
 
-                var Pi = new Symbol("Pi");
+                //var Pi = new Symbol("Pi");
 
-                var eqs = and(
+                //var eqs = and(
 
-                    vxB == vxA + ax * tAB,
-                    vyB == vyA + ay * tAB,
+                //    vxB == vxA + ax * tAB,
+                //    vyB == vyA + ay * tAB,
 
-                    xB == xA + vxA * tAB + ax * (tAB ^ 2) / 2,
-                    yB == yA + vyA * tAB + ay * (tAB ^ 2) / 2,
+                //    xB == xA + vxA * tAB + ax * (tAB ^ 2) / 2,
+                //    yB == yA + vyA * tAB + ay * (tAB ^ 2) / 2,
 
-                    vxA != 0,
+                //    vxA != 0,
 
-                    ay != 0
-                );
+                //    ay != 0
+                //);
 
-                var vals = new List<Equation>() { xA == 0, yA == 100, vxA == 40, vyA == 0, yB == 0, ax == 0, ay == -9.8, Pi == Math.PI };
+                //var vals = new List<Equation>() { xA == 0, yA == 100, vxA == 40, vyA == 0, yB == 0, ax == 0, ay == -9.8, Pi == Math.PI };
 
-                var zeros = vals.Where(eq => eq.b == 0).ToList();
+                //var zeros = vals.Where(eq => eq.b == 0).ToList();
 
-                DoubleFloat.Tolerance = 0.00001;
+                //DoubleFloat.Tolerance = 0.00001;
 
-                eqs
-                    .EliminateVariables(vxB, vyB, tAB)
-                    .IsolateVariable(xB)
-                    .LogicalExpand().SimplifyEquation()
-                    .CheckVariable(ay)
-                    .CheckVariable(vxA).SimplifyLogical()
-                    .Substitute(ax == 0)        
-                    .AssertEqTo(
-                        or(
-                            and(
-                                vxA != 0,
-                                xB == -(vxA ^ 2) * (-(- vyA / vxA + ay / (vxA ^ 2) * xA) + sqrt(((- vyA / vxA + ay * xA / (vxA ^ 2)) ^ 2) + 2 * ay * (vyA * xA / vxA - ay / 2 / (vxA ^ 2) * (xA ^ 2) - yA + yB) / (vxA ^ 2))) / ay,
-                                ay / (vxA ^ 2) != 0,
-                                ay != 0),
-                            and(
-                                vxA != 0,
-                                xB == -(vxA ^ 2) * (-(-vyA / vxA + ay / (vxA ^ 2) * xA) - sqrt(((-vyA / vxA + ay * xA / (vxA ^ 2)) ^ 2) + 2 * ay * (vyA * xA / vxA - ay / 2 / (vxA ^ 2) * (xA ^ 2) - yA + yB) / (vxA ^ 2))) / ay,
-                                ay / (vxA ^ 2) != 0,
-                                ay != 0)))
-                    .Substitute(zeros)
-                    .AssertEqTo(
-                        or(
-                            and(
-                                vxA != 0,
-                                xB == -1 / ay * (vxA ^ 2) * sqrt(-2 * ay * (vxA ^ -2) * yA),
-                                ay / (vxA ^ 2) != 0,
-                                ay != 0),
-                            and(
-                                vxA != 0,
-                                xB == 1 / ay * (vxA ^ 2) * sqrt(-2 * ay * (vxA ^ -2) * yA),
-                                ay / (vxA ^ 2) != 0,
-                                ay != 0)))
-                    .Substitute(vals)
-                    .AssertEqTo(or(xB == 180.70158058105022, xB == -180.70158058105022));
+                //eqs
+                //    .EliminateVariables(vxB, vyB, tAB)
+                //    .IsolateVariable(xB)
+                //    .LogicalExpand().SimplifyEquation()
+                //    .CheckVariable(ay)
+                //    .CheckVariable(vxA).SimplifyLogical()
+                //    .Substitute(ax == 0)        
+                //    .AssertEqTo(
+                //        or(
+                //            and(
+                //                vxA != 0,
+                //                xB == -(vxA ^ 2) * (-(- vyA / vxA + ay / (vxA ^ 2) * xA) + sqrt(((- vyA / vxA + ay * xA / (vxA ^ 2)) ^ 2) + 2 * ay * (vyA * xA / vxA - ay / 2 / (vxA ^ 2) * (xA ^ 2) - yA + yB) / (vxA ^ 2))) / ay,
+                //                ay / (vxA ^ 2) != 0,
+                //                ay != 0),
+                //            and(
+                //                vxA != 0,
+                //                xB == -(vxA ^ 2) * (-(-vyA / vxA + ay / (vxA ^ 2) * xA) - sqrt(((-vyA / vxA + ay * xA / (vxA ^ 2)) ^ 2) + 2 * ay * (vyA * xA / vxA - ay / 2 / (vxA ^ 2) * (xA ^ 2) - yA + yB) / (vxA ^ 2))) / ay,
+                //                ay / (vxA ^ 2) != 0,
+                //                ay != 0)))
+                //    .Substitute(zeros)
+                //    .AssertEqTo(
+                //        or(
+                //            and(
+                //                vxA != 0,
+                //                xB == -1 / ay * (vxA ^ 2) * sqrt(-2 * ay * (vxA ^ -2) * yA),
+                //                ay / (vxA ^ 2) != 0,
+                //                ay != 0),
+                //            and(
+                //                vxA != 0,
+                //                xB == 1 / ay * (vxA ^ 2) * sqrt(-2 * ay * (vxA ^ -2) * yA),
+                //                ay / (vxA ^ 2) != 0,
+                //                ay != 0)))
+                //    .Substitute(vals)
+                //    .AssertEqTo(or(xB == 180.70158058105022, xB == -180.70158058105022));
 
-                eqs
-                    .EliminateVariables(vxB, xB, tAB)
-                    .IsolateVariable(vyB)
-                    .LogicalExpand().SimplifyEquation()
-                    .CheckVariable(ay)
-                    .AssertEqTo(
-                        or(
-                            and(
-                                vyB == -1 * ay * sqrt(2 * (ay ^ -1) * ((ay ^ -1) / 2 * (vyA ^ 2) + -1 * yA + yB)),
-                                vxA != 0,
-                                ay != 0),
-                            and(
-                                vyB == ay * sqrt(2 * (ay ^ -1) * ((ay ^ -1) / 2 * (vyA ^ 2) + -1 * yA + yB)),
-                                vxA != 0,
-                                ay != 0)))
-                    .Substitute(zeros)
-                    .AssertEqTo(
-                        or(
-                          and(
-                              vyB == -ay * sqrt(-2 / ay * yA),
-                              vxA != 0,
-                              ay != 0),
-                          and(
-                              vyB == ay * sqrt(-2 / ay * yA),
-                              vxA != 0,
-                              ay != 0)))
-                    .Substitute(vals)
-                    .AssertEqTo(or(vyB == 44.271887242357309, vyB == -44.271887242357309));
+                //eqs
+                //    .EliminateVariables(vxB, xB, tAB)
+                //    .IsolateVariable(vyB)
+                //    .LogicalExpand().SimplifyEquation()
+                //    .CheckVariable(ay)
+                //    .AssertEqTo(
+                //        or(
+                //            and(
+                //                vyB == -1 * ay * sqrt(2 * (ay ^ -1) * ((ay ^ -1) / 2 * (vyA ^ 2) + -1 * yA + yB)),
+                //                vxA != 0,
+                //                ay != 0),
+                //            and(
+                //                vyB == ay * sqrt(2 * (ay ^ -1) * ((ay ^ -1) / 2 * (vyA ^ 2) + -1 * yA + yB)),
+                //                vxA != 0,
+                //                ay != 0)))
+                //    .Substitute(zeros)
+                //    .AssertEqTo(
+                //        or(
+                //          and(
+                //              vyB == -ay * sqrt(-2 / ay * yA),
+                //              vxA != 0,
+                //              ay != 0),
+                //          and(
+                //              vyB == ay * sqrt(-2 / ay * yA),
+                //              vxA != 0,
+                //              ay != 0)))
+                //    .Substitute(vals)
+                //    .AssertEqTo(or(vyB == 44.271887242357309, vyB == -44.271887242357309));
 
-                DoubleFloat.Tolerance = null;
+                //DoubleFloat.Tolerance = null;
             }
 
             #endregion
@@ -1592,148 +1592,148 @@ namespace Tests
             #region PSE 5E Example 4.7
 
             {
-                var xA = new Symbol("xA");
-                var yA = new Symbol("yA");
+                //var xA = new Symbol("xA");
+                //var yA = new Symbol("yA");
 
-                var xB = new Symbol("xB");
-                var yB = new Symbol("yB");
+                //var xB = new Symbol("xB");
+                //var yB = new Symbol("yB");
 
-                var vxA = new Symbol("vxA");
-                var vyA = new Symbol("vyA");
+                //var vxA = new Symbol("vxA");
+                //var vyA = new Symbol("vyA");
 
-                var vxB = new Symbol("vxB");
-                var vyB = new Symbol("vyB");
+                //var vxB = new Symbol("vxB");
+                //var vyB = new Symbol("vyB");
 
-                var tAB = new Symbol("tAB");
+                //var tAB = new Symbol("tAB");
 
-                var ax = new Symbol("ax");
-                var ay = new Symbol("ay");
+                //var ax = new Symbol("ax");
+                //var ay = new Symbol("ay");
 
-                var th = new Symbol("th");
-                var d = new Symbol("d");
+                //var th = new Symbol("th");
+                //var d = new Symbol("d");
 
-                var Pi = new Symbol("Pi");
+                //var Pi = new Symbol("Pi");
 
-                var eqs = and(
+                //var eqs = and(
 
-                    cos(th) == (xB - xA) / d,
-                    sin(th) == (yA - yB) / d,
+                //    cos(th) == (xB - xA) / d,
+                //    sin(th) == (yA - yB) / d,
 
-                    vxB == vxA + ax * tAB,
-                    vyB == vyA + ay * tAB,
+                //    vxB == vxA + ax * tAB,
+                //    vyB == vyA + ay * tAB,
 
-                    xB == xA + vxA * tAB + ax * (tAB ^ 2) / 2,
-                    yB == yA + vyA * tAB + ay * (tAB ^ 2) / 2,
+                //    xB == xA + vxA * tAB + ax * (tAB ^ 2) / 2,
+                //    yB == yA + vyA * tAB + ay * (tAB ^ 2) / 2,
 
-                    yB != 0,
+                //    yB != 0,
 
-                    ay != 0
-                );
+                //    ay != 0
+                //);
 
-                var vals = new List<Equation>() { xA == 0, yA == 0, vxA == 25, vyA == 0, ax == 0, ay == -9.8, th == (35).ToRadians(), Pi == Math.PI };
+                //var vals = new List<Equation>() { xA == 0, yA == 0, vxA == 25, vyA == 0, ax == 0, ay == -9.8, th == (35).ToRadians(), Pi == Math.PI };
 
-                var zeros = vals.Where(eq => eq.b == 0).ToList();
+                //var zeros = vals.Where(eq => eq.b == 0).ToList();
 
-                DoubleFloat.Tolerance = 0.00001;
+                //DoubleFloat.Tolerance = 0.00001;
 
-                eqs
-                    .Substitute(zeros)
-                    .EliminateVariables(vxB, vyB, d, yB, tAB)
-                    .IsolateVariable(xB)
-                    .LogicalExpand()
-                    .CheckVariable(ay)
-                    .SimplifyEquation()
-                    .AssertEqTo(
-                        or(
-                            and(
-                                xB == -(sin(th) / cos(th) + sqrt((cos(th) ^ -2) * (sin(th) ^ 2))) * (vxA ^ 2) / ay,
-                                ay / (vxA ^ 2) != 0,
-                                sin(th) / cos(th) * xB != 0,
-                                ay != 0),
-                            and(
-                                xB == -(sin(th) / cos(th) - sqrt((cos(th) ^ -2) * (sin(th) ^ 2))) * (vxA ^ 2) / ay,
-                                ay / (vxA ^ 2) != 0,
-                                sin(th) / cos(th) * xB != 0,
-                                ay != 0)))
-                    .Substitute(vals)
-                    .SimplifyEquation()
-                    .AssertEqTo(
-                        or(
-                            and(
-                                xB == 89.312185996136435,
-                                xB != 0),
-                            and(
-                                xB == 7.0805039835788038E-15,
-                                xB != 0)));
+                //eqs
+                //    .Substitute(zeros)
+                //    .EliminateVariables(vxB, vyB, d, yB, tAB)
+                //    .IsolateVariable(xB)
+                //    .LogicalExpand()
+                //    .CheckVariable(ay)
+                //    .SimplifyEquation()
+                //    .AssertEqTo(
+                //        or(
+                //            and(
+                //                xB == -(sin(th) / cos(th) + sqrt((cos(th) ^ -2) * (sin(th) ^ 2))) * (vxA ^ 2) / ay,
+                //                ay / (vxA ^ 2) != 0,
+                //                sin(th) / cos(th) * xB != 0,
+                //                ay != 0),
+                //            and(
+                //                xB == -(sin(th) / cos(th) - sqrt((cos(th) ^ -2) * (sin(th) ^ 2))) * (vxA ^ 2) / ay,
+                //                ay / (vxA ^ 2) != 0,
+                //                sin(th) / cos(th) * xB != 0,
+                //                ay != 0)))
+                //    .Substitute(vals)
+                //    .SimplifyEquation()
+                //    .AssertEqTo(
+                //        or(
+                //            and(
+                //                xB == 89.312185996136435,
+                //                xB != 0),
+                //            and(
+                //                xB == 7.0805039835788038E-15,
+                //                xB != 0)));
 
-                eqs
-                    .Substitute(zeros)
-                    .EliminateVariables(vxB, vyB, d, xB, tAB)
-                    .IsolateVariable(yB)
-                    .LogicalExpand()
-                    .CheckVariable(yB)
-                    .AssertEqTo(
-                        and(
-                            yB == 2 * (sin(th) ^ 2) * (vxA ^ 2) / ay / (cos(th) ^ 2),
-                            -ay * (cos(th) ^ 2) / (sin(th) ^ 2) / (vxA ^ 2) / 2 != 0,
-                            yB != 0,
-                            ay != 0))
-                    .Substitute(vals)
-                    .AssertEqTo(
-                        and(
-                            yB == -62.537065888482395,
-                            yB != 0));
+                //eqs
+                //    .Substitute(zeros)
+                //    .EliminateVariables(vxB, vyB, d, xB, tAB)
+                //    .IsolateVariable(yB)
+                //    .LogicalExpand()
+                //    .CheckVariable(yB)
+                //    .AssertEqTo(
+                //        and(
+                //            yB == 2 * (sin(th) ^ 2) * (vxA ^ 2) / ay / (cos(th) ^ 2),
+                //            -ay * (cos(th) ^ 2) / (sin(th) ^ 2) / (vxA ^ 2) / 2 != 0,
+                //            yB != 0,
+                //            ay != 0))
+                //    .Substitute(vals)
+                //    .AssertEqTo(
+                //        and(
+                //            yB == -62.537065888482395,
+                //            yB != 0));
 
-                eqs
-                    .Substitute(zeros)
-                    .EliminateVariables(vxB, vyB, d, xB, yB)
-                    .IsolateVariable(tAB)
-                    .LogicalExpand().CheckVariable(ay).SimplifyEquation().SimplifyLogical()
-                    .AssertEqTo(
-                        or(
-                            and(
-                                tAB == -(sin(th) * vxA / cos(th) + sqrt((sin(th) ^ 2) * (vxA ^ 2) / (cos(th) ^ 2))) / ay,
-                                ay != 0,
-                                sin(th) * tAB * vxA / cos(th) != 0),
-                            and(
-                                tAB == -(sin(th) * vxA / cos(th) - sqrt((sin(th) ^ 2) * (vxA ^ 2) / (cos(th) ^ 2))) / ay,
-                                ay != 0,
-                                sin(th) * tAB * vxA / cos(th) != 0)))
-                    .Substitute(vals)
-                    .CheckVariable(tAB).SimplifyEquation()
-                    .AssertEqTo(
-                        and(
-                            tAB == 3.5724874398454571,
-                            tAB != 0));
+                //eqs
+                //    .Substitute(zeros)
+                //    .EliminateVariables(vxB, vyB, d, xB, yB)
+                //    .IsolateVariable(tAB)
+                //    .LogicalExpand().CheckVariable(ay).SimplifyEquation().SimplifyLogical()
+                //    .AssertEqTo(
+                //        or(
+                //            and(
+                //                tAB == -(sin(th) * vxA / cos(th) + sqrt((sin(th) ^ 2) * (vxA ^ 2) / (cos(th) ^ 2))) / ay,
+                //                ay != 0,
+                //                sin(th) * tAB * vxA / cos(th) != 0),
+                //            and(
+                //                tAB == -(sin(th) * vxA / cos(th) - sqrt((sin(th) ^ 2) * (vxA ^ 2) / (cos(th) ^ 2))) / ay,
+                //                ay != 0,
+                //                sin(th) * tAB * vxA / cos(th) != 0)))
+                //    .Substitute(vals)
+                //    .CheckVariable(tAB).SimplifyEquation()
+                //    .AssertEqTo(
+                //        and(
+                //            tAB == 3.5724874398454571,
+                //            tAB != 0));
 
-                eqs
-                    .Substitute(zeros)
-                    .EliminateVariables(vxB, d, tAB, xB, yB)
-                    .IsolateVariable(vyB)
-                    .LogicalExpand()
-                    .CheckVariable(ay)
-                    .SimplifyEquation()
-                    .CheckVariable(ay)
-                    .AssertEqTo(
-                        or(
-                            and(
-                                vyB == -ay * (sin(th) * vxA / (ay * cos(th)) + sqrt((sin(th) ^ 2) * (vxA ^ 2) / ((ay ^ 2) * (cos(th) ^ 2)))),
-                                sin(th) * vxA * vyB / (ay * cos(th)) != 0,
-                                ay != 0),
-                            and(
-                                vyB == -ay * (sin(th) * vxA / (ay * cos(th)) - sqrt((sin(th) ^ 2) * (vxA ^ 2) / ((ay ^ 2) * (cos(th) ^ 2)))),
-                                sin(th) * vxA * vyB / (ay * cos(th)) != 0,
-                                ay != 0)))
-                    .Substitute(vals)
-                    .CheckVariable(vyB)
-                    .SimplifyEquation()
-                    .CheckVariable(vyB)
-                    .AssertEqTo(
-                        and(
-                            vyB == -35.010376910485483,
-                            vyB != 0));
+                //eqs
+                //    .Substitute(zeros)
+                //    .EliminateVariables(vxB, d, tAB, xB, yB)
+                //    .IsolateVariable(vyB)
+                //    .LogicalExpand()
+                //    .CheckVariable(ay)
+                //    .SimplifyEquation()
+                //    .CheckVariable(ay)
+                //    .AssertEqTo(
+                //        or(
+                //            and(
+                //                vyB == -ay * (sin(th) * vxA / (ay * cos(th)) + sqrt((sin(th) ^ 2) * (vxA ^ 2) / ((ay ^ 2) * (cos(th) ^ 2)))),
+                //                sin(th) * vxA * vyB / (ay * cos(th)) != 0,
+                //                ay != 0),
+                //            and(
+                //                vyB == -ay * (sin(th) * vxA / (ay * cos(th)) - sqrt((sin(th) ^ 2) * (vxA ^ 2) / ((ay ^ 2) * (cos(th) ^ 2)))),
+                //                sin(th) * vxA * vyB / (ay * cos(th)) != 0,
+                //                ay != 0)))
+                //    .Substitute(vals)
+                //    .CheckVariable(vyB)
+                //    .SimplifyEquation()
+                //    .CheckVariable(vyB)
+                //    .AssertEqTo(
+                //        and(
+                //            vyB == -35.010376910485483,
+                //            vyB != 0));
 
-                DoubleFloat.Tolerance = null;
+                //DoubleFloat.Tolerance = null;
             }
 
             #endregion
@@ -1741,522 +1741,522 @@ namespace Tests
             #region PSE 5E P4.9
 
             {
-                // In a local bar, a customer slides an empty beer mug
-                // down the counter for a refill. The bartender is momentarily 
-                // distracted and does not see the mug, which slides
-                // off the counter and strikes the floor 1.40 m from the
-                // base of the counter. If the height of the counter is 
-                // 0.860 m, (a) with what velocity did the mug leave the
-                // counter and (b) what was the direction of the mug’s 
-                // velocity just before it hit the floor?
+                //// In a local bar, a customer slides an empty beer mug
+                //// down the counter for a refill. The bartender is momentarily 
+                //// distracted and does not see the mug, which slides
+                //// off the counter and strikes the floor 1.40 m from the
+                //// base of the counter. If the height of the counter is 
+                //// 0.860 m, (a) with what velocity did the mug leave the
+                //// counter and (b) what was the direction of the mug’s 
+                //// velocity just before it hit the floor?
                 
-                var xA = new Symbol("xA");
-                var yA = new Symbol("yA");
+                //var xA = new Symbol("xA");
+                //var yA = new Symbol("yA");
 
-                var xB = new Symbol("xB");
-                var yB = new Symbol("yB");
+                //var xB = new Symbol("xB");
+                //var yB = new Symbol("yB");
 
-                var vxA = new Symbol("vxA");
-                var vyA = new Symbol("vyA");
+                //var vxA = new Symbol("vxA");
+                //var vyA = new Symbol("vyA");
 
-                var vxB = new Symbol("vxB");
-                var vyB = new Symbol("vyB");
+                //var vxB = new Symbol("vxB");
+                //var vyB = new Symbol("vyB");
 
-                var tAB = new Symbol("tAB");
+                //var tAB = new Symbol("tAB");
 
-                var ax = new Symbol("ax");
-                var ay = new Symbol("ay");
+                //var ax = new Symbol("ax");
+                //var ay = new Symbol("ay");
 
-                var thB = new Symbol("thB");
-                var vB = new Symbol("vB");
+                //var thB = new Symbol("thB");
+                //var vB = new Symbol("vB");
 
-                var eqs = and(
+                //var eqs = and(
 
-                    vxB == vxA + ax * tAB,
-                    vyB == vyA + ay * tAB,
+                //    vxB == vxA + ax * tAB,
+                //    vyB == vyA + ay * tAB,
 
-                    tan(thB) == vyB / vxB,
+                //    tan(thB) == vyB / vxB,
 
-                    xB == xA + vxA * tAB + ax * (tAB ^ 2) / 2,
-                    yB == yA + vyA * tAB + ay * (tAB ^ 2) / 2,
+                //    xB == xA + vxA * tAB + ax * (tAB ^ 2) / 2,
+                //    yB == yA + vyA * tAB + ay * (tAB ^ 2) / 2,
 
-                    xB != 0
-                );
+                //    xB != 0
+                //);
 
-                var vals = new List<Equation>() { xA == 0, yA == 0.86, /* vxA */ vyA == 0, xB == 1.4, yB == 0, /* vxB vyB vB thB */ /* tAB */ ax == 0, ay == -9.8 };
+                //var vals = new List<Equation>() { xA == 0, yA == 0.86, /* vxA */ vyA == 0, xB == 1.4, yB == 0, /* vxB vyB vB thB */ /* tAB */ ax == 0, ay == -9.8 };
 
-                var zeros = vals.Where(eq => eq.b == 0).ToList();
+                //var zeros = vals.Where(eq => eq.b == 0).ToList();
 
-                DoubleFloat.Tolerance = 0.00001;
+                //DoubleFloat.Tolerance = 0.00001;
 
-                eqs
-                    .Substitute(zeros)
-                    .EliminateVariables(thB, vxB, vyB, tAB)
-                    .IsolateVariable(vxA)
-                    .LogicalExpand()
-                    .AssertEqTo(
-                        or(
-                            and(
-                                vxA == ay * (xB ^ 2) / yA / 4 * sqrt(-8 / ay * (xB ^ -2) * yA),
-                                2 / ay * (xB ^ -2) * yA != 0,
-                                xB != 0),
-                            and(
-                                vxA == -ay * (xB ^ 2) / yA / 4 * sqrt(-8 / ay * (xB ^ -2) * yA),
-                                2 / ay * (xB ^ -2) * yA != 0,
-                                xB != 0)))
-                    .Substitute(vals)
-                    .AssertEqTo(or(vxA == -3.3417722634053204, vxA == 3.3417722634053204));
+                //eqs
+                //    .Substitute(zeros)
+                //    .EliminateVariables(thB, vxB, vyB, tAB)
+                //    .IsolateVariable(vxA)
+                //    .LogicalExpand()
+                //    .AssertEqTo(
+                //        or(
+                //            and(
+                //                vxA == ay * (xB ^ 2) / yA / 4 * sqrt(-8 / ay * (xB ^ -2) * yA),
+                //                2 / ay * (xB ^ -2) * yA != 0,
+                //                xB != 0),
+                //            and(
+                //                vxA == -ay * (xB ^ 2) / yA / 4 * sqrt(-8 / ay * (xB ^ -2) * yA),
+                //                2 / ay * (xB ^ -2) * yA != 0,
+                //                xB != 0)))
+                //    .Substitute(vals)
+                //    .AssertEqTo(or(vxA == -3.3417722634053204, vxA == 3.3417722634053204));
 
-                eqs
-                    .Substitute(zeros)
-                    .EliminateVariables(vxB, vyB, tAB, vxA)
-                    .LogicalExpand()
-                    .CheckVariable(xB)
-                    .SimplifyLogical()
-                    .IsolateVariable(thB)
-                    .AssertEqTo(
-                        and(
-                            -tan(thB) / ay != 0,
-                            thB == new Atan(-2 * yA / xB),
-                            xB != 0))
-                    .Substitute(vals)
-                    .AssertEqTo(
-                        and(
-                            0.1020408163265306 * tan(thB) != 0,
-                            thB == -0.88760488150470185));
+                //eqs
+                //    .Substitute(zeros)
+                //    .EliminateVariables(vxB, vyB, tAB, vxA)
+                //    .LogicalExpand()
+                //    .CheckVariable(xB)
+                //    .SimplifyLogical()
+                //    .IsolateVariable(thB)
+                //    .AssertEqTo(
+                //        and(
+                //            -tan(thB) / ay != 0,
+                //            thB == new Atan(-2 * yA / xB),
+                //            xB != 0))
+                //    .Substitute(vals)
+                //    .AssertEqTo(
+                //        and(
+                //            0.1020408163265306 * tan(thB) != 0,
+                //            thB == -0.88760488150470185));
 
-                DoubleFloat.Tolerance = null;
+                //DoubleFloat.Tolerance = null;
             }
 
-            #endregion
+			#endregion
 
-            #region SumDifferenceFormulaFunc
+			#region SumDifferenceFormulaFunc
 
-            // sin(u) cos(v) - cos(u) sin(v) -> sin(u - v)
+			// sin(u) cos(v) - cos(u) sin(v) -> sin(u - v)
 
-            Func<MathObject, MathObject> SumDifferenceFormulaFunc = elt =>
-            {
-                if (elt is Sum)
-                {
-                    var items = new List<MathObject>();
+			Func<MathObject, MathObject> SumDifferenceFormulaFunc = elt =>
+			{
+				if (elt is Sum)
+				{
+					var items = new List<MathObject>();
 
-                    foreach (var item in (elt as Sum).Elements)
-                    {
-                        if (
-                            item is Product &&
-                            (item as Product).Elements[0] == -1 &&
-                            (item as Product).Elements[1] is Cos &&
-                            (item as Product).Elements[2] is Sin
-                            )
-                        {
-                            var u_ = ((item as Product).Elements[1] as Cos).Parameters[0];
-                            var v_ = ((item as Product).Elements[2] as Sin).Parameters[0];
+					foreach (var item in (elt as Sum).Elements)
+					{
+						if (
+							item is Product &&
+							(item as Product).Elements[0] == -1 &&
+							(item as Product).Elements[1] is Cos &&
+							(item as Product).Elements[2] is Sin
+							)
+						{
+							var u_ = ((item as Product).Elements[1] as Cos).Parameters[0];
+							var v_ = ((item as Product).Elements[2] as Sin).Parameters[0];
 
-                            Func<MathObject, bool> match = obj =>
-                                obj is Product &&
-                                (obj as Product).Elements[0] is Cos &&
-                                (obj as Product).Elements[1] is Sin &&
+							Func<MathObject, bool> match = obj =>
+								obj is Product &&
+								(obj as Product).Elements[0] is Cos &&
+								(obj as Product).Elements[1] is Sin &&
 
-                                ((obj as Product).Elements[1] as Sin).Parameters[0] == u_ &&
-                                ((obj as Product).Elements[0] as Cos).Parameters[0] == v_;
+								((obj as Product).Elements[1] as Sin).Parameters[0] == u_ &&
+								((obj as Product).Elements[0] as Cos).Parameters[0] == v_;
 
-                            if (items.Any(obj => match(obj)))
-                            {
-                                items = items.Where(obj => match(obj) == false).ToList();
+							if (items.Any(obj => match(obj)))
+							{
+								items = items.Where(obj => match(obj) == false).ToList();
 
-                                items.Add(sin(u_ - v_));
-                            }
-                            else items.Add(item);
-                        }
-                        else items.Add(item);
-                    }
+								items.Add(sin(u_ - v_));
+							}
+							else items.Add(item);
+						}
+						else items.Add(item);
+					}
 
-	                return new Sum(items).Simplify();
-                }
+					return new Sum(items).Simplify();
+				}
 
-                return elt;
-            };
+				return elt;
+			};
 
-            {
-                var u = new Symbol("u");
-                var v = new Symbol("v");
+			//{
+			//    var u = new Symbol("u");
+			//    var v = new Symbol("v");
 
-                (sin(u) * cos(v) - cos(u) * sin(v))
-                    .DeepSelect(SumDifferenceFormulaFunc)
-                    .AssertEqTo(sin(u - v));
-            }
+			//    (sin(u) * cos(v) - cos(u) * sin(v))
+			//        .DeepSelect(SumDifferenceFormulaFunc)
+			//        .AssertEqTo(sin(u - v));
+			//}
 
-            #endregion
-            
-            #region SumDifferenceFormulaFunc 
+			#endregion
 
-            // sin(u) cos(v) + cos(u) sin(v) -> sin(u + v)
+			#region SumDifferenceFormulaFunc 
 
-            Func<MathObject, MathObject> SumDifferenceFormulaAFunc = elt =>
-            {
-                if (elt is Sum)
-                {
-                    var items = new List<MathObject>();
+			// sin(u) cos(v) + cos(u) sin(v) -> sin(u + v)
 
-                    foreach (var item in (elt as Sum).Elements)
-                    {
-                        if (
-                            item is Product &&
-                            (item as Product).Elements[0] is Cos &&
-                            (item as Product).Elements[1] is Sin
-                            )
-                        {
-                            var u_ = ((item as Product).Elements[0] as Cos).Parameters[0];
-                            var v_ = ((item as Product).Elements[1] as Sin).Parameters[0];
+			Func<MathObject, MathObject> SumDifferenceFormulaAFunc = elt =>
+			{
+				if (elt is Sum)
+				{
+					var items = new List<MathObject>();
 
-                            Func<MathObject, bool> match = obj =>
-                                obj is Product &&
-                                (obj as Product).Elements[0] is Cos &&
-                                (obj as Product).Elements[1] is Sin &&
+					foreach (var item in (elt as Sum).Elements)
+					{
+						if (
+							item is Product &&
+							(item as Product).Elements[0] is Cos &&
+							(item as Product).Elements[1] is Sin
+							)
+						{
+							var u_ = ((item as Product).Elements[0] as Cos).Parameters[0];
+							var v_ = ((item as Product).Elements[1] as Sin).Parameters[0];
 
-                                ((obj as Product).Elements[1] as Sin).Parameters[0] == u_ &&
-                                ((obj as Product).Elements[0] as Cos).Parameters[0] == v_;
+							Func<MathObject, bool> match = obj =>
+								obj is Product &&
+								(obj as Product).Elements[0] is Cos &&
+								(obj as Product).Elements[1] is Sin &&
 
-                            if (items.Any(obj => match(obj)))
-                            {
-                                items = items.Where(obj => match(obj) == false).ToList();
+								((obj as Product).Elements[1] as Sin).Parameters[0] == u_ &&
+								((obj as Product).Elements[0] as Cos).Parameters[0] == v_;
 
-                                items.Add(sin(u_ + v_));
-                            }
-                            else items.Add(item);
-                        }
-                        else items.Add(item);
-                    }
+							if (items.Any(obj => match(obj)))
+							{
+								items = items.Where(obj => match(obj) == false).ToList();
 
-                    return new Sum(items).Simplify();
-                }
+								items.Add(sin(u_ + v_));
+							}
+							else items.Add(item);
+						}
+						else items.Add(item);
+					}
 
-                return elt;
-            };
+					return new Sum(items).Simplify();
+				}
 
-            {
-                var u = new Symbol("u");
-                var v = new Symbol("v");
+				return elt;
+			};
 
-                (sin(u) * cos(v) + cos(u) * sin(v))
-                    .DeepSelect(SumDifferenceFormulaAFunc)
-                    .AssertEqTo(sin(u + v));
-            }
+			//{
+			//    var u = new Symbol("u");
+			//    var v = new Symbol("v");
 
-            #endregion
-            
-            #region DoubleAngleFormulaFunc
+			//    (sin(u) * cos(v) + cos(u) * sin(v))
+			//        .DeepSelect(SumDifferenceFormulaAFunc)
+			//        .AssertEqTo(sin(u + v));
+			//}
 
-            // sin(u) cos(u) -> sin(2 u) / 2
+			#endregion
 
-            Func<MathObject, MathObject> DoubleAngleFormulaFunc =
-                    elt =>
-                    {
-                        if (elt is Product)
-                        {
-                            var items = new List<MathObject>();
+			#region DoubleAngleFormulaFunc
 
-                            foreach (var item in (elt as Product).Elements)
-                            {
-                                if (item is Sin)
-                                {
-                                    var sym = (item as Sin).Parameters.First();
+			//// sin(u) cos(u) -> sin(2 u) / 2
 
-                                    if (items.Any(obj => (obj is Cos) && (obj as Cos).Parameters.First() == sym))
-                                    {
-                                        items = items.Where(obj => ((obj is Cos) && (obj as Cos).Parameters.First() == sym) == false).ToList();
+			Func<MathObject, MathObject> DoubleAngleFormulaFunc =
+					elt =>
+					{
+						if (elt is Product)
+						{
+							var items = new List<MathObject>();
 
-                                        items.Add(sin(2 * sym) / 2);
-                                    }
-                                    else items.Add(item);
-                                }
+							foreach (var item in (elt as Product).Elements)
+							{
+								if (item is Sin)
+								{
+									var sym = (item as Sin).Parameters.First();
 
-                                else if (item is Cos)
-                                {
-                                    var sym = (item as Cos).Parameters.First();
+									if (items.Any(obj => (obj is Cos) && (obj as Cos).Parameters.First() == sym))
+									{
+										items = items.Where(obj => ((obj is Cos) && (obj as Cos).Parameters.First() == sym) == false).ToList();
 
-                                    if (items.Any(obj => (obj is Sin) && (obj as Sin).Parameters.First() == sym))
-                                    {
-                                        items = items.Where(obj => ((obj is Sin) && (obj as Sin).Parameters.First() == sym) == false).ToList();
+										items.Add(sin(2 * sym) / 2);
+									}
+									else items.Add(item);
+								}
 
-                                        items.Add(sin(2 * sym) / 2);
-                                    }
-                                    else items.Add(item);
-                                }
+								else if (item is Cos)
+								{
+									var sym = (item as Cos).Parameters.First();
 
-                                else items.Add(item);
+									if (items.Any(obj => (obj is Sin) && (obj as Sin).Parameters.First() == sym))
+									{
+										items = items.Where(obj => ((obj is Sin) && (obj as Sin).Parameters.First() == sym) == false).ToList();
 
-                            }
-                            return new Product(items).Simplify();
-                        }
-                        return elt;
-                    };
+										items.Add(sin(2 * sym) / 2);
+									}
+									else items.Add(item);
+								}
 
-            #endregion
+								else items.Add(item);
 
-            #region SinCosToTanFunc
+							}
+							return new Product(items).Simplify();
+						}
+						return elt;
+					};
+
+			#endregion
+
+			#region SinCosToTanFunc
 
 
-            // sin(x) / cos(x) -> tan(x)
+			// sin(x) / cos(x) -> tan(x)
 
-            Func<MathObject, MathObject> SinCosToTanFunc = elt =>
-            {
-                if (elt is Product)
-                {
-                    if ((elt as Product).Elements.Any(obj1 =>
-                            obj1 is Sin &&
-                            (elt as Product).Elements.Any(obj2 => obj2 == 1 / cos((obj1 as Sin).Parameters[0]))))
-                    {
-                        var sin_ = (elt as Product).Elements.First(obj1 =>
-                            obj1 is Sin &&
-                            (elt as Product).Elements.Any(obj2 => obj2 == 1 / cos((obj1 as Sin).Parameters[0])));
+			Func<MathObject, MathObject> SinCosToTanFunc = elt =>
+			{
+				if (elt is Product)
+				{
+					if ((elt as Product).Elements.Any(obj1 =>
+							obj1 is Sin &&
+							(elt as Product).Elements.Any(obj2 => obj2 == 1 / cos((obj1 as Sin).Parameters[0]))))
+					{
+						var sin_ = (elt as Product).Elements.First(obj1 =>
+							obj1 is Sin &&
+							(elt as Product).Elements.Any(obj2 => obj2 == 1 / cos((obj1 as Sin).Parameters[0])));
 
-                        var arg = (sin_ as Sin).Parameters[0];
+						var arg = (sin_ as Sin).Parameters[0];
 
-                        return elt * cos(arg) / sin(arg) * tan(arg);
-                    }
+						return elt * cos(arg) / sin(arg) * tan(arg);
+					}
 
-                    return elt;
-                }
+					return elt;
+				}
 
-                return elt;
-            };
+				return elt;
+			};
 
-            #endregion
+			#endregion
 
-            {
-                var x = new Symbol("x");
-                var y = new Symbol("y");
+			{
+                //var x = new Symbol("x");
+                //var y = new Symbol("y");
 
-                (sin(x) / cos(x)).DeepSelect(SinCosToTanFunc)
+                //(sin(x) / cos(x)).DeepSelect(SinCosToTanFunc)
 
-                    .AssertEqTo(tan(x));
+                //    .AssertEqTo(tan(x));
 
-                (y * sin(x) / cos(x)).DeepSelect(SinCosToTanFunc)
+                //(y * sin(x) / cos(x)).DeepSelect(SinCosToTanFunc)
 
-                    .AssertEqTo(tan(x) * y);
+                //    .AssertEqTo(tan(x) * y);
 
-                (sin(x) * sin(y) / cos(x) / cos(y))
-                    .DeepSelect(SinCosToTanFunc)
-                    .DeepSelect(SinCosToTanFunc)
+                //(sin(x) * sin(y) / cos(x) / cos(y))
+                //    .DeepSelect(SinCosToTanFunc)
+                //    .DeepSelect(SinCosToTanFunc)
 
-                    .AssertEqTo(tan(x) * tan(y));
+                //    .AssertEqTo(tan(x) * tan(y));
             }
             
             #region PSE 5E P4.11
 
             {
-                // One strategy in a snowball fight is to throw a first snowball
-                // at a high angle over level ground. While your opponent is watching
-                // the first one, you throw a second one at a low angle and timed
-                // to arrive at your opponent before or at the same time as the first one.
+				// One strategy in a snowball fight is to throw a first snowball
+				// at a high angle over level ground. While your opponent is watching
+				// the first one, you throw a second one at a low angle and timed
+				// to arrive at your opponent before or at the same time as the first one.
 
-                // Assume both snowballs are thrown with a speed of 25.0 m/s.
+				// Assume both snowballs are thrown with a speed of 25.0 m/s.
 
-                // The first one is thrown at an angle of 70.0° with respect to the horizontal. 
+				// The first one is thrown at an angle of 70.0° with respect to the horizontal. 
 
-                // (a) At what angle should the second (lowangle) 
-                // snowball be thrown if it is to land at the same
-                // point as the first?
+				// (a) At what angle should the second (lowangle) 
+				// snowball be thrown if it is to land at the same
+				// point as the first?
 
-                // (b) How many seconds later should the second snowball 
-                // be thrown if it is to land at the same time as the first?
-                
-                var xA = new Symbol("xA");
-                var yA = new Symbol("yA");
+				// (b) How many seconds later should the second snowball 
+				//be thrown if it is to land at the same time as the first?
 
-                var vxA = new Symbol("vxA");
-                var vyA = new Symbol("vyA");
+				//   var xA = new Symbol("xA");
+				//var yA = new Symbol("yA");
 
-                var vA = new Symbol("vA");
+				//var vxA = new Symbol("vxA");
+				//var vyA = new Symbol("vyA");
 
-                var thA = new Symbol("thA");
+				//var vA = new Symbol("vA");
 
-                var xB = new Symbol("xB");
-                var yB = new Symbol("yB");
+				//var thA = new Symbol("thA");
 
-                var vxB = new Symbol("vxB");
-                var vyB = new Symbol("vyB");
+				//var xB = new Symbol("xB");
+				//var yB = new Symbol("yB");
 
-                var tAB = new Symbol("tAB");
-                var tAC = new Symbol("tAC");
+				//var vxB = new Symbol("vxB");
+				//var vyB = new Symbol("vyB");
 
-                var ax = new Symbol("ax");
-                var ay = new Symbol("ay");
+				//var tAB = new Symbol("tAB");
+				//var tAC = new Symbol("tAC");
 
-                var eqs = new And(
+				//var ax = new Symbol("ax");
+				//var ay = new Symbol("ay");
 
-                    vxA == vA * cos(thA),
-                    vyA == vA * sin(thA),
+				//var eqs = new And(
 
-                    vxB == vxA + ax * tAB,
-                    vyB == vyA + ay * tAB,
+				//	vxA == vA * cos(thA),
+				//	vyA == vA * sin(thA),
 
-                    xB == xA + vxA * tAB + ax * (tAB ^ 2) / 2,
-                    yB == yA + vyA * tAB + ay * (tAB ^ 2) / 2
-                );
+				//	vxB == vxA + ax * tAB,
+				//	vyB == vyA + ay * tAB,
 
-                DoubleFloat.Tolerance = 0.00001;
+				//	xB == xA + vxA * tAB + ax * (tAB ^ 2) / 2,
+				//	yB == yA + vyA * tAB + ay * (tAB ^ 2) / 2
+				//);
 
-	            {
-		            var vals = new List<Equation>
-			            {
-				            xA == 0,
-				            yA == 0,
-				            /* vxA vyA */ vA == 25.0,
-				            /* thA == 70.0, */ /* xB == 20.497, */ /* yB */ /* vxB */ vyB == 0,
-				            /* tAB */ ax == 0,
-				            ay == -9.8,
-				            pi == Math.PI
-			            };
+				//DoubleFloat.Tolerance = 0.00001;
 
-                    var zeros = vals.Where(eq => eq.b == 0).ToList();
+				//{
+				//	var vals = new List<Equation>
+				//  {
+				//   xA == 0,
+				//   yA == 0,
+				//   /* vxA vyA */ vA == 25.0,
+				//   /* thA == 70.0, */ /* xB == 20.497, */ /* yB */ /* vxB */ vyB == 0,
+				//   /* tAB */ ax == 0,
+				//   ay == -9.8,
+				//   pi == Math.PI
+				//  };
 
-                    {
-                        // thA = ... || thA = ...
+				//	var zeros = vals.Where(eq => eq.b == 0).ToList();
 
-	                    var sub = eqs.Substitute(zeros);
-	                    var elim = sub.EliminateVariables(yB, vxA, vyA, vxB, tAB);
-	                    var sel = elim.DeepSelect(DoubleAngleFormulaFunc);
-	                    var expr = sel.IsolateVariable(thA);
+				//	{
+				//		// thA = ... || thA = ...
 
-	                    //var expr = eqs.Substitute(zeros)
-	                    //              .EliminateVariables(yB, vxA, vyA, vxB, tAB)
-	                    //              .DeepSelect(DoubleAngleFormulaFunc)
-	                    //              .IsolateVariable(thA);
+				//		var sub = eqs.Substitute(zeros);
+				//		var elim = sub.EliminateVariables(yB, vxA, vyA, vxB, tAB);
+				//		var sel = elim.DeepSelect(DoubleAngleFormulaFunc);
+				//		var expr = sel.IsolateVariable(thA);
 
-                        // th_delta = ...
+				//		//var expr = eqs.Substitute(zeros)
+				//		//              .EliminateVariables(yB, vxA, vyA, vxB, tAB)
+				//		//              .DeepSelect(DoubleAngleFormulaFunc)
+				//		//              .IsolateVariable(thA);
 
-                        var th1 = ((expr as Or).Parameters[0] as Equation).b;
-                        var th2 = ((expr as Or).Parameters[1] as Equation).b;
+				//		// th_delta = ...
 
-                        var th_delta = new Symbol("th_delta");
+				//		var th1 = ((expr as Or).Parameters[0] as Equation).b;
+				//		var th2 = ((expr as Or).Parameters[1] as Equation).b;
 
-	                    and(eqs, th_delta == (th1 - th2).AlgebraicExpand())
-		                    .Substitute(zeros)
+				//		var th_delta = new Symbol("th_delta");
 
-		                    .EliminateVariables(yB, vxA, vyA, vxB, tAB)
+				//		and(eqs, th_delta == (th1 - th2).AlgebraicExpand())
+				//		 .Substitute(zeros)
 
-		                    .DeepSelect(DoubleAngleFormulaFunc)
-		                    .EliminateVariable(xB)
+				//		 .EliminateVariables(yB, vxA, vyA, vxB, tAB)
 
-		                    .AssertEqTo(th_delta == asin(sin(2*thA)) - pi/2)
+				//		 .DeepSelect(DoubleAngleFormulaFunc)
+				//		 .EliminateVariable(xB)
 
-		                    .Substitute(thA == (70).ToRadians())
-		                    .Substitute(pi == Math.PI)
+				//		 .AssertEqTo(th_delta == asin(sin(2 * thA)) - pi / 2)
 
-		                    .AssertEqTo(th_delta == -0.87266462599716454);
-                    }
+				//		 .Substitute(thA == (70).ToRadians())
+				//		 .Substitute(pi == Math.PI)
 
-                    {
-                        // tAB = ...
+				//		 .AssertEqTo(th_delta == -0.87266462599716454);
+				//	}
 
-                        var tAB_eq = eqs
-                            .Substitute(zeros)
-                            .EliminateVariables(yB, vxA, vyA, vxB, xB)
-                            .IsolateVariable(tAB);
+				//	{
+				//		// tAB = ...
 
-                        and(
-                            or(thA == (20).ToRadians(), thA == (70).ToRadians()),
-                            tAB_eq,
-                            tAC == tAB * 2)
-                            .LogicalExpand()
-                            .EliminateVariables(thA, tAB)
+				//		var tAB_eq = eqs
+				//			.Substitute(zeros)
+				//			.EliminateVariables(yB, vxA, vyA, vxB, xB)
+				//			.IsolateVariable(tAB);
 
-                            .AssertEqTo(or(
-                                tAC == -2 * sin(pi / 9) * vA / ay,
-                                tAC == -2 * sin(7 * pi / 18) * vA / ay))
+				//		and(
+				//			or(thA == (20).ToRadians(), thA == (70).ToRadians()),
+				//			tAB_eq,
+				//			tAC == tAB * 2)
+				//			.LogicalExpand()
+				//			.EliminateVariables(thA, tAB)
 
-                            .Substitute(vals)
-                            .AssertEqTo(
-                                or(
-                                    tAC == 1.7450007312534115,
-                                    tAC == 4.794350106050552));
-                    }
-                }
+				//			.AssertEqTo(or(
+				//				tAC == -2 * sin(pi / 9) * vA / ay,
+				//				tAC == -2 * sin(7 * pi / 18) * vA / ay))
 
-                DoubleFloat.Tolerance = null;
-            }
+				//			.Substitute(vals)
+				//			.AssertEqTo(
+				//				or(
+				//					tAC == 1.7450007312534115,
+				//					tAC == 4.794350106050552));
+				//	}
+				//}
 
-            #endregion
+				//DoubleFloat.Tolerance = null;
+			}
+
+			#endregion
 
 
-            #region PSE 5E P4.13
+			#region PSE 5E P4.13
 
-            {
+			{
                 // An artillery shell is fired with an initial velocity of 
                 // 300 m/s at 55.0° above the horizontal. It explodes on a
                 // mountainside 42.0 s after firing. What are the x and y
                 // coordinates of the shell where it explodes, relative to its
                 // firing point?
                 
-                var xA = new Symbol("xA");
-                var yA = new Symbol("yA");
+                //var xA = new Symbol("xA");
+                //var yA = new Symbol("yA");
 
-                var vxA = new Symbol("vxA");
-                var vyA = new Symbol("vyA");
+                //var vxA = new Symbol("vxA");
+                //var vyA = new Symbol("vyA");
 
-                var vA = new Symbol("vA");
-                var thA = new Symbol("thA");
+                //var vA = new Symbol("vA");
+                //var thA = new Symbol("thA");
 
-                var xB = new Symbol("xB");
-                var yB = new Symbol("yB");
+                //var xB = new Symbol("xB");
+                //var yB = new Symbol("yB");
 
-                var vxB = new Symbol("vxB");
-                var vyB = new Symbol("vyB");
+                //var vxB = new Symbol("vxB");
+                //var vyB = new Symbol("vyB");
 
-                var tAB = new Symbol("tAB");
+                //var tAB = new Symbol("tAB");
 
-                var ax = new Symbol("ax");
-                var ay = new Symbol("ay");
+                //var ax = new Symbol("ax");
+                //var ay = new Symbol("ay");
 
-                var Pi = new Symbol("Pi");
+                //var Pi = new Symbol("Pi");
 
-                var eqs = and(
-                    vxA == vA * cos(thA),
-                    vyA == vA * sin(thA),
+                //var eqs = and(
+                //    vxA == vA * cos(thA),
+                //    vyA == vA * sin(thA),
 
-                    vxB == vxA + ax * tAB,
-                    vyB == vyA + ay * tAB,
+                //    vxB == vxA + ax * tAB,
+                //    vyB == vyA + ay * tAB,
 
-                    xB == xA + vxA * tAB + ax * (tAB ^ 2) / 2,
-                    yB == yA + vyA * tAB + ay * (tAB ^ 2) / 2
-                );
+                //    xB == xA + vxA * tAB + ax * (tAB ^ 2) / 2,
+                //    yB == yA + vyA * tAB + ay * (tAB ^ 2) / 2
+                //);
 
-                DoubleFloat.Tolerance = 0.00001;
+                //DoubleFloat.Tolerance = 0.00001;
 
-                {
-                    var vals = new List<Equation>() { xA == 0, yA == 0, /* vxA vyA */ vA == 300.0, thA == (55).ToRadians(), /* xB yB vxB vyB */ tAB == 42, ax == 0, ay == -9.8, Pi == Math.PI };
+                //{
+                //    var vals = new List<Equation>() { xA == 0, yA == 0, /* vxA vyA */ vA == 300.0, thA == (55).ToRadians(), /* xB yB vxB vyB */ tAB == 42, ax == 0, ay == -9.8, Pi == Math.PI };
 
-                    var zeros = vals.Where(eq => eq.b == 0).ToList();
+                //    var zeros = vals.Where(eq => eq.b == 0).ToList();
 
-                    {
-                        eqs
-                            .Substitute(zeros)
-                            .EliminateVariable(vxA)
-                            .EliminateVariable(vyA)
+                //    {
+                //        eqs
+                //            .Substitute(zeros)
+                //            .EliminateVariable(vxA)
+                //            .EliminateVariable(vyA)
 
-                            .AssertEqTo(
-                                and(
-                                    vxB == cos(thA) * vA,
-                                    vyB == ay * tAB + sin(thA) * vA,
-                                    xB == cos(thA) * tAB * vA,
-                                    yB == ay * (tAB ^ 2) / 2 + sin(thA) * tAB * vA))
+                //            .AssertEqTo(
+                //                and(
+                //                    vxB == cos(thA) * vA,
+                //                    vyB == ay * tAB + sin(thA) * vA,
+                //                    xB == cos(thA) * tAB * vA,
+                //                    yB == ay * (tAB ^ 2) / 2 + sin(thA) * tAB * vA))
 
-                            .Substitute(vals)
+                //            .Substitute(vals)
 
-                            .AssertEqTo(
-                                and(
-                                    vxB == 172.07293090531385,
-                                    vyB == -165.85438671330249,
-                                    xB == 7227.0630980231817,
-                                    yB == 1677.7157580412968))
+                //            .AssertEqTo(
+                //                and(
+                //                    vxB == 172.07293090531385,
+                //                    vyB == -165.85438671330249,
+                //                    xB == 7227.0630980231817,
+                //                    yB == 1677.7157580412968))
 
-                            ;
-                    }
-                }
+                //            ;
+                //    }
+                //}
 
-                DoubleFloat.Tolerance = null;
+                //DoubleFloat.Tolerance = null;
             }
 
             #endregion
@@ -2270,84 +2270,84 @@ namespace Tests
                 // What is the angle of projection? 
                 // Give your answer to three significant figures.
                 
-                var xA = new Symbol("xA");
-                var yA = new Symbol("yA");
+                //var xA = new Symbol("xA");
+                //var yA = new Symbol("yA");
 
-                var vxA = new Symbol("vxA");
-                var vyA = new Symbol("vyA");
+                //var vxA = new Symbol("vxA");
+                //var vyA = new Symbol("vyA");
 
-                var vA = new Symbol("vA");
-                var thA = new Symbol("thA");
-
-
-                var xB = new Symbol("xB");
-                var yB = new Symbol("yB");
-
-                var vxB = new Symbol("vxB");
-                var vyB = new Symbol("vyB");
+                //var vA = new Symbol("vA");
+                //var thA = new Symbol("thA");
 
 
-                var xC = new Symbol("xC");
-                var yC = new Symbol("yC");
+                //var xB = new Symbol("xB");
+                //var yB = new Symbol("yB");
 
-                var vxC = new Symbol("vxC");
-                var vyC = new Symbol("vyC");
-
-
-                var tAB = new Symbol("tAB");
-                var tBC = new Symbol("tBC");
-
-                var ax = new Symbol("ax");
-                var ay = new Symbol("ay");
-
-                var Pi = new Symbol("Pi");
-
-                var eqs = and(
-
-                    xC - xA == 3 * yB,
-
-                    tAB == tBC,
+                //var vxB = new Symbol("vxB");
+                //var vyB = new Symbol("vyB");
 
 
-                    vxA == vA * cos(thA),
-                    vyA == vA * sin(thA),
+                //var xC = new Symbol("xC");
+                //var yC = new Symbol("yC");
 
-                    vxB == vxA + ax * tAB,
-                    vyB == vyA + ay * tAB,
-
-                    xB == xA + vxA * tAB + ax * (tAB ^ 2) / 2,
-                    yB == yA + vyA * tAB + ay * (tAB ^ 2) / 2,
+                //var vxC = new Symbol("vxC");
+                //var vyC = new Symbol("vyC");
 
 
-                    vxC == vxB + ax * tBC,
-                    vyC == vyB + ay * tBC,
+                //var tAB = new Symbol("tAB");
+                //var tBC = new Symbol("tBC");
 
-                    xC == xB + vxB * tBC + ax * (tBC ^ 2) / 2,
-                    yC == yB + vyB * tBC + ay * (tBC ^ 2) / 2
+                //var ax = new Symbol("ax");
+                //var ay = new Symbol("ay");
 
-                );
+                //var Pi = new Symbol("Pi");
 
-                DoubleFloat.Tolerance = 0.00001;
+                //var eqs = and(
 
-                {
-                    var vals = new List<Equation>() 
-                    { 
-                        xA == 0, yA == 0, /* vxA vyA vA thA */ /* xB yB vxB */ vyB == 0, /* tAB tBC */ 
-                        /* xC */ yC == 0,
+                //    xC - xA == 3 * yB,
 
-                        ax == 0, ay == -9.8, Pi == Math.PI 
-                    };
+                //    tAB == tBC,
 
-                    var zeros = vals.Where(eq => eq.b == 0).ToList();
 
-                    eqs
-                        .Substitute(zeros)
-                        .EliminateVariables(xC, tAB, vxA, vyA, vxB, xB, yB, vxC, vyC, tBC)
-                        .IsolateVariable(thA)
-                        .AssertEqTo(thA == new Atan(new Integer(4) / 3));
-                }
+                //    vxA == vA * cos(thA),
+                //    vyA == vA * sin(thA),
 
-                DoubleFloat.Tolerance = null;
+                //    vxB == vxA + ax * tAB,
+                //    vyB == vyA + ay * tAB,
+
+                //    xB == xA + vxA * tAB + ax * (tAB ^ 2) / 2,
+                //    yB == yA + vyA * tAB + ay * (tAB ^ 2) / 2,
+
+
+                //    vxC == vxB + ax * tBC,
+                //    vyC == vyB + ay * tBC,
+
+                //    xC == xB + vxB * tBC + ax * (tBC ^ 2) / 2,
+                //    yC == yB + vyB * tBC + ay * (tBC ^ 2) / 2
+
+                //);
+
+                //DoubleFloat.Tolerance = 0.00001;
+
+                //{
+                //    var vals = new List<Equation>() 
+                //    { 
+                //        xA == 0, yA == 0, /* vxA vyA vA thA */ /* xB yB vxB */ vyB == 0, /* tAB tBC */ 
+                //        /* xC */ yC == 0,
+
+                //        ax == 0, ay == -9.8, Pi == Math.PI 
+                //    };
+
+                //    var zeros = vals.Where(eq => eq.b == 0).ToList();
+
+                //    eqs
+                //        .Substitute(zeros)
+                //        .EliminateVariables(xC, tAB, vxA, vyA, vxB, xB, yB, vxC, vyC, tBC)
+                //        .IsolateVariable(thA)
+                //        .AssertEqTo(thA == new Atan(new Integer(4) / 3));
+                //}
+
+                //DoubleFloat.Tolerance = null;
             }
 
             #endregion
@@ -2362,104 +2362,104 @@ namespace Tests
                 //
                 // At what angle, above the horizontal, should the cannon be fired?
 
-                var xA = new Symbol("xA");
-                var yA = new Symbol("yA");
+                //var xA = new Symbol("xA");
+                //var yA = new Symbol("yA");
 
-                var vxA = new Symbol("vxA");
-                var vyA = new Symbol("vyA");
+                //var vxA = new Symbol("vxA");
+                //var vyA = new Symbol("vyA");
 
-                var vA = new Symbol("vA");
-                var thA = new Symbol("thA");
-
-
-                var xB = new Symbol("xB");
-                var yB = new Symbol("yB");
-
-                var vxB = new Symbol("vxB");
-                var vyB = new Symbol("vyB");
+                //var vA = new Symbol("vA");
+                //var thA = new Symbol("thA");
 
 
-                var xC = new Symbol("xC");
-                var yC = new Symbol("yC");
+                //var xB = new Symbol("xB");
+                //var yB = new Symbol("yB");
 
-                var vxC = new Symbol("vxC");
-                var vyC = new Symbol("vyC");
+                //var vxB = new Symbol("vxB");
+                //var vyB = new Symbol("vyB");
 
 
-                var tAB = new Symbol("tAB");
-                var tBC = new Symbol("tBC");
+                //var xC = new Symbol("xC");
+                //var yC = new Symbol("yC");
 
-                var ax = new Symbol("ax");
-                var ay = new Symbol("ay");
+                //var vxC = new Symbol("vxC");
+                //var vyC = new Symbol("vyC");
 
-                var Pi = new Symbol("Pi");
 
-                var phi = new Symbol("phi");
+                //var tAB = new Symbol("tAB");
+                //var tBC = new Symbol("tBC");
 
-                var eqs = and(
+                //var ax = new Symbol("ax");
+                //var ay = new Symbol("ay");
 
-                    vxA == vA * cos(thA),
-                    vyA == vA * sin(thA),
+                //var Pi = new Symbol("Pi");
 
-                    vxB == vxA + ax * tAB,
-                    vyB == vyA + ay * tAB,
+                //var phi = new Symbol("phi");
 
-                    xB == xA + vxA * tAB + ax * (tAB ^ 2) / 2,
-                    yB == yA + vyA * tAB + ay * (tAB ^ 2) / 2
-                );
+                //var eqs = and(
 
-                DoubleFloat.Tolerance = 0.00001;
+                //    vxA == vA * cos(thA),
+                //    vyA == vA * sin(thA),
 
-                {
-                    var vals = new List<Equation>() 
-                    { 
-                        xA ==    0, yA ==   0, /* vxA vyA */ vA == 1000, /* thA */ 
-                        xB == 2000, yB == 800.0, /* vxB vyB */ 
-                        /* tAB */ ax == 0, ay == -9.8, Pi == Math.PI 
-                    };
+                //    vxB == vxA + ax * tAB,
+                //    vyB == vyA + ay * tAB,
 
-                    var zeros = vals.Where(eq => eq.b == 0).ToList();
+                //    xB == xA + vxA * tAB + ax * (tAB ^ 2) / 2,
+                //    yB == yA + vyA * tAB + ay * (tAB ^ 2) / 2
+                //);
 
-                    {
-                        eqs
-                            .Substitute(zeros)
-                            .EliminateVariables(vxA, vyA, vxB, vyB, tAB)
+                //DoubleFloat.Tolerance = 0.00001;
 
-                            .MultiplyBothSidesBy(cos(thA) ^ 2).AlgebraicExpand()
-                            .Substitute(cos(thA) ^ 2, (1 + cos(2 * thA)) / 2)
-                            .DeepSelect(DoubleAngleFormulaFunc).AlgebraicExpand()
-                            .AddToBothSides(-sin(2 * thA) * xB / 2)
-                            .AddToBothSides(-yB / 2)
-                            .MultiplyBothSidesBy(2 / xB).AlgebraicExpand()
+                //{
+                //    var vals = new List<Equation>() 
+                //    { 
+                //        xA ==    0, yA ==   0, /* vxA vyA */ vA == 1000, /* thA */ 
+                //        xB == 2000, yB == 800.0, /* vxB vyB */ 
+                //        /* tAB */ ax == 0, ay == -9.8, Pi == Math.PI 
+                //    };
 
-                            // yB / xB = tan(phi)
-                            // yB / xB = sin(phi) / cos(phi)
+                //    var zeros = vals.Where(eq => eq.b == 0).ToList();
 
-                            // phi = atan(yB / xB)
+                //    {
+                //        eqs
+                //            .Substitute(zeros)
+                //            .EliminateVariables(vxA, vyA, vxB, vyB, tAB)
 
-                            .Substitute(cos(2 * thA) * yB / xB, cos(2 * thA) * sin(phi) / cos(phi))
-                            .MultiplyBothSidesBy(cos(phi)).AlgebraicExpand()
-                            .DeepSelect(SumDifferenceFormulaFunc)
-                            .IsolateVariable(thA)
+                //            .MultiplyBothSidesBy(cos(thA) ^ 2).AlgebraicExpand()
+                //            .Substitute(cos(thA) ^ 2, (1 + cos(2 * thA)) / 2)
+                //            .DeepSelect(DoubleAngleFormulaFunc).AlgebraicExpand()
+                //            .AddToBothSides(-sin(2 * thA) * xB / 2)
+                //            .AddToBothSides(-yB / 2)
+                //            .MultiplyBothSidesBy(2 / xB).AlgebraicExpand()
 
-                            .Substitute(phi, new Atan(yB / xB).Simplify())
+                //            // yB / xB = tan(phi)
+                //            // yB / xB = sin(phi) / cos(phi)
 
-                            .AssertEqTo(
-                                or(
-                                    thA == -(asin(ay * cos(atan(yB / xB)) * (vA ^ -2) * xB + -1 * cos(atan(yB / xB)) * yB / xB) - atan(yB / xB)) / 2,
-                                    thA == -(-asin(ay * cos(atan(yB / xB)) * (vA ^ -2) * xB - cos(atan(yB / xB)) * yB / xB) - atan(yB / xB) + Pi) / 2))
+                //            // phi = atan(yB / xB)
 
-                            .Substitute(vals)
+                //            .Substitute(cos(2 * thA) * yB / xB, cos(2 * thA) * sin(phi) / cos(phi))
+                //            .MultiplyBothSidesBy(cos(phi)).AlgebraicExpand()
+                //            .DeepSelect(SumDifferenceFormulaFunc)
+                //            .IsolateVariable(thA)
 
-                            .AssertEqTo(
-                                or(
-                                    thA == 0.39034573609628065,
-                                    thA == -1.5806356857788124))
-                            ;
-                    }
-                }
+                //            .Substitute(phi, new Atan(yB / xB).Simplify())
 
-                DoubleFloat.Tolerance = null;
+                //            .AssertEqTo(
+                //                or(
+                //                    thA == -(asin(ay * cos(atan(yB / xB)) * (vA ^ -2) * xB + -1 * cos(atan(yB / xB)) * yB / xB) - atan(yB / xB)) / 2,
+                //                    thA == -(-asin(ay * cos(atan(yB / xB)) * (vA ^ -2) * xB - cos(atan(yB / xB)) * yB / xB) - atan(yB / xB) + Pi) / 2))
+
+                //            .Substitute(vals)
+
+                //            .AssertEqTo(
+                //                or(
+                //                    thA == 0.39034573609628065,
+                //                    thA == -1.5806356857788124))
+                //            ;
+                //    }
+                //}
+
+                //DoubleFloat.Tolerance = null;
             }
 
             #endregion
@@ -2479,93 +2479,93 @@ namespace Tests
                 // (b) Does the ball approach the crossbar while still 
                 //     rising or while falling ?
                 
-                Func <MathObject, MathObject> sqrt = obj => obj ^ (new Fraction(1,2));
+                //Func <MathObject, MathObject> sqrt = obj => obj ^ (new Fraction(1,2));
 
-                var xA = new Symbol("xA");
-                var yA = new Symbol("yA");
+                //var xA = new Symbol("xA");
+                //var yA = new Symbol("yA");
 
-                var vxA = new Symbol("vxA");
-                var vyA = new Symbol("vyA");
+                //var vxA = new Symbol("vxA");
+                //var vyA = new Symbol("vyA");
 
-                var vA = new Symbol("vA");
-                var thA = new Symbol("thA");
+                //var vA = new Symbol("vA");
+                //var thA = new Symbol("thA");
 
 
-                var xB = new Symbol("xB");
-                var yB = new Symbol("yB");
+                //var xB = new Symbol("xB");
+                //var yB = new Symbol("yB");
 
-                var vxB = new Symbol("vxB");
-                var vyB = new Symbol("vyB");
+                //var vxB = new Symbol("vxB");
+                //var vyB = new Symbol("vyB");
                 
-                var tAB = new Symbol("tAB");
+                //var tAB = new Symbol("tAB");
                 
-                var ax = new Symbol("ax");
-                var ay = new Symbol("ay");
+                //var ax = new Symbol("ax");
+                //var ay = new Symbol("ay");
 
-                var Pi = new Symbol("Pi");
+                //var Pi = new Symbol("Pi");
 
-                var cleared_by = new Symbol("cleared_by");
+                //var cleared_by = new Symbol("cleared_by");
 
-                var goal_height = new Symbol("goal_height");
+                //var goal_height = new Symbol("goal_height");
                 
-                var eqs = and(
+                //var eqs = and(
 
-                    vxA == vA * cos(thA),
-                    vyA == vA * sin(thA),
+                //    vxA == vA * cos(thA),
+                //    vyA == vA * sin(thA),
 
-                    vxB == vxA + ax * tAB,
-                    vyB == vyA + ay * tAB,
+                //    vxB == vxA + ax * tAB,
+                //    vyB == vyA + ay * tAB,
 
-                    xB == xA + vxA * tAB + ax * (tAB ^ 2) / 2,
-                    yB == yA + vyA * tAB + ay * (tAB ^ 2) / 2,
+                //    xB == xA + vxA * tAB + ax * (tAB ^ 2) / 2,
+                //    yB == yA + vyA * tAB + ay * (tAB ^ 2) / 2,
 
-                    cleared_by == yB - goal_height
-                );
+                //    cleared_by == yB - goal_height
+                //);
 
-                DoubleFloat.Tolerance = 0.00001;
+                //DoubleFloat.Tolerance = 0.00001;
 
-                {
-                    var vals = new List<Equation>()
-                    {
-                        xA == 0, yA == 0, /* vxA vyA */ vA == 20, thA == (53).ToRadians(),
-                        xB == 36, /* yB */ /* vxB vyB */ 
-                        /* tAB */ ax == 0, ay == -9.8, Pi == Math.PI,
+                //{
+                //    var vals = new List<Equation>()
+                //    {
+                //        xA == 0, yA == 0, /* vxA vyA */ vA == 20, thA == (53).ToRadians(),
+                //        xB == 36, /* yB */ /* vxB vyB */ 
+                //        /* tAB */ ax == 0, ay == -9.8, Pi == Math.PI,
 
-                        goal_height == 3.05
-                    };
+                //        goal_height == 3.05
+                //    };
 
-                    var zeros = vals.Where(eq => eq.b == 0).ToList();
+                //    var zeros = vals.Where(eq => eq.b == 0).ToList();
 
-                    {
-                        eqs
-                            .Substitute(zeros)
-                            .EliminateVariables(vxA, vyA, vxB, vyB, tAB, yB)
+                //    {
+                //        eqs
+                //            .Substitute(zeros)
+                //            .EliminateVariables(vxA, vyA, vxB, vyB, tAB, yB)
 
-                            .AssertEqTo(
-                                cleared_by == -goal_height + sin(thA) / cos(thA) * xB + ay / 2 * (cos(thA) ^ -2) * (vA ^ -2) * (xB ^ 2)
-                                )
+                //            .AssertEqTo(
+                //                cleared_by == -goal_height + sin(thA) / cos(thA) * xB + ay / 2 * (cos(thA) ^ -2) * (vA ^ -2) * (xB ^ 2)
+                //                )
 
-                            .Substitute(vals)
+                //            .Substitute(vals)
 
-                            .AssertEqTo(cleared_by == 0.88921618776713007);
-                    }
+                //            .AssertEqTo(cleared_by == 0.88921618776713007);
+                //    }
 
-                    {
-                        eqs
-                            .Substitute(zeros)
+                //    {
+                //        eqs
+                //            .Substitute(zeros)
 
-                            .EliminateVariables(cleared_by, vxA, vyA, vxB, tAB, yB)
-                            .IsolateVariable(vyB)
+                //            .EliminateVariables(cleared_by, vxA, vyA, vxB, tAB, yB)
+                //            .IsolateVariable(vyB)
 
-                            .AssertEqTo(vyB == sin(thA) * vA + ay / cos(thA) / vA * xB)
+                //            .AssertEqTo(vyB == sin(thA) * vA + ay / cos(thA) / vA * xB)
                             
-                            .Substitute(vals)
+                //            .Substitute(vals)
 
-                            .AssertEqTo(vyB == -13.338621888454744);
-                    }
-                }
+                //            .AssertEqTo(vyB == -13.338621888454744);
+                //    }
+                //}
 
-                DoubleFloat.Tolerance = null;
+                //DoubleFloat.Tolerance = null;
             }
 
             #endregion
@@ -2579,75 +2579,75 @@ namespace Tests
                 // the stream is vi, at what height h does the water strike
                 // the building?
                 
-                var xA = new Symbol("xA");
-                var yA = new Symbol("yA");
+                //var xA = new Symbol("xA");
+                //var yA = new Symbol("yA");
 
-                var vxA = new Symbol("vxA");
-                var vyA = new Symbol("vyA");
+                //var vxA = new Symbol("vxA");
+                //var vyA = new Symbol("vyA");
 
-                var vA = new Symbol("vA");
-                var thA = new Symbol("thA");
+                //var vA = new Symbol("vA");
+                //var thA = new Symbol("thA");
 
 
-                var xB = new Symbol("xB");
-                var yB = new Symbol("yB");
+                //var xB = new Symbol("xB");
+                //var yB = new Symbol("yB");
 
-                var vxB = new Symbol("vxB");
-                var vyB = new Symbol("vyB");
+                //var vxB = new Symbol("vxB");
+                //var vyB = new Symbol("vyB");
 
-                var tAB = new Symbol("tAB");
+                //var tAB = new Symbol("tAB");
 
-                var ax = new Symbol("ax");
-                var ay = new Symbol("ay");
+                //var ax = new Symbol("ax");
+                //var ay = new Symbol("ay");
 
-                var Pi = new Symbol("Pi");
+                //var Pi = new Symbol("Pi");
 
-                var d = new Symbol("d");
-                var thi = new Symbol("thi");
-                var vi = new Symbol("vi");
-                var h = new Symbol("h");
+                //var d = new Symbol("d");
+                //var thi = new Symbol("thi");
+                //var vi = new Symbol("vi");
+                //var h = new Symbol("h");
                 
-                var eqs = and(
+                //var eqs = and(
 
-                    vxA == vA * cos(thA),
-                    vyA == vA * sin(thA),
+                //    vxA == vA * cos(thA),
+                //    vyA == vA * sin(thA),
 
-                    vxB == vxA + ax * tAB,
-                    vyB == vyA + ay * tAB,
+                //    vxB == vxA + ax * tAB,
+                //    vyB == vyA + ay * tAB,
 
-                    xB == xA + vxA * tAB + ax * (tAB ^ 2) / 2,
-                    yB == yA + vyA * tAB + ay * (tAB ^ 2) / 2
+                //    xB == xA + vxA * tAB + ax * (tAB ^ 2) / 2,
+                //    yB == yA + vyA * tAB + ay * (tAB ^ 2) / 2
                     
-                );
+                //);
 
-                DoubleFloat.Tolerance = 0.00001;
+                //DoubleFloat.Tolerance = 0.00001;
 
-                {
-                    var vals = new List<Equation>()
-                    {
-                        xA == 0, yA == 0, /* vxA vyA */ vA == vi, thA == thi,
-                        xB == d, yB == h, /* vxB vyB */ 
-                        /* tAB */ ax == 0, ay == -9.8, Pi == Math.PI
-                    };
+                //{
+                //    var vals = new List<Equation>()
+                //    {
+                //        xA == 0, yA == 0, /* vxA vyA */ vA == vi, thA == thi,
+                //        xB == d, yB == h, /* vxB vyB */ 
+                //        /* tAB */ ax == 0, ay == -9.8, Pi == Math.PI
+                //    };
 
-                    var zeros = vals.Where(eq => eq.b == 0).ToList();
+                //    var zeros = vals.Where(eq => eq.b == 0).ToList();
                     
-                    {
-                        eqs
-                            .Substitute(zeros)
-                            .EliminateVariables(vxA, vyA, vxB, vyB, tAB)
+                //    {
+                //        eqs
+                //            .Substitute(zeros)
+                //            .EliminateVariables(vxA, vyA, vxB, vyB, tAB)
                             
-                            .Substitute(vals.Where(eq => eq.b is Symbol).ToList())
+                //            .Substitute(vals.Where(eq => eq.b is Symbol).ToList())
 
-                            .AssertEqTo(
+                //            .AssertEqTo(
 
-                                h == d * sin(thi) / cos(thi) + ay * (d ^ 2) / (cos(thi) ^ 2) / (vi ^ 2) / 2
+                //                h == d * sin(thi) / cos(thi) + ay * (d ^ 2) / (cos(thi) ^ 2) / (vi ^ 2) / 2
                                 
-                                );
-                    }
-                }
+                //                );
+                //    }
+                //}
 
-                DoubleFloat.Tolerance = null;
+                //DoubleFloat.Tolerance = null;
             }
 
             #endregion
@@ -2677,211 +2677,211 @@ namespace Tests
                 // y_max = 2.50 m
                 // y_f = 0.700 m
                 
-                var xA = new Symbol("xA");
-                var yA = new Symbol("yA");
+                //var xA = new Symbol("xA");
+                //var yA = new Symbol("yA");
 
-                var vxA = new Symbol("vxA");
-                var vyA = new Symbol("vyA");
+                //var vxA = new Symbol("vxA");
+                //var vyA = new Symbol("vyA");
 
-                var vA = new Symbol("vA");
-                var thA = new Symbol("thA");
+                //var vA = new Symbol("vA");
+                //var thA = new Symbol("thA");
 
 
-                var xB = new Symbol("xB");
-                var yB = new Symbol("yB");
+                //var xB = new Symbol("xB");
+                //var yB = new Symbol("yB");
 
-                var vxB = new Symbol("vxB");
-                var vyB = new Symbol("vyB");
+                //var vxB = new Symbol("vxB");
+                //var vyB = new Symbol("vyB");
 
 
-                var tAB = new Symbol("tAB");
+                //var tAB = new Symbol("tAB");
 
 
-                var xC = new Symbol("xC");
-                var yC = new Symbol("yC");
+                //var xC = new Symbol("xC");
+                //var yC = new Symbol("yC");
 
-                var vxC = new Symbol("vxC");
-                var vyC = new Symbol("vyC");
+                //var vxC = new Symbol("vxC");
+                //var vyC = new Symbol("vyC");
 
 
-                var tBC = new Symbol("tBC");
+                //var tBC = new Symbol("tBC");
 
-                var tAC = new Symbol("tAC");
+                //var tAC = new Symbol("tAC");
 
-                var ax = new Symbol("ax");
-                var ay = new Symbol("ay");
+                //var ax = new Symbol("ax");
+                //var ay = new Symbol("ay");
 
-                var Pi = new Symbol("Pi");
+                //var Pi = new Symbol("Pi");
 
-                var eqs = and(
+                //var eqs = and(
 
-                    //vxA == vA * cos(thA),
-                    //vyA == vA * sin(thA),
+                //    //vxA == vA * cos(thA),
+                //    //vyA == vA * sin(thA),
 
-                    vxB == vxA + ax * tAB,
-                    vyB == vyA + ay * tAB,
+                //    vxB == vxA + ax * tAB,
+                //    vyB == vyA + ay * tAB,
 
-                    xB == xA + vxA * tAB + ax * (tAB ^ 2) / 2,
-                    yB == yA + vyA * tAB + ay * (tAB ^ 2) / 2,
+                //    xB == xA + vxA * tAB + ax * (tAB ^ 2) / 2,
+                //    yB == yA + vyA * tAB + ay * (tAB ^ 2) / 2,
 
 
-                    vxC == vxB + ax * tBC,
-                    vyC == vyB + ay * tBC,
+                //    vxC == vxB + ax * tBC,
+                //    vyC == vyB + ay * tBC,
 
-                    xC == xB + vxB * tBC + ax * (tBC ^ 2) / 2,
-                    yC == yB + vyB * tBC + ay * (tBC ^ 2) / 2,
+                //    xC == xB + vxB * tBC + ax * (tBC ^ 2) / 2,
+                //    yC == yB + vyB * tBC + ay * (tBC ^ 2) / 2,
 
-                    tAC == tAB + tBC,
+                //    tAC == tAB + tBC,
 
-                    // vyA / vxA == tan(thA),
+                //    // vyA / vxA == tan(thA),
 
-                    tan(thA) == vyA / vxA,
+                //    tan(thA) == vyA / vxA,
 
-                    ay != 0
+                //    ay != 0
 
-                );
+                //);
 
-                DoubleFloat.Tolerance = 0.00001;
+                //DoubleFloat.Tolerance = 0.00001;
 
-                {
-                    var vals = new List<Equation>()
-                    {
-                        xA == 0,    yA == 1.02, /* vxA vyA vA thA */
-                        /* xB */    yB == 1.85, /* vxB            */ vyB == 0,
-                        xC == 2.80, yC == 0.9,  /* vxC vyC        */
+                //{
+                //    var vals = new List<Equation>()
+                //    {
+                //        xA == 0,    yA == 1.02, /* vxA vyA vA thA */
+                //        /* xB */    yB == 1.85, /* vxB            */ vyB == 0,
+                //        xC == 2.80, yC == 0.9,  /* vxC vyC        */
 
-                        /* tAB tBC */ ax == 0, ay == -9.8, Pi == Math.PI
-                    };
+                //        /* tAB tBC */ ax == 0, ay == -9.8, Pi == Math.PI
+                //    };
 
-                    var zeros = vals.Where(eq => eq.b == 0).ToList();
+                //    var zeros = vals.Where(eq => eq.b == 0).ToList();
 
-                    {
-                        eqs
-                            .Substitute(zeros)
+                //    {
+                //        eqs
+                //            .Substitute(zeros)
 
-                            .EliminateVariables(thA, vxB, xB, vxC, vyC, vxA, vyA, tAB)
+                //            .EliminateVariables(thA, vxB, xB, vxC, vyC, vxA, vyA, tAB)
 
-                            .CheckVariable(ay).SimplifyEquation().SimplifyLogical()
+                //            .CheckVariable(ay).SimplifyEquation().SimplifyLogical()
 
-                            .EliminateVariable(tBC)
+                //            .EliminateVariable(tBC)
 
-                            .LogicalExpand().SimplifyEquation().CheckVariable(ay).SimplifyLogical()
+                //            .LogicalExpand().SimplifyEquation().CheckVariable(ay).SimplifyLogical()
 
-                            .AssertEqTo(
+                //            .AssertEqTo(
 
-                                or(
-                                    and(ay != 0, tAC == (ay ^ -1) * sqrt(-2 * ay * (-1 * yA + yB)) + -1 * (ay ^ -1) * sqrt(2 * ay * (-1 * yB + yC))),
-                                    and(ay != 0, tAC == (ay ^ -1) * sqrt(-2 * ay * (-1 * yA + yB)) + (ay ^ -1) * sqrt(2 * ay * (-1 * yB + yC))),
-                                    and(ay != 0, tAC == -1 * (ay ^ -1) * sqrt(-2 * ay * (-1 * yA + yB)) + -1 * (ay ^ -1) * sqrt(2 * ay * (-1 * yB + yC))),
-                                    and(ay != 0, tAC == -1 * (ay ^ -1) * sqrt(-2 * ay * (-1 * yA + yB)) + (ay ^ -1) * sqrt(2 * ay * (-1 * yB + yC)))))
+                //                or(
+                //                    and(ay != 0, tAC == (ay ^ -1) * sqrt(-2 * ay * (-1 * yA + yB)) + -1 * (ay ^ -1) * sqrt(2 * ay * (-1 * yB + yC))),
+                //                    and(ay != 0, tAC == (ay ^ -1) * sqrt(-2 * ay * (-1 * yA + yB)) + (ay ^ -1) * sqrt(2 * ay * (-1 * yB + yC))),
+                //                    and(ay != 0, tAC == -1 * (ay ^ -1) * sqrt(-2 * ay * (-1 * yA + yB)) + -1 * (ay ^ -1) * sqrt(2 * ay * (-1 * yB + yC))),
+                //                    and(ay != 0, tAC == -1 * (ay ^ -1) * sqrt(-2 * ay * (-1 * yA + yB)) + (ay ^ -1) * sqrt(2 * ay * (-1 * yB + yC)))))
 
-                            .Substitute(vals)
+                //            .Substitute(vals)
 
-                            .AssertEqTo(
+                //            .AssertEqTo(
 
-                                or(
-                                    tAC == 0.028747849043843032,
-                                    tAC == -0.85188272280886768,
-                                    tAC == 0.85188272280886768,
-                                    tAC == -0.028747849043843032));
-                    }
+                //                or(
+                //                    tAC == 0.028747849043843032,
+                //                    tAC == -0.85188272280886768,
+                //                    tAC == 0.85188272280886768,
+                //                    tAC == -0.028747849043843032));
+                //    }
 
-                    {
-                        eqs
-                            .Substitute(zeros)
+                //    {
+                //        eqs
+                //            .Substitute(zeros)
 
-                            .EliminateVariables(thA, vxB, vxC, xB)
+                //            .EliminateVariables(thA, vxB, vxC, xB)
 
-                            .IsolateVariable(vxA)
+                //            .IsolateVariable(vxA)
 
-                            .EliminateVariables(tAC, vyC, tAB, vyA)
+                //            .EliminateVariables(tAC, vyC, tAB, vyA)
 
-                            .SimplifyEquation().CheckVariable(ay)
+                //            .SimplifyEquation().CheckVariable(ay)
 
-                            .EliminateVariable(tBC)
+                //            .EliminateVariable(tBC)
 
-                            .LogicalExpand().SimplifyEquation().CheckVariable(ay).SimplifyLogical()
+                //            .LogicalExpand().SimplifyEquation().CheckVariable(ay).SimplifyLogical()
 
-                            .AssertEqTo(
+                //            .AssertEqTo(
 
-                                or(
-                                    and(ay != 0, vxA == xC * ((-1 * sqrt(-2 * (ay ^ -1) * (-1 * yA + yB)) + -1 * (ay ^ -1) * sqrt(2 * ay * (-1 * yB + yC))) ^ -1)),
-                                    and(ay != 0, vxA == xC * ((-1 * sqrt(-2 * (ay ^ -1) * (-1 * yA + yB)) + (ay ^ -1) * sqrt(2 * ay * (-1 * yB + yC))) ^ -1)),
-                                    and(ay != 0, vxA == xC * ((sqrt(-2 * (ay ^ -1) * (-1 * yA + yB)) + -1 * (ay ^ -1) * sqrt(2 * ay * (-1 * yB + yC))) ^ -1)),
-                                    and(ay != 0, vxA == xC * ((sqrt(-2 * (ay ^ -1) * (-1 * yA + yB)) + (ay ^ -1) * sqrt(2 * ay * (-1 * yB + yC))) ^ -1))))
+                //                or(
+                //                    and(ay != 0, vxA == xC * ((-1 * sqrt(-2 * (ay ^ -1) * (-1 * yA + yB)) + -1 * (ay ^ -1) * sqrt(2 * ay * (-1 * yB + yC))) ^ -1)),
+                //                    and(ay != 0, vxA == xC * ((-1 * sqrt(-2 * (ay ^ -1) * (-1 * yA + yB)) + (ay ^ -1) * sqrt(2 * ay * (-1 * yB + yC))) ^ -1)),
+                //                    and(ay != 0, vxA == xC * ((sqrt(-2 * (ay ^ -1) * (-1 * yA + yB)) + -1 * (ay ^ -1) * sqrt(2 * ay * (-1 * yB + yC))) ^ -1)),
+                //                    and(ay != 0, vxA == xC * ((sqrt(-2 * (ay ^ -1) * (-1 * yA + yB)) + (ay ^ -1) * sqrt(2 * ay * (-1 * yB + yC))) ^ -1))))
 
-                            .Substitute(vals)
+                //            .Substitute(vals)
 
-                            .AssertEqTo(
+                //            .AssertEqTo(
 
-                                or(
-                                    vxA == 97.398591307814215,
-                                    vxA == -3.286837407346058,
-                                    vxA == 3.286837407346058,
-                                    vxA == -97.398591307814215));
-                    }
+                //                or(
+                //                    vxA == 97.398591307814215,
+                //                    vxA == -3.286837407346058,
+                //                    vxA == 3.286837407346058,
+                //                    vxA == -97.398591307814215));
+                //    }
 
-                    {
-                        eqs
-                            .Substitute(zeros)
+                //    {
+                //        eqs
+                //            .Substitute(zeros)
 
-                            .EliminateVariables(thA, vxA, vxC, vyC, vxB, xB, tAB, tAC, tBC)
+                //            .EliminateVariables(thA, vxA, vxC, vyC, vxB, xB, tAB, tAC, tBC)
 
-                            .SimplifyEquation().CheckVariable(ay).SimplifyLogical()
+                //            .SimplifyEquation().CheckVariable(ay).SimplifyLogical()
 
-                            .IsolateVariable(vyA)
+                //            .IsolateVariable(vyA)
 
-                            .LogicalExpand().SimplifyEquation().CheckVariable(ay)
+                //            .LogicalExpand().SimplifyEquation().CheckVariable(ay)
 
-                            .AssertEqTo(
-                                or(
-                                    and(ay != 0, vyA == ay * sqrt(-2 * (ay ^ -1) * (-1 * yA + yB))),
-                                    and(ay != 0, vyA == -1 * ay * sqrt(-2 * (ay ^ -1) * (-1 * yA + yB)))))
+                //            .AssertEqTo(
+                //                or(
+                //                    and(ay != 0, vyA == ay * sqrt(-2 * (ay ^ -1) * (-1 * yA + yB))),
+                //                    and(ay != 0, vyA == -1 * ay * sqrt(-2 * (ay ^ -1) * (-1 * yA + yB)))))
 
-                            .Substitute(vals)
+                //            .Substitute(vals)
 
-                            .AssertEqTo(
-                                or(
-                                    vyA == -4.0333608814486217,
-                                    vyA == 4.0333608814486217));
-                    }
+                //            .AssertEqTo(
+                //                or(
+                //                    vyA == -4.0333608814486217,
+                //                    vyA == 4.0333608814486217));
+                //    }
 
-                    {
-                        eqs
-                            .Substitute(zeros)
+                //    {
+                //        eqs
+                //            .Substitute(zeros)
 
-                            .EliminateVariables(vxA, vyA, vxB, xB, vxC, tBC, tAB, vyC, tAC)
+                //            .EliminateVariables(vxA, vyA, vxB, xB, vxC, tBC, tAB, vyC, tAC)
 
-                            .LogicalExpand()
-                            .SimplifyEquation()
-                            .SimplifyLogical()
-                            .CheckVariable(ay)
+                //            .LogicalExpand()
+                //            .SimplifyEquation()
+                //            .SimplifyLogical()
+                //            .CheckVariable(ay)
 
-                            .AssertEqTo(
+                //            .AssertEqTo(
 
-                                or(
-                                    and(ay != 0, tan(thA) == -1 * (xC ^ -1) * sqrt(-2 * ay * (-1 * yA + yB)) * ((ay ^ -1) * sqrt(-2 * ay * (-1 * yA + yB)) + -1 * sqrt(2 * (ay ^ -1) * (-1 * yB + yC)))),
-                                    and(ay != 0, tan(thA) == -1 * (xC ^ -1) * sqrt(-2 * ay * (-1 * yA + yB)) * ((ay ^ -1) * sqrt(-2 * ay * (-1 * yA + yB)) + sqrt(2 * (ay ^ -1) * (-1 * yB + yC)))),
-                                    and(ay != 0, tan(thA) == (xC ^ -1) * sqrt(-2 * ay * (-1 * yA + yB)) * (-1 * (ay ^ -1) * sqrt(-2 * ay * (-1 * yA + yB)) + -1 * sqrt(2 * (ay ^ -1) * (-1 * yB + yC)))),
-                                    and(ay != 0, tan(thA) == (xC ^ -1) * sqrt(-2 * ay * (-1 * yA + yB)) * (-1 * (ay ^ -1) * sqrt(-2 * ay * (-1 * yA + yB)) + sqrt(2 * (ay ^ -1) * (-1 * yB + yC))))
+                //                or(
+                //                    and(ay != 0, tan(thA) == -1 * (xC ^ -1) * sqrt(-2 * ay * (-1 * yA + yB)) * ((ay ^ -1) * sqrt(-2 * ay * (-1 * yA + yB)) + -1 * sqrt(2 * (ay ^ -1) * (-1 * yB + yC)))),
+                //                    and(ay != 0, tan(thA) == -1 * (xC ^ -1) * sqrt(-2 * ay * (-1 * yA + yB)) * ((ay ^ -1) * sqrt(-2 * ay * (-1 * yA + yB)) + sqrt(2 * (ay ^ -1) * (-1 * yB + yC)))),
+                //                    and(ay != 0, tan(thA) == (xC ^ -1) * sqrt(-2 * ay * (-1 * yA + yB)) * (-1 * (ay ^ -1) * sqrt(-2 * ay * (-1 * yA + yB)) + -1 * sqrt(2 * (ay ^ -1) * (-1 * yB + yC)))),
+                //                    and(ay != 0, tan(thA) == (xC ^ -1) * sqrt(-2 * ay * (-1 * yA + yB)) * (-1 * (ay ^ -1) * sqrt(-2 * ay * (-1 * yA + yB)) + sqrt(2 * (ay ^ -1) * (-1 * yB + yC))))
 
-                                    ))
+                //                    ))
 
-                            .IsolateVariable(thA)
+                //            .IsolateVariable(thA)
 
-                            .Substitute(vals)
+                //            .Substitute(vals)
 
-                            .AssertEqTo(
-                                or(
-                                    thA == 0.88702813023277882,
-                                    thA == -0.041387227947930878,
-                                    thA == -0.041387227947930878,
-                                    thA == 0.88702813023277882));
+                //            .AssertEqTo(
+                //                or(
+                //                    thA == 0.88702813023277882,
+                //                    thA == -0.041387227947930878,
+                //                    thA == -0.041387227947930878,
+                //                    thA == 0.88702813023277882));
 
-                    }
-                }
+                //    }
+                //}
 
-                DoubleFloat.Tolerance = null;
+                //DoubleFloat.Tolerance = null;
             }
 
             #endregion

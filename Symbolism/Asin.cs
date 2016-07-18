@@ -1,8 +1,10 @@
 using System;
+using System.Diagnostics;
 
 namespace Symbolism
 {
 	// TODO: Add Acos
+	[DebuggerDisplay("{StandardForm()}")]
 	public class Asin : Function
 	{
 		private static MathObject AsinProc(params MathObject[] ls)

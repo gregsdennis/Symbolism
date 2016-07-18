@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Symbolism
 {
+	[DebuggerDisplay("{StandardForm()}")]
 	public class Product : MathObject, IEquatable<Product>
 	{
 		public IReadOnlyList<MathObject> Elements { get; }

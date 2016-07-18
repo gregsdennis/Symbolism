@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Symbolism
 {
+	[DebuggerDisplay("{StandardForm()}")]
 	public class Or : Function
 	{
 		private static MathObject OrProc(params MathObject[] ls)

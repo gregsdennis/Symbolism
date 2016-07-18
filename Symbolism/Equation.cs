@@ -1,7 +1,9 @@
 using System;
+using System.Diagnostics;
 
 namespace Symbolism
 {
+	[DebuggerDisplay("{StandardForm()}")]
 	public class Equation : MathObject, IEquatable<Equation>
 	{
 		public enum Operators

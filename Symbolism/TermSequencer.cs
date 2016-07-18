@@ -74,8 +74,8 @@ namespace Symbolism
 
 			Sum uSum = u as Sum, vSum = v as Sum;
 			if (uSum != null && vSum != null)
-				return O3(uSum.Elements.Reverse<MathObject>().ToList(),
-						  vSum.Elements.Reverse<MathObject>().ToList());
+				return O3(uSum.Elements.Reverse().ToList(),
+						  vSum.Elements.Reverse().ToList());
 
 			Power uPow = u as Power, vPow = v as Power;
 			if (uPow != null && vPow != null)

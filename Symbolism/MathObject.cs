@@ -1,7 +1,9 @@
 using System;
+using System.Diagnostics;
 
 namespace Symbolism
 {
+	[DebuggerDisplay("{StandardForm()}")]
 	public abstract class MathObject
 	{
 		//////////////////////////////////////////////////////////////////////

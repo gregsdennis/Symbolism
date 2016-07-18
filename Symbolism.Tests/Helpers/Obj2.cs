@@ -1,7 +1,6 @@
-﻿using Symbolism;
-using static Symbolism.Functions;
+﻿using static Symbolism.Functions;
 
-namespace Tests
+namespace Symbolism.Tests
 {
 	public class Obj2
 	{

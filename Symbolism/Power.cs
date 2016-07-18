@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Symbolism
 {
+	[DebuggerDisplay("{StandardForm()}")]
 	public class Power : MathObject, IEquatable<Power>
 	{
 		public MathObject Base { get; }

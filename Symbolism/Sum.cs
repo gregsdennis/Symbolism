@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Symbolism
 {
+	[DebuggerDisplay("{StandardForm()}")]
 	public class Sum : MathObject
 	{
 		private readonly List<MathObject> _elements;
@@ -166,19 +168,19 @@ namespace Symbolism
 			return new Sum(res);
 		}
 
-		public override string FullForm() => string.Join(" + ", _elements.ConvertAll(elt => elt.Precedence < Precedence
-																							   ? $"({elt})"
-																							   : $"{elt}"));
+		public override string FullForm() => string.Join(" + ", _elements.Select(elt => elt.Precedence < Precedence
+			                                                                                ? $"({elt})"
+			                                                                                : $"{elt}"));
 
 		public override string StandardForm()
 		{
-			var result = string.Join(" ", _elements.ConvertAll(elt =>
+			var result = string.Join(" ", _elements.Select(elt =>
 				{
 					var elt_ = elt.Coefficient() < 0 ? elt*-1 : elt;
 
-					var elt__ = elt.Coefficient() < 0 && elt_ is Sum || (elt is Power && (elt as Power).Exponent != new Fraction(1,2))
-									? $"({elt_})"
-									: $"{elt_}";
+					var elt__ = elt.Coefficient() < 0 && elt_ is Sum || (elt is Power && (elt as Power).Exponent != new Fraction(1, 2))
+						            ? $"({elt_})"
+						            : $"{elt_}";
 
 					return elt.Coefficient() < 0 ? $"- {elt__}" : $"+ {elt__}";
 				}));

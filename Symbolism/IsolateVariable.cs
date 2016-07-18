@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using static Symbolism.Constants;
+
 namespace Symbolism
 {
 	public static partial class Extensions
@@ -212,7 +214,7 @@ namespace Symbolism
 			var a_sin = eq.a as Sin;
 			if (a_sin != null)
 				return new Or(a_sin.Parameters[0] == new Asin(eq.b),
-				              a_sin.Parameters[0] == new Symbol("Pi") - new Asin(eq.b)).IsolateVariable(sym);
+				              a_sin.Parameters[0] == pi - new Asin(eq.b)).IsolateVariable(sym);
 
 			// tan(x) == y
 

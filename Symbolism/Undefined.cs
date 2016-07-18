@@ -9,5 +9,10 @@ namespace Symbolism
 			Instance = new Undefined();
 		}
 		private Undefined() {}
+
+		public override string ToString()
+		{
+			return "undef";
+		}
 	}
 }

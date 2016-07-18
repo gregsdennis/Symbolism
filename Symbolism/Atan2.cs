@@ -1,7 +1,9 @@
 using System;
+using System.Diagnostics;
 
 namespace Symbolism
 {
+	[DebuggerDisplay("{StandardForm()}")]
 	public class Atan2 : Function
 	{
 		private static MathObject Atan2Proc(params MathObject[] ls)

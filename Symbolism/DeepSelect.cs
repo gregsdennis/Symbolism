@@ -23,7 +23,7 @@ namespace Symbolism
 
 			var equation = result as Equation;
 			if (equation != null)
-				return new Equation(equation.a.DeepSelect(proc),equation.b.DeepSelect(proc),equation.Operator);
+				return new Equation(equation.a.DeepSelect(proc), equation.b.DeepSelect(proc), equation.Operator);
 
 			var sum = result as Sum;
 			if (sum != null)

@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Symbolism
 {
+	[DebuggerDisplay("{StandardForm()}")]
 	class Difference : MathObject
 	{
 		public List<MathObject> Elements { get; }
