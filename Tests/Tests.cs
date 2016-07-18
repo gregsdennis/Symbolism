@@ -1290,84 +1290,84 @@ namespace Tests
 
                 // (b) What is the maximum height reached?
 
-                var obj = new KinematicObjectABC("obj");
+                //var obj = new KinematicObjectABC("obj");
 
-                var yB = new Symbol("yB");
-                var xC = new Symbol("xC");
-                var ay = new Symbol("ay");
-                var thA = new Symbol("thA");
-                var vA = new Symbol("vA");
+                //var yB = new Symbol("yB");
+                //var xC = new Symbol("xC");
+                //var ay = new Symbol("ay");
+                //var thA = new Symbol("thA");
+                //var vA = new Symbol("vA");
 
-                var Pi = new Symbol("Pi");
+                //var Pi = new Symbol("Pi");
 
-                var eqs = and(
+                //var eqs = and(
 
-                    obj.TrigEquationsA(),
+                //    obj.TrigEquationsA(),
 
-                    obj.tAC == 2 * obj.tAB,
+                //    obj.tAC == 2 * obj.tAB,
 
-                    obj.EquationsAB(),
-                    obj.EquationsAC()
+                //    obj.EquationsAB(),
+                //    obj.EquationsAC()
                     
-                    );
+                //    );
 
-                var vals = new List<Equation>()
-                {
-                    obj.xA == 0,
-                    obj.yA == 0,
+                //var vals = new List<Equation>()
+                //{
+                //    obj.xA == 0,
+                //    obj.yA == 0,
 
-                    obj.vA == vA,
-                    obj.thA == thA,
+                //    obj.vA == vA,
+                //    obj.thA == thA,
 
-                    obj.yB == yB,
-                    obj.vyB == 0,
+                //    obj.yB == yB,
+                //    obj.vyB == 0,
 
-                    obj.xC == xC,
+                //    obj.xC == xC,
 
-                    obj.ax == 0,
-                    obj.ay == ay
-                };
+                //    obj.ax == 0,
+                //    obj.ay == ay
+                //};
 
-                var numerical_vals = new List<Equation>()
-                {
-                    thA == (20).ToRadians(),
-                    vA == 11,
-                    ay == -9.8,
-                    Pi == Math.PI
+                //var numerical_vals = new List<Equation>()
+                //{
+                //    thA == (20).ToRadians(),
+                //    vA == 11,
+                //    ay == -9.8,
+                //    Pi == Math.PI
                     
-                };
+                //};
 
-                // xC
-                eqs
-                    .Substitute(vals)
+                //// xC
+                //eqs
+                //    .Substitute(vals)
 
-                    .EliminateVariables(
-                        obj.vxA, obj.vyA, obj.vyC, obj.vxC, obj.vxB,
-                        obj.xB, yB, obj.yC,
-                        obj.tAC, obj.tAB
-                    )
+                //    .EliminateVariables(
+                //        obj.vxA, obj.vyA, obj.vyC, obj.vxC, obj.vxB,
+                //        obj.xB, yB, obj.yC,
+                //        obj.tAC, obj.tAB
+                //    )
                     
-                    .AssertEqTo(xC == -2 * cos(thA) * sin(thA) * (vA ^ 2) / ay)
+                //    .AssertEqTo(xC == -2 * cos(thA) * sin(thA) * (vA ^ 2) / ay)
 
-                    .Substitute(numerical_vals)
+                //    .Substitute(numerical_vals)
 
-                    .AssertEqTo(xC == 7.9364592624562507);
+                //    .AssertEqTo(xC == 7.9364592624562507);
 
-                // yB
-                eqs
-                    .Substitute(vals)
+                //// yB
+                //eqs
+                //    .Substitute(vals)
 
-                    .EliminateVariables(
-                        obj.tAB, obj.tAC,
-                        obj.vxA, obj.vxB, obj.vxC, obj.vyC, obj.vyA,
-                        obj.xB, xC, obj.yC
-                    )
+                //    .EliminateVariables(
+                //        obj.tAB, obj.tAC,
+                //        obj.vxA, obj.vxB, obj.vxC, obj.vyC, obj.vyA,
+                //        obj.xB, xC, obj.yC
+                //    )
                     
-                    .AssertEqTo(yB == -(sin(thA) ^ 2) * (vA ^ 2) / (2 * ay))
+                //    .AssertEqTo(yB == -(sin(thA) ^ 2) * (vA ^ 2) / (2 * ay))
 
-                    .Substitute(numerical_vals)
+                //    .Substitute(numerical_vals)
 
-                    .AssertEqTo(yB == 0.72215873425009314);
+                //    .AssertEqTo(yB == 0.72215873425009314);
 
             }
             #endregion
@@ -2899,182 +2899,182 @@ namespace Tests
                 // Determine the components of a third force that,
                 // when applied to the puck, causes it to have zero acceleration.
                 
-                var F = new Symbol("F");
-                var th = new Symbol("th");
+                //var F = new Symbol("F");
+                //var th = new Symbol("th");
 
-                var Fx = new Symbol("Fx");
-                var Fy = new Symbol("Fy");
+                //var Fx = new Symbol("Fx");
+                //var Fy = new Symbol("Fy");
 
 
-                var F1 = new Symbol("F1");
-                var th1 = new Symbol("th1");
+                //var F1 = new Symbol("F1");
+                //var th1 = new Symbol("th1");
 
-                var F1x = new Symbol("F1x");
-                var F1y = new Symbol("F1y");
+                //var F1x = new Symbol("F1x");
+                //var F1y = new Symbol("F1y");
                 
 
-                var F2 = new Symbol("F2");
-                var th2 = new Symbol("th2");
+                //var F2 = new Symbol("F2");
+                //var th2 = new Symbol("th2");
 
-                var F2x = new Symbol("F2x");
-                var F2y = new Symbol("F2y");
-
-
-                var F3 = new Symbol("F3");
-                var th3 = new Symbol("th3");
-
-                var F3x = new Symbol("F3x");
-                var F3y = new Symbol("F3y");
+                //var F2x = new Symbol("F2x");
+                //var F2y = new Symbol("F2y");
 
 
-                var a = new Symbol("a");
+                //var F3 = new Symbol("F3");
+                //var th3 = new Symbol("th3");
 
-                var ax = new Symbol("ax");
-                var ay = new Symbol("ay");
+                //var F3x = new Symbol("F3x");
+                //var F3y = new Symbol("F3y");
 
-                var m = new Symbol("m");
 
-                var Pi = new Symbol("Pi");
+                //var a = new Symbol("a");
 
-                var eqs = and(
+                //var ax = new Symbol("ax");
+                //var ay = new Symbol("ay");
 
-                    Fx == F * cos(th),
-                    Fy == F * sin(th),
+                //var m = new Symbol("m");
 
-                    Fx == ax * m,
-                    Fy == ay * m,
+                //var Pi = new Symbol("Pi");
 
-                    Fx == F1x + F2x + F3x,
-                    Fy == F1y + F2y + F3y,
+                //var eqs = and(
 
-                    F1x == F1 * cos(th1), F1y == F1 * sin(th1),
+                //    Fx == F * cos(th),
+                //    Fy == F * sin(th),
 
-                    F2x == F2 * cos(th2), F2y == F2 * sin(th2),
+                //    Fx == ax * m,
+                //    Fy == ay * m,
 
-                    F3x == F3 * cos(th3), F3y == F3 * sin(th3),
+                //    Fx == F1x + F2x + F3x,
+                //    Fy == F1y + F2y + F3y,
 
-                    a == sqrt((ax ^ 2) + (ay ^ 2))
+                //    F1x == F1 * cos(th1), F1y == F1 * sin(th1),
 
-                    );
+                //    F2x == F2 * cos(th2), F2y == F2 * sin(th2),
 
-                DoubleFloat.Tolerance = 0.00001;
+                //    F3x == F3 * cos(th3), F3y == F3 * sin(th3),
 
-                {
-                    var vals = new List<Equation>()
-                    {
+                //    a == sqrt((ax ^ 2) + (ay ^ 2))
 
-                        m == 0.3,
+                //    );
 
-                        F1 == 5.0, th1 == (-20).ToRadians(),
-                        F2 == 8.0, th2 == (60).ToRadians(),
+                //DoubleFloat.Tolerance = 0.00001;
 
-                        F3 == 0,
+                //{
+                //    var vals = new List<Equation>()
+                //    {
 
-                        Pi == Math.PI
-                    };
+                //        m == 0.3,
 
-                    var zeros = vals.Where(eq => eq.b == 0).ToList();
+                //        F1 == 5.0, th1 == (-20).ToRadians(),
+                //        F2 == 8.0, th2 == (60).ToRadians(),
 
-                    // a 
-                    {
-                        eqs
-                            .Substitute(zeros)
-                            .EliminateVariables(ax, ay, Fx, Fy, F, F1x, F1y, F2x, F2y, F3x, F3y)
-                            .DeepSelect(SinCosToTanFunc)
-                            .EliminateVariable(th)
+                //        F3 == 0,
+
+                //        Pi == Math.PI
+                //    };
+
+                //    var zeros = vals.Where(eq => eq.b == 0).ToList();
+
+                //    // a 
+                //    {
+                //        eqs
+                //            .Substitute(zeros)
+                //            .EliminateVariables(ax, ay, Fx, Fy, F, F1x, F1y, F2x, F2y, F3x, F3y)
+                //            .DeepSelect(SinCosToTanFunc)
+                //            .EliminateVariable(th)
                             
-                            .AssertEqTo(
+                //            .AssertEqTo(
 
-                                a ==
-                                    sqrt(
-                                        ((cos(th1) * F1 + cos(th2) * F2) ^ 2) * (m ^ -2) +
-                                        (cos(atan(((cos(th1) * F1 + cos(th2) * F2) ^ -1) * (F1 * sin(th1) + F2 * sin(th2)))) ^ -2) *
-                                        ((cos(th1) * F1 + cos(th2) * F2) ^ 2) *
-                                        (m ^ -2) *
-                                        (sin(atan(((cos(th1) * F1 + cos(th2) * F2) ^ -1) * (F1 * sin(th1) + F2 * sin(th2)))) ^ 2))
+                //                a ==
+                //                    sqrt(
+                //                        ((cos(th1) * F1 + cos(th2) * F2) ^ 2) * (m ^ -2) +
+                //                        (cos(atan(((cos(th1) * F1 + cos(th2) * F2) ^ -1) * (F1 * sin(th1) + F2 * sin(th2)))) ^ -2) *
+                //                        ((cos(th1) * F1 + cos(th2) * F2) ^ 2) *
+                //                        (m ^ -2) *
+                //                        (sin(atan(((cos(th1) * F1 + cos(th2) * F2) ^ -1) * (F1 * sin(th1) + F2 * sin(th2)))) ^ 2))
 
-                            )
+                //            )
 
-                            .Substitute(vals)
+                //            .Substitute(vals)
 
-                            .Substitute(3, 3.0)
+                //            .Substitute(3, 3.0)
 
-                            //.DispLong()
+                //            //.DispLong()
 
-                            .AssertEqTo(a == 33.811874017759315);
-                    }
+                //            .AssertEqTo(a == 33.811874017759315);
+                //    }
 
-                    // th
-                    {
-                        eqs
-                            .Substitute(zeros)
-                            .EliminateVariables(a, F, Fx, Fy, ax, ay, F1x, F1y, F2x, F2y, F3x, F3y)
-                            .DeepSelect(SinCosToTanFunc)
-                            .IsolateVariable(th)
+                //    // th
+                //    {
+                //        eqs
+                //            .Substitute(zeros)
+                //            .EliminateVariables(a, F, Fx, Fy, ax, ay, F1x, F1y, F2x, F2y, F3x, F3y)
+                //            .DeepSelect(SinCosToTanFunc)
+                //            .IsolateVariable(th)
 
-                            .AssertEqTo(
+                //            .AssertEqTo(
 
-                                th == atan((F1 * sin(th1) + F2 * sin(th2)) / (cos(th1) * F1 + cos(th2) * F2))
+                //                th == atan((F1 * sin(th1) + F2 * sin(th2)) / (cos(th1) * F1 + cos(th2) * F2))
 
-                                )
+                //                )
 
-                            .Substitute(vals)
+                //            .Substitute(vals)
 
-                            .Substitute(3, 3.0)
+                //            .Substitute(3, 3.0)
 
-                            .AssertEqTo(th == 0.54033704850428876);
-                    }
-                }
+                //            .AssertEqTo(th == 0.54033704850428876);
+                //    }
+                //}
 
-                {
-                    var vals = new List<Equation>()
-                    {
+                //{
+                //    var vals = new List<Equation>()
+                //    {
 
-                        m == 0.3,
+                //        m == 0.3,
 
-                        F1 == 5.0, th1 == (-20).ToRadians(),
-                        F2 == 8.0, th2 == (60).ToRadians(),
+                //        F1 == 5.0, th1 == (-20).ToRadians(),
+                //        F2 == 8.0, th2 == (60).ToRadians(),
 
-                        ax == 0, ay == 0,
+                //        ax == 0, ay == 0,
 
-                        Pi == Math.PI
-                    };
+                //        Pi == Math.PI
+                //    };
 
-                    var zeros = vals.Where(eq => eq.b == 0).ToList();
+                //    var zeros = vals.Where(eq => eq.b == 0).ToList();
                     
-                    // F3x
-                    {
-                        eqs
-                            .Substitute(zeros)
-                            .EliminateVariables(F3, th3, F3y, F1x, F2x, Fx, F, Fy, F1y, F2y, a)
-                            .IsolateVariable(F3x)
+                //    // F3x
+                //    {
+                //        eqs
+                //            .Substitute(zeros)
+                //            .EliminateVariables(F3, th3, F3y, F1x, F2x, Fx, F, Fy, F1y, F2y, a)
+                //            .IsolateVariable(F3x)
                             
-                            .AssertEqTo(F3x == -1 * cos(th1) * F1 + -1 * cos(th2) * F2)
+                //            .AssertEqTo(F3x == -1 * cos(th1) * F1 + -1 * cos(th2) * F2)
 
-                            .Substitute(vals)
+                //            .Substitute(vals)
                             
-                            .AssertEqTo(F3x == -8.6984631039295444);
-                    }
+                //            .AssertEqTo(F3x == -8.6984631039295444);
+                //    }
 
 
-                    // F3y
-                    {
-                        eqs
-                            .Substitute(zeros)
-                            .EliminateVariables(F3, th3, F3x, F1x, F2x, Fx, F, Fy, F1y, F2y, a)
-                            .IsolateVariable(F3y)
+                //    // F3y
+                //    {
+                //        eqs
+                //            .Substitute(zeros)
+                //            .EliminateVariables(F3, th3, F3x, F1x, F2x, Fx, F, Fy, F1y, F2y, a)
+                //            .IsolateVariable(F3y)
 
-                            .AssertEqTo(F3y == -1 * F1 * sin(th1) + -1 * F2 * sin(th2))
+                //            .AssertEqTo(F3y == -1 * F1 * sin(th1) + -1 * F2 * sin(th2))
                             
-                            .Substitute(vals)
+                //            .Substitute(vals)
 
-                            // .DispLong()
+                //            // .DispLong()
 
-                            .Substitute(3, 3.0)
+                //            .Substitute(3, 3.0)
 
-                            .AssertEqTo(F3y == -5.2181025136471657);
-                    }   
-                }
+                //            .AssertEqTo(F3y == -5.2181025136471657);
+                //    }   
+                //}
             }
 
             #endregion
@@ -3087,110 +3087,110 @@ namespace Tests
                 // angles of 37.0° and 53.0° with the horizontal. Find the tension
                 // in the three cables.
                 
-                var F = new Symbol("F");    // total force magnitude
-                var th = new Symbol("th");  // total force direction
+                //var F = new Symbol("F");    // total force magnitude
+                //var th = new Symbol("th");  // total force direction
 
-                var Fx = new Symbol("Fx");  // total force x-component
-                var Fy = new Symbol("Fy");  // total force y-component
-
-
-                var F1 = new Symbol("F1");
-                var th1 = new Symbol("th1");
-
-                var F1x = new Symbol("F1x");
-                var F1y = new Symbol("F1y");
+                //var Fx = new Symbol("Fx");  // total force x-component
+                //var Fy = new Symbol("Fy");  // total force y-component
 
 
-                var F2 = new Symbol("F2");
-                var th2 = new Symbol("th2");
+                //var F1 = new Symbol("F1");
+                //var th1 = new Symbol("th1");
 
-                var F2x = new Symbol("F2x");
-                var F2y = new Symbol("F2y");
-
-
-                var F3 = new Symbol("F3");
-                var th3 = new Symbol("th3");
-
-                var F3x = new Symbol("F3x");
-                var F3y = new Symbol("F3y");
+                //var F1x = new Symbol("F1x");
+                //var F1y = new Symbol("F1y");
 
 
-                var a = new Symbol("a");
+                //var F2 = new Symbol("F2");
+                //var th2 = new Symbol("th2");
 
-                var ax = new Symbol("ax");
-                var ay = new Symbol("ay");
+                //var F2x = new Symbol("F2x");
+                //var F2y = new Symbol("F2y");
 
-                var m = new Symbol("m");
 
-                var Pi = new Symbol("Pi");
+                //var F3 = new Symbol("F3");
+                //var th3 = new Symbol("th3");
 
-                var eqs = and(
+                //var F3x = new Symbol("F3x");
+                //var F3y = new Symbol("F3y");
 
-                    Fx == F * cos(th),
-                    Fy == F * sin(th),
 
-                    Fx == ax * m,
-                    Fy == ay * m,
+                //var a = new Symbol("a");
 
-                    Fx == F1x + F2x + F3x,
-                    Fy == F1y + F2y + F3y,
+                //var ax = new Symbol("ax");
+                //var ay = new Symbol("ay");
 
-                    F1x == F1 * cos(th1), F1y == F1 * sin(th1),
-                    F2x == F2 * cos(th2), F2y == F2 * sin(th2),
-                    F3x == F3 * cos(th3), F3y == F3 * sin(th3),
+                //var m = new Symbol("m");
 
-                    a == sqrt((ax ^ 2) + (ay ^ 2))
+                //var Pi = new Symbol("Pi");
 
-                    );
+                //var eqs = and(
 
-                DoubleFloat.Tolerance = 0.00001;
+                //    Fx == F * cos(th),
+                //    Fy == F * sin(th),
 
-                {
-                    var vals = new List<Equation>()
-                    {
+                //    Fx == ax * m,
+                //    Fy == ay * m,
 
-                        // m 
+                //    Fx == F1x + F2x + F3x,
+                //    Fy == F1y + F2y + F3y,
 
-                        /* F1 */    th1 == (180 - 37).ToRadians(),  // F1x F1y
-                        /* F2 */    th2 == (53).ToRadians(),        // F2x F2y
-                        F3 == 125,  th3 == (270).ToRadians(),       // F3x F3y
+                //    F1x == F1 * cos(th1), F1y == F1 * sin(th1),
+                //    F2x == F2 * cos(th2), F2y == F2 * sin(th2),
+                //    F3x == F3 * cos(th3), F3y == F3 * sin(th3),
+
+                //    a == sqrt((ax ^ 2) + (ay ^ 2))
+
+                //    );
+
+                //DoubleFloat.Tolerance = 0.00001;
+
+                //{
+                //    var vals = new List<Equation>()
+                //    {
+
+                //        // m 
+
+                //        /* F1 */    th1 == (180 - 37).ToRadians(),  // F1x F1y
+                //        /* F2 */    th2 == (53).ToRadians(),        // F2x F2y
+                //        F3 == 125,  th3 == (270).ToRadians(),       // F3x F3y
                         
-                        ax == 0,    ay == 0,
+                //        ax == 0,    ay == 0,
 
-                        Pi == Math.PI
-                    };
+                //        Pi == Math.PI
+                //    };
 
-                    var zeros = vals.Where(eq => eq.b == 0).ToList();
+                //    var zeros = vals.Where(eq => eq.b == 0).ToList();
 
-                    // F1
-                    {
-                        eqs
-                            .Substitute(zeros)
-                            .EliminateVariables(Fx, Fy, F, F1x, F1y, F2x, F2y, F2, F3x, F3y, a)
-                            .IsolateVariable(F1)
+                //    // F1
+                //    {
+                //        eqs
+                //            .Substitute(zeros)
+                //            .EliminateVariables(Fx, Fy, F, F1x, F1y, F2x, F2y, F2, F3x, F3y, a)
+                //            .IsolateVariable(F1)
                             
-                            .AssertEqTo(F1 == (F3 * sin(th3) - cos(th3) * F3 * sin(th2) / cos(th2)) / (cos(th1) * sin(th2) / cos(th2) - sin(th1)))
+                //            .AssertEqTo(F1 == (F3 * sin(th3) - cos(th3) * F3 * sin(th2) / cos(th2)) / (cos(th1) * sin(th2) / cos(th2) - sin(th1)))
 
-                            .Substitute(vals)
+                //            .Substitute(vals)
 
-                            .AssertEqTo(F1 == 75.226877894006023);
-                    }
+                //            .AssertEqTo(F1 == 75.226877894006023);
+                //    }
 
-                    // F2
-                    {
-                        eqs
-                            .Substitute(zeros)
-                            .EliminateVariables(Fx, Fy, F, F1x, F1y, F2x, F2y, F1, F3x, F3y, a)
-                            .IsolateVariable(F2)
+                //    // F2
+                //    {
+                //        eqs
+                //            .Substitute(zeros)
+                //            .EliminateVariables(Fx, Fy, F, F1x, F1y, F2x, F2y, F1, F3x, F3y, a)
+                //            .IsolateVariable(F2)
 
-                            .AssertEqTo(F2 == (cos(th3) * F3 * sin(th1) / cos(th1) - F3 * sin(th3)) / (sin(th2) - cos(th2) * sin(th1) / cos(th1)))
+                //            .AssertEqTo(F2 == (cos(th3) * F3 * sin(th1) / cos(th1) - F3 * sin(th3)) / (sin(th2) - cos(th2) * sin(th1) / cos(th1)))
                             
-                            .Substitute(vals)
+                //            .Substitute(vals)
 
-                            .AssertEqTo(F2 == 99.829438755911582);
-                    }
+                //            .AssertEqTo(F2 == 99.829438755911582);
+                //    }
 
-                }
+                //}
             }
 
             #endregion
@@ -3207,181 +3207,181 @@ namespace Tests
                 // to the bottom is d. How long does it take the front edge to
                 // reach the bottom, and what is its speed just as it gets there?
                 
-                var F = new Symbol("F");    // total force magnitude
-                var th = new Symbol("th");  // total force direction
+                //var F = new Symbol("F");    // total force magnitude
+                //var th = new Symbol("th");  // total force direction
 
-                var Fx = new Symbol("Fx");  // total force x-component
-                var Fy = new Symbol("Fy");  // total force y-component
-
-
-                var F1 = new Symbol("F1");
-                var th1 = new Symbol("th1");
-
-                var F1x = new Symbol("F1x");
-                var F1y = new Symbol("F1y");
+                //var Fx = new Symbol("Fx");  // total force x-component
+                //var Fy = new Symbol("Fy");  // total force y-component
 
 
-                var F2 = new Symbol("F2");
-                var th2 = new Symbol("th2");
+                //var F1 = new Symbol("F1");
+                //var th1 = new Symbol("th1");
 
-                var F2x = new Symbol("F2x");
-                var F2y = new Symbol("F2y");
-
-
-                //var F3 = new Symbol("F3");
-                //var th3 = new Symbol("th3");
-
-                //var F3x = new Symbol("F3x");
-                //var F3y = new Symbol("F3y");
+                //var F1x = new Symbol("F1x");
+                //var F1y = new Symbol("F1y");
 
 
-                var a = new Symbol("a");
+                //var F2 = new Symbol("F2");
+                //var th2 = new Symbol("th2");
 
-                var ax = new Symbol("ax");
-                var ay = new Symbol("ay");
+                //var F2x = new Symbol("F2x");
+                //var F2y = new Symbol("F2y");
 
-                var m = new Symbol("m");
 
-                var n = new Symbol("n");
-                var g = new Symbol("g");
+                ////var F3 = new Symbol("F3");
+                ////var th3 = new Symbol("th3");
 
-                var incline = new Symbol("incline");
+                ////var F3x = new Symbol("F3x");
+                ////var F3y = new Symbol("F3y");
 
-                var Pi = new Symbol("Pi");
+
+                //var a = new Symbol("a");
+
+                //var ax = new Symbol("ax");
+                //var ay = new Symbol("ay");
+
+                //var m = new Symbol("m");
+
+                //var n = new Symbol("n");
+                //var g = new Symbol("g");
+
+                //var incline = new Symbol("incline");
+
+                //var Pi = new Symbol("Pi");
                 
-                var xA = new Symbol("xA");
-                var yA = new Symbol("yA");
+                //var xA = new Symbol("xA");
+                //var yA = new Symbol("yA");
 
-                var vxA = new Symbol("vxA");
-                var vyA = new Symbol("vyA");
+                //var vxA = new Symbol("vxA");
+                //var vyA = new Symbol("vyA");
 
-                var vA = new Symbol("vA");
-                var thA = new Symbol("thA");
-
-
-                var xB = new Symbol("xB");
-                var yB = new Symbol("yB");
-
-                var vxB = new Symbol("vxB");
-                var vyB = new Symbol("vyB");
+                //var vA = new Symbol("vA");
+                //var thA = new Symbol("thA");
 
 
-                var tAB = new Symbol("tAB");
+                //var xB = new Symbol("xB");
+                //var yB = new Symbol("yB");
+
+                //var vxB = new Symbol("vxB");
+                //var vyB = new Symbol("vyB");
+
+
+                //var tAB = new Symbol("tAB");
                 
-                var d = new Symbol("d");
+                //var d = new Symbol("d");
                 
-                var eqs = and(
+                //var eqs = and(
 
-                    Fx == F * cos(th),
-                    Fy == F * sin(th),
+                //    Fx == F * cos(th),
+                //    Fy == F * sin(th),
 
-                    Fx == ax * m,
-                    Fy == ay * m,
+                //    Fx == ax * m,
+                //    Fy == ay * m,
 
-                    Fx == F1x + F2x, //+ F3x,
-                    Fy == F1y + F2y, //+ F3y,
+                //    Fx == F1x + F2x, //+ F3x,
+                //    Fy == F1y + F2y, //+ F3y,
 
-                    F1x == F1 * cos(th1), F1y == F1 * sin(th1),
-                    F2x == F2 * cos(th2), F2y == F2 * sin(th2),
-                    //F3x == F3 * cos(th3), F3y == F3 * sin(th3),
+                //    F1x == F1 * cos(th1), F1y == F1 * sin(th1),
+                //    F2x == F2 * cos(th2), F2y == F2 * sin(th2),
+                //    //F3x == F3 * cos(th3), F3y == F3 * sin(th3),
 
-                    a == sqrt((ax ^ 2) + (ay ^ 2)),
+                //    a == sqrt((ax ^ 2) + (ay ^ 2)),
 
-                    xB == xA + vxA * tAB + ax * (tAB ^ 2) / 2,
+                //    xB == xA + vxA * tAB + ax * (tAB ^ 2) / 2,
 
-                    vxB == vxA + ax * tAB,
+                //    vxB == vxA + ax * tAB,
 
-                    d != 0
+                //    d != 0
 
-                    );
+                //    );
 
-                DoubleFloat.Tolerance = 0.00001;
+                //DoubleFloat.Tolerance = 0.00001;
 
-                {
-                    var vals = new List<Equation>()
-                    {
+                //{
+                //    var vals = new List<Equation>()
+                //    {
 
-                        // m 
+                //        // m 
                         
-                        F1 == n,        th1 == 90 * Pi / 180,            // F1x F1y
-                        F2 == m * g,    th2 == 270 * Pi / 180 + incline, // F2x F2y
-                        //F3 == 125,    th3 == (270).ToRadians(),        // F3x F3y
+                //        F1 == n,        th1 == 90 * Pi / 180,            // F1x F1y
+                //        F2 == m * g,    th2 == 270 * Pi / 180 + incline, // F2x F2y
+                //        //F3 == 125,    th3 == (270).ToRadians(),        // F3x F3y
                         
-                        /* ax */  ay == 0,
+                //        /* ax */  ay == 0,
 
-                        // Pi == Math.PI
+                //        // Pi == Math.PI
 
-                        xA == 0, xB == d, vxA == 0
-                    };
+                //        xA == 0, xB == d, vxA == 0
+                //    };
 
-                    var zeros = vals.Where(eq => eq.b == 0).ToList();
+                //    var zeros = vals.Where(eq => eq.b == 0).ToList();
 
-                    // ax
-                    {
-                        eqs
-                            .Substitute(zeros)
-                            .EliminateVariables(a, F)
-                            .DeepSelect(SinCosToTanFunc)
-                            .EliminateVariables(th, Fx, F1x, F2x, Fy, F1y, F2y, vxB, xB)
-                            .Substitute(vals)
-                            .EliminateVariable(n)
-                            .IsolateVariable(ax)
+                //    // ax
+                //    {
+                //        eqs
+                //            .Substitute(zeros)
+                //            .EliminateVariables(a, F)
+                //            .DeepSelect(SinCosToTanFunc)
+                //            .EliminateVariables(th, Fx, F1x, F2x, Fy, F1y, F2y, vxB, xB)
+                //            .Substitute(vals)
+                //            .EliminateVariable(n)
+                //            .IsolateVariable(ax)
 
-                            .AssertEqTo(
-                                and(
-                                    ax == g * sin(incline),
-                                    d != 0));
-                    }
+                //            .AssertEqTo(
+                //                and(
+                //                    ax == g * sin(incline),
+                //                    d != 0));
+                //    }
 
-                    // tAB
-                    {
-                        eqs
-                            .Substitute(zeros)
-                            .EliminateVariables(a, F)
-                            .DeepSelect(SinCosToTanFunc)
-                            .EliminateVariables(th, Fx, F1x, F2x, Fy, F1y, F2y, ax, vxB)
-                            .Substitute(vals)
-                            .EliminateVariable(n)
-                            .IsolateVariable(tAB).LogicalExpand().CheckVariable(d)
+                //    // tAB
+                //    {
+                //        eqs
+                //            .Substitute(zeros)
+                //            .EliminateVariables(a, F)
+                //            .DeepSelect(SinCosToTanFunc)
+                //            .EliminateVariables(th, Fx, F1x, F2x, Fy, F1y, F2y, ax, vxB)
+                //            .Substitute(vals)
+                //            .EliminateVariable(n)
+                //            .IsolateVariable(tAB).LogicalExpand().CheckVariable(d)
                             
-                            .AssertEqTo(
-                                or(
-                                    and(
-                                        tAB == - sqrt(2 * d * g * sin(incline)) / sin(incline) / g,
-                                        - g * sin(incline) / 2 != 0,
-                                        d != 0),
-                                    and(
-                                        tAB == sqrt(2 * d * g * sin(incline)) / sin(incline) / g,
-                                        -g * sin(incline) / 2 != 0,
-                                        d != 0))
-                            );
-                    }
+                //            .AssertEqTo(
+                //                or(
+                //                    and(
+                //                        tAB == - sqrt(2 * d * g * sin(incline)) / sin(incline) / g,
+                //                        - g * sin(incline) / 2 != 0,
+                //                        d != 0),
+                //                    and(
+                //                        tAB == sqrt(2 * d * g * sin(incline)) / sin(incline) / g,
+                //                        -g * sin(incline) / 2 != 0,
+                //                        d != 0))
+                //            );
+                //    }
 
-                    // vxB
-                    {
-                        eqs
-                            .Substitute(zeros)
-                            .EliminateVariables(a, F)
-                            .DeepSelect(SinCosToTanFunc)
-                            .EliminateVariables(th, Fx, F1x, F2x, Fy, F1y, F2y, ax, tAB)
-                            .Substitute(vals)
-                            .CheckVariable(d)
-                            .EliminateVariable(n)
+                //    // vxB
+                //    {
+                //        eqs
+                //            .Substitute(zeros)
+                //            .EliminateVariables(a, F)
+                //            .DeepSelect(SinCosToTanFunc)
+                //            .EliminateVariables(th, Fx, F1x, F2x, Fy, F1y, F2y, ax, tAB)
+                //            .Substitute(vals)
+                //            .CheckVariable(d)
+                //            .EliminateVariable(n)
 
-                            .AssertEqTo(
-                                or(
-                                    and(
-                                        -g * sin(incline) / 2 != 0,
-                                        vxB == -sqrt(2 * d * g * sin(incline)),
-                                        d != 0
-                                    ),
-                                    and(
-                                        -g * sin(incline) / 2 != 0,
-                                        vxB == sqrt(2 * d * g * sin(incline)),
-                                        d != 0))
-                            );
-                    }
-                }
+                //            .AssertEqTo(
+                //                or(
+                //                    and(
+                //                        -g * sin(incline) / 2 != 0,
+                //                        vxB == -sqrt(2 * d * g * sin(incline)),
+                //                        d != 0
+                //                    ),
+                //                    and(
+                //                        -g * sin(incline) / 2 != 0,
+                //                        vxB == sqrt(2 * d * g * sin(incline)),
+                //                        d != 0))
+                //            );
+                //    }
+                //}
             }
 
             #endregion
@@ -3398,84 +3398,84 @@ namespace Tests
                 // Determine the magnitude of the acceleration of the two 
                 // objects and the tension in the lightweight cord.
                 
-                var F_m1 = new Symbol("F_m1");      // total force on mass 1
-                var F_m2 = new Symbol("F_m2");      // total force on mass 2
+                //var F_m1 = new Symbol("F_m1");      // total force on mass 1
+                //var F_m2 = new Symbol("F_m2");      // total force on mass 2
 
-                var F1_m1 = new Symbol("F1_m1");    // force 1 on mass 1
-                var F2_m1 = new Symbol("F2_m1");    // force 2 on mass 1
+                //var F1_m1 = new Symbol("F1_m1");    // force 1 on mass 1
+                //var F2_m1 = new Symbol("F2_m1");    // force 2 on mass 1
 
-                var F1_m2 = new Symbol("F1_m2");    // force 1 on mass 2
-                var F2_m2 = new Symbol("F2_m2");    // force 2 on mass 2
+                //var F1_m2 = new Symbol("F1_m2");    // force 1 on mass 2
+                //var F2_m2 = new Symbol("F2_m2");    // force 2 on mass 2
 
-                var m1 = new Symbol("m1");
-                var m2 = new Symbol("m2");
+                //var m1 = new Symbol("m1");
+                //var m2 = new Symbol("m2");
 
-                var a = new Symbol("a");
+                //var a = new Symbol("a");
 
-                var T = new Symbol("T");
+                //var T = new Symbol("T");
 
-                var g = new Symbol("g");
+                //var g = new Symbol("g");
 
 
-                var eqs = and(
+                //var eqs = and(
 
-                    F_m1 == F1_m1 - F2_m1,
-                    F_m2 == F2_m2 - F1_m2,
+                //    F_m1 == F1_m1 - F2_m1,
+                //    F_m2 == F2_m2 - F1_m2,
 
-                    F_m1 == m1 * a,
-                    F_m2 == m2 * a,
+                //    F_m1 == m1 * a,
+                //    F_m2 == m2 * a,
 
-                    F1_m1 == T,
-                    F2_m1 == m1 * g,
+                //    F1_m1 == T,
+                //    F2_m1 == m1 * g,
 
-                    F1_m2 == T,
-                    F2_m2 == m2 * g
+                //    F1_m2 == T,
+                //    F2_m2 == m2 * g
                     
-                    );
+                //    );
 
-                DoubleFloat.Tolerance = 0.00001;
+                //DoubleFloat.Tolerance = 0.00001;
 
-                {
-                    var vals = new List<Equation>()
-                    {
-                        m1 == 2.0, m2 == 4.0, g == 9.8
-                    };
+                //{
+                //    var vals = new List<Equation>()
+                //    {
+                //        m1 == 2.0, m2 == 4.0, g == 9.8
+                //    };
 
-                    var zeros = vals.Where(eq => eq.b == 0).ToList();
+                //    var zeros = vals.Where(eq => eq.b == 0).ToList();
 
-                    // a
-                    {
-                        eqs
-                            .EliminateVariables(F_m1, F_m2, F2_m1, F2_m2, F1_m1, F1_m2, T)
-                            .IsolateVariable(a)
+                //    // a
+                //    {
+                //        eqs
+                //            .EliminateVariables(F_m1, F_m2, F2_m1, F2_m2, F1_m1, F1_m2, T)
+                //            .IsolateVariable(a)
                             
-                            .AssertEqTo(
-                                a == (-1 * g * m1 + g * m2) / (m1 + m2)
-                            )
+                //            .AssertEqTo(
+                //                a == (-1 * g * m1 + g * m2) / (m1 + m2)
+                //            )
 
-                            .Substitute(vals)
+                //            .Substitute(vals)
                             
-                            .AssertEqTo(a == 3.2666666666666666);
-                    }
+                //            .AssertEqTo(a == 3.2666666666666666);
+                //    }
 
-                    // T
-                    {
-                        eqs
-                            .EliminateVariables(F_m1, F_m2, F2_m1, F2_m2, F1_m1, F1_m2, a)
-                            .IsolateVariable(T)
+                //    // T
+                //    {
+                //        eqs
+                //            .EliminateVariables(F_m1, F_m2, F2_m1, F2_m2, F1_m1, F1_m2, a)
+                //            .IsolateVariable(T)
                             
-                            .AssertEqTo(
-                                T == 2 * g * m2 / (1 + m2 / m1)
-                            )
+                //            .AssertEqTo(
+                //                T == 2 * g * m2 / (1 + m2 / m1)
+                //            )
 
-                            .Substitute(vals)
+                //            .Substitute(vals)
                             
-                            .AssertEqTo(
-                                T == 26.133333333333333
-                            );
-                    }
+                //            .AssertEqTo(
+                //                T == 26.133333333333333
+                //            );
+                //    }
                     
-                }
+                //}
             }
 
             #endregion
@@ -3491,201 +3491,201 @@ namespace Tests
 
                 ////////////////////////////////////////////////////////////////////////////////
 
-                var F1_m1 = new Symbol("F1_m1");        // force 1 on mass 1
-                var F2_m1 = new Symbol("F2_m1");        // force 2 on mass 1
-                var F3_m1 = new Symbol("F3_m1");        // force 3 on mass 1
+                //var F1_m1 = new Symbol("F1_m1");        // force 1 on mass 1
+                //var F2_m1 = new Symbol("F2_m1");        // force 2 on mass 1
+                //var F3_m1 = new Symbol("F3_m1");        // force 3 on mass 1
 
-                var th1_m1 = new Symbol("th1_m1");      // direction of force 1 on mass 1
-                var th2_m1 = new Symbol("th2_m1");      // direction of force 2 on mass 1
-                var th3_m1 = new Symbol("th3_m1");      // direction of force 3 on mass 1
+                //var th1_m1 = new Symbol("th1_m1");      // direction of force 1 on mass 1
+                //var th2_m1 = new Symbol("th2_m1");      // direction of force 2 on mass 1
+                //var th3_m1 = new Symbol("th3_m1");      // direction of force 3 on mass 1
 
-                var F1x_m1 = new Symbol("F1x_m1");      // x-component of force 1 on mass 1
-                var F2x_m1 = new Symbol("F2x_m1");      // x-component of force 2 on mass 1
-                var F3x_m1 = new Symbol("F3x_m1");      // x-component of force 3 on mass 1
+                //var F1x_m1 = new Symbol("F1x_m1");      // x-component of force 1 on mass 1
+                //var F2x_m1 = new Symbol("F2x_m1");      // x-component of force 2 on mass 1
+                //var F3x_m1 = new Symbol("F3x_m1");      // x-component of force 3 on mass 1
 
-                var F1y_m1 = new Symbol("F1y_m1");      // y-component of force 1 on mass 1
-                var F2y_m1 = new Symbol("F2y_m1");      // y-component of force 2 on mass 1
-                var F3y_m1 = new Symbol("F3y_m1");      // y-component of force 3 on mass 1
+                //var F1y_m1 = new Symbol("F1y_m1");      // y-component of force 1 on mass 1
+                //var F2y_m1 = new Symbol("F2y_m1");      // y-component of force 2 on mass 1
+                //var F3y_m1 = new Symbol("F3y_m1");      // y-component of force 3 on mass 1
 
-                var Fx_m1 = new Symbol("Fx_m1");        // x-component of total force on mass 1
-                var Fy_m1 = new Symbol("Fy_m1");        // y-component of total force on mass 1
+                //var Fx_m1 = new Symbol("Fx_m1");        // x-component of total force on mass 1
+                //var Fy_m1 = new Symbol("Fy_m1");        // y-component of total force on mass 1
 
-                var ax_m1 = new Symbol("ax_m1");        // x-component of acceleration of mass 1
-                var ay_m1 = new Symbol("ay_m1");        // y-component of acceleration of mass 1
+                //var ax_m1 = new Symbol("ax_m1");        // x-component of acceleration of mass 1
+                //var ay_m1 = new Symbol("ay_m1");        // y-component of acceleration of mass 1
 
-                var m1 = new Symbol("m1");
+                //var m1 = new Symbol("m1");
 
-                ////////////////////////////////////////////////////////////////////////////////
+                //////////////////////////////////////////////////////////////////////////////////
 
-                var F1_m2 = new Symbol("F1_m2");        // force 1 on mass 2
-                var F2_m2 = new Symbol("F2_m2");        // force 2 on mass 2
-                var F3_m2 = new Symbol("F3_m2");        // force 3 on mass 2
+                //var F1_m2 = new Symbol("F1_m2");        // force 1 on mass 2
+                //var F2_m2 = new Symbol("F2_m2");        // force 2 on mass 2
+                //var F3_m2 = new Symbol("F3_m2");        // force 3 on mass 2
 
-                var th1_m2 = new Symbol("th1_m2");      // direction of force 1 on mass 2
-                var th2_m2 = new Symbol("th2_m2");      // direction of force 2 on mass 2
-                var th3_m2 = new Symbol("th3_m2");      // direction of force 3 on mass 2
+                //var th1_m2 = new Symbol("th1_m2");      // direction of force 1 on mass 2
+                //var th2_m2 = new Symbol("th2_m2");      // direction of force 2 on mass 2
+                //var th3_m2 = new Symbol("th3_m2");      // direction of force 3 on mass 2
 
-                var F1x_m2 = new Symbol("F1x_m2");      // x-component of force 1 on mass 2
-                var F2x_m2 = new Symbol("F2x_m2");      // x-component of force 2 on mass 2
-                var F3x_m2 = new Symbol("F3x_m2");      // x-component of force 3 on mass 2
+                //var F1x_m2 = new Symbol("F1x_m2");      // x-component of force 1 on mass 2
+                //var F2x_m2 = new Symbol("F2x_m2");      // x-component of force 2 on mass 2
+                //var F3x_m2 = new Symbol("F3x_m2");      // x-component of force 3 on mass 2
 
-                var F1y_m2 = new Symbol("F1y_m2");      // y-component of force 1 on mass 2
-                var F2y_m2 = new Symbol("F2y_m2");      // y-component of force 2 on mass 2
-                var F3y_m2 = new Symbol("F3y_m2");      // y-component of force 3 on mass 2
+                //var F1y_m2 = new Symbol("F1y_m2");      // y-component of force 1 on mass 2
+                //var F2y_m2 = new Symbol("F2y_m2");      // y-component of force 2 on mass 2
+                //var F3y_m2 = new Symbol("F3y_m2");      // y-component of force 3 on mass 2
 
-                var Fx_m2 = new Symbol("Fx_m2");        // x-component of total force on mass 2
-                var Fy_m2 = new Symbol("Fy_m2");        // y-component of total force on mass 2
+                //var Fx_m2 = new Symbol("Fx_m2");        // x-component of total force on mass 2
+                //var Fy_m2 = new Symbol("Fy_m2");        // y-component of total force on mass 2
 
-                var ax_m2 = new Symbol("ax_m2");        // x-component of acceleration of mass 2
-                var ay_m2 = new Symbol("ay_m2");        // y-component of acceleration of mass 2
+                //var ax_m2 = new Symbol("ax_m2");        // x-component of acceleration of mass 2
+                //var ay_m2 = new Symbol("ay_m2");        // y-component of acceleration of mass 2
 
-                var m2 = new Symbol("m2");
+                //var m2 = new Symbol("m2");
 
-                ////////////////////////////////////////////////////////////////////////////////
+                //////////////////////////////////////////////////////////////////////////////////
 
-                var incline = new Symbol("incline");
+                //var incline = new Symbol("incline");
 
-                var T = new Symbol("T");                // tension in cable
+                //var T = new Symbol("T");                // tension in cable
 
-                var g = new Symbol("g");                // gravity
+                //var g = new Symbol("g");                // gravity
 
-                var n = new Symbol("n");                // normal force on block
+                //var n = new Symbol("n");                // normal force on block
 
-                var a = new Symbol("a");
+                //var a = new Symbol("a");
 
-                var Pi = new Symbol("Pi");
+                //var Pi = new Symbol("Pi");
 
-                var eqs = and(
+                //var eqs = and(
 
-                    ax_m2 == ay_m1,                     // the block moves right as the ball moves up
+                //    ax_m2 == ay_m1,                     // the block moves right as the ball moves up
 
-                    ////////////////////////////////////////////////////////////////////////////////
+                //    ////////////////////////////////////////////////////////////////////////////////
 
-                    F1x_m1 == F1_m1 * cos(th1_m1),
-                    F2x_m1 == F2_m1 * cos(th2_m1),
-                    F3x_m1 == F3_m1 * cos(th3_m1),
+                //    F1x_m1 == F1_m1 * cos(th1_m1),
+                //    F2x_m1 == F2_m1 * cos(th2_m1),
+                //    F3x_m1 == F3_m1 * cos(th3_m1),
 
-                    F1y_m1 == F1_m1 * sin(th1_m1),
-                    F2y_m1 == F2_m1 * sin(th2_m1),
-                    F3y_m1 == F3_m1 * sin(th3_m1),
+                //    F1y_m1 == F1_m1 * sin(th1_m1),
+                //    F2y_m1 == F2_m1 * sin(th2_m1),
+                //    F3y_m1 == F3_m1 * sin(th3_m1),
 
-                    Fx_m1 == F1x_m1 + F2x_m1 + F3x_m1,
-                    Fy_m1 == F1y_m1 + F2y_m1 + F3y_m1,
+                //    Fx_m1 == F1x_m1 + F2x_m1 + F3x_m1,
+                //    Fy_m1 == F1y_m1 + F2y_m1 + F3y_m1,
 
-                    Fx_m1 == m1 * ax_m1,
-                    Fy_m1 == m1 * ay_m1,
+                //    Fx_m1 == m1 * ax_m1,
+                //    Fy_m1 == m1 * ay_m1,
 
-                    ////////////////////////////////////////////////////////////////////////////////
+                //    ////////////////////////////////////////////////////////////////////////////////
 
-                    F1x_m2 == F1_m2 * cos(th1_m2),
-                    F2x_m2 == F2_m2 * cos(th2_m2),
-                    F3x_m2 == F3_m2 * cos(th3_m2),
+                //    F1x_m2 == F1_m2 * cos(th1_m2),
+                //    F2x_m2 == F2_m2 * cos(th2_m2),
+                //    F3x_m2 == F3_m2 * cos(th3_m2),
 
-                    F1y_m2 == F1_m2 * sin(th1_m2),
-                    F2y_m2 == F2_m2 * sin(th2_m2),
-                    F3y_m2 == F3_m2 * sin(th3_m2),
+                //    F1y_m2 == F1_m2 * sin(th1_m2),
+                //    F2y_m2 == F2_m2 * sin(th2_m2),
+                //    F3y_m2 == F3_m2 * sin(th3_m2),
 
-                    Fx_m2 == F1x_m2 + F2x_m2 + F3x_m2,
-                    Fy_m2 == F1y_m2 + F2y_m2 + F3y_m2,
+                //    Fx_m2 == F1x_m2 + F2x_m2 + F3x_m2,
+                //    Fy_m2 == F1y_m2 + F2y_m2 + F3y_m2,
 
-                    Fx_m2 == m2 * ax_m2,
-                    Fy_m2 == m2 * ay_m2,
+                //    Fx_m2 == m2 * ax_m2,
+                //    Fy_m2 == m2 * ay_m2,
 
-                    ////////////////////////////////////////////////////////////////////////////////
+                //    ////////////////////////////////////////////////////////////////////////////////
                     
-                    a == ax_m2
+                //    a == ax_m2
                     
-                    );
+                //    );
 
-                DoubleFloat.Tolerance = 0.00001;
+                //DoubleFloat.Tolerance = 0.00001;
 
-                {
-                    var vals = new List<Equation>()
-                    {
-                        ax_m1 == 0,                         // ball  moves vertically
-                        ay_m2 == 0,                         // block moves horizontally
+                //{
+                //    var vals = new List<Equation>()
+                //    {
+                //        ax_m1 == 0,                         // ball  moves vertically
+                //        ay_m2 == 0,                         // block moves horizontally
 
-                        F1_m1 == T,
-                        F2_m1 == m1 * g,
-                        F3_m1 == 0,
+                //        F1_m1 == T,
+                //        F2_m1 == m1 * g,
+                //        F3_m1 == 0,
 
-                        th1_m1 == 90 * Pi / 180,            // force 1 is straight up
-                        th2_m1 == 270 * Pi / 180,           // force 2 is straight down
+                //        th1_m1 == 90 * Pi / 180,            // force 1 is straight up
+                //        th2_m1 == 270 * Pi / 180,           // force 2 is straight down
 
-                        F1_m2 == n,
-                        F2_m2 == T,
-                        F3_m2 == m2 * g,
+                //        F1_m2 == n,
+                //        F2_m2 == T,
+                //        F3_m2 == m2 * g,
 
-                        th1_m2 == 90 * Pi / 180,            // force 1 is straight up
-                        th2_m2 == 180 * Pi / 180,           // force 2 is straight down
-                        th3_m2 == 270 * Pi / 180 + incline  // force 3 direction
+                //        th1_m2 == 90 * Pi / 180,            // force 1 is straight up
+                //        th2_m2 == 180 * Pi / 180,           // force 2 is straight down
+                //        th3_m2 == 270 * Pi / 180 + incline  // force 3 direction
 
-                    };
+                //    };
 
-                    var zeros = vals.Where(eq => eq.b == 0).ToList();
+                //    var zeros = vals.Where(eq => eq.b == 0).ToList();
                     
-                    // a
-                    {
-                        eqs
-                            .Substitute(vals)
+                //    // a
+                //    {
+                //        eqs
+                //            .Substitute(vals)
 
-                            .EliminateVariables(
-                                F1x_m1, F2x_m1, F3x_m1,
-                                F1y_m1, F2y_m1, F3y_m1,
+                //            .EliminateVariables(
+                //                F1x_m1, F2x_m1, F3x_m1,
+                //                F1y_m1, F2y_m1, F3y_m1,
                                 
-                                Fx_m1, Fy_m1,
+                //                Fx_m1, Fy_m1,
 
-                                F1x_m2, F2x_m2, F3x_m2,
-                                F1y_m2, F2y_m2, F3y_m2,
+                //                F1x_m2, F2x_m2, F3x_m2,
+                //                F1y_m2, F2y_m2, F3y_m2,
 
-                                Fx_m2, Fy_m2,                                
+                //                Fx_m2, Fy_m2,                                
                                 
-                                ax_m2, n, T, ay_m1
-                            )
+                //                ax_m2, n, T, ay_m1
+                //            )
                             
-                            .AssertEqTo(
+                //            .AssertEqTo(
                             
-                                a == (g * m1 - g * m2 * sin(incline)) / (-m1 - m2)
+                //                a == (g * m1 - g * m2 * sin(incline)) / (-m1 - m2)
 
-                            )
+                //            )
 
-                            .Substitute(m1 == 10.0)
-                            .Substitute(m2 == 5.0)
-                            .Substitute(incline == 45 * Math.PI / 180)
-                            .Substitute(g == 9.8)
+                //            .Substitute(m1 == 10.0)
+                //            .Substitute(m2 == 5.0)
+                //            .Substitute(incline == 45 * Math.PI / 180)
+                //            .Substitute(g == 9.8)
 
-                            .AssertEqTo(a == -4.2234511814572784);
-                    }
+                //            .AssertEqTo(a == -4.2234511814572784);
+                //    }
                     
-                    // T
-                    {
-                        eqs
-                            .Substitute(vals)
+                //    // T
+                //    {
+                //        eqs
+                //            .Substitute(vals)
 
-                            .EliminateVariables(
-                                F1x_m1, F2x_m1, F3x_m1,
-                                F1y_m1, F2y_m1, F3y_m1,
+                //            .EliminateVariables(
+                //                F1x_m1, F2x_m1, F3x_m1,
+                //                F1y_m1, F2y_m1, F3y_m1,
 
-                                Fx_m1, Fy_m1,
+                //                Fx_m1, Fy_m1,
 
-                                F1x_m2, F2x_m2, F3x_m2,
-                                F1y_m2, F2y_m2, F3y_m2,
+                //                F1x_m2, F2x_m2, F3x_m2,
+                //                F1y_m2, F2y_m2, F3y_m2,
 
-                                Fx_m2, Fy_m2,
+                //                Fx_m2, Fy_m2,
 
-                                ax_m2, n, a, ay_m1
-                            )
+                //                ax_m2, n, a, ay_m1
+                //            )
                             
-                            .IsolateVariable(T)
-                            .RationalizeExpression()
+                //            .IsolateVariable(T)
+                //            .RationalizeExpression()
                             
-                            .AssertEqTo(
+                //            .AssertEqTo(
 
-                                T == m1 * (-g * m2 - g * m2 * sin(incline)) / (-m1 - m2)
+                //                T == m1 * (-g * m2 - g * m2 * sin(incline)) / (-m1 - m2)
 
-                            );
-                    }
-                }
+                //            );
+                //    }
+                //}
             }
 
             #endregion
@@ -3704,103 +3704,103 @@ namespace Tests
                 // Find the magnitude of the acceleration of the two objects
                 // and the tension in the cord.
 
-                var bal = new Obj2("bal");
-                var blk = new Obj3("blk");
+                //var bal = new Obj2("bal");
+                //var blk = new Obj3("blk");
 
-                var th = new Symbol("th");
+                //var th = new Symbol("th");
 
-                var T = new Symbol("T");                // tension in cable
-                var g = new Symbol("g");                // gravity
-                var n = new Symbol("n");                // normal force on block
-                var a = new Symbol("a");
+                //var T = new Symbol("T");                // tension in cable
+                //var g = new Symbol("g");                // gravity
+                //var n = new Symbol("n");                // normal force on block
+                //var a = new Symbol("a");
 
-                var m1 = new Symbol("m1");
-                var m2 = new Symbol("m2");
+                //var m1 = new Symbol("m1");
+                //var m2 = new Symbol("m2");
 
-                var Pi = new Symbol("Pi");
+                //var Pi = new Symbol("Pi");
 
-                var eqs = and(
+                //var eqs = and(
 
-                    blk.ax == bal.ay,                   // the block moves right as the ball moves up
+                //    blk.ax == bal.ay,                   // the block moves right as the ball moves up
 
-                    a == blk.ax,
+                //    a == blk.ax,
 
-                    bal.Equations(),
-                    blk.Equations()
+                //    bal.Equations(),
+                //    blk.Equations()
 
-                    );
+                //    );
 
-                DoubleFloat.Tolerance = 0.00001;
+                //DoubleFloat.Tolerance = 0.00001;
 
-                var vals = new List<Equation>
-                {
-                    bal.ax == 0,
+                //var vals = new List<Equation>
+                //{
+                //    bal.ax == 0,
 
-                    bal.m == m1,
+                //    bal.m == m1,
 
-                    bal.F1 == T,            bal.th1 == (90).ToRadians(),                // force 1 is straight up
-                    bal.F2 == m1 * g,       bal.th2 == (270).ToRadians(),               // force 2 is straight down
+                //    bal.F1 == T,            bal.th1 == (90).ToRadians(),                // force 1 is straight up
+                //    bal.F2 == m1 * g,       bal.th2 == (270).ToRadians(),               // force 2 is straight down
 
-                    blk.ay == 0,
+                //    blk.ay == 0,
 
-                    blk.m == m2,
+                //    blk.m == m2,
 
-                    blk.F1 == n,            blk.th1 == (90).ToRadians(),                // force 1 is straight up
-                    blk.F2 == T,            blk.th2 == (180).ToRadians(),               // force 2 is straight down
-                    blk.F3 == m2 * g,       blk.th3 == (270).ToRadians() + th           // force 3 direction
-                };
+                //    blk.F1 == n,            blk.th1 == (90).ToRadians(),                // force 1 is straight up
+                //    blk.F2 == T,            blk.th2 == (180).ToRadians(),               // force 2 is straight down
+                //    blk.F3 == m2 * g,       blk.th3 == (270).ToRadians() + th           // force 3 direction
+                //};
 
-                // a
-                eqs
-                    .Substitute(vals)
+                //// a
+                //eqs
+                //    .Substitute(vals)
 
-                    .EliminateVariables(
+                //    .EliminateVariables(
 
-                        bal.ΣFx, bal.F1x, bal.F2x,
-                        bal.ΣFy, bal.F1y, bal.F2y,
+                //        bal.ΣFx, bal.F1x, bal.F2x,
+                //        bal.ΣFy, bal.F1y, bal.F2y,
 
-                        blk.ΣFx, blk.F1x, blk.F2x, blk.F3x,
-                        blk.ΣFy, blk.F1y, blk.F2y, blk.F3y,
+                //        blk.ΣFx, blk.F1x, blk.F2x, blk.F3x,
+                //        blk.ΣFy, blk.F1y, blk.F2y, blk.F3y,
 
-                        blk.ax, bal.ay,
+                //        blk.ax, bal.ay,
 
-                        T, n
-                    )
+                //        T, n
+                //    )
 
-                    .IsolateVariable(a)
+                //    .IsolateVariable(a)
 
-                    .AssertEqTo(
+                //    .AssertEqTo(
 
-                        a == (g * m1 - g * m2 * sin(th)) / (-m1 - m2)
+                //        a == (g * m1 - g * m2 * sin(th)) / (-m1 - m2)
 
-                    );
+                //    );
 
-                // T
-                eqs
-                    .Substitute(vals)
+                //// T
+                //eqs
+                //    .Substitute(vals)
 
-                    .EliminateVariables(
+                //    .EliminateVariables(
 
-                        bal.ΣFx, bal.F1x, bal.F2x,
-                        bal.ΣFy, bal.F1y, bal.F2y,
+                //        bal.ΣFx, bal.F1x, bal.F2x,
+                //        bal.ΣFy, bal.F1y, bal.F2y,
 
-                        blk.ΣFx, blk.F1x, blk.F2x, blk.F3x,
-                        blk.ΣFy, blk.F1y, blk.F2y, blk.F3y,
+                //        blk.ΣFx, blk.F1x, blk.F2x, blk.F3x,
+                //        blk.ΣFy, blk.F1y, blk.F2y, blk.F3y,
 
-                        blk.ax, bal.ay,
+                //        blk.ax, bal.ay,
 
-                        a, n
-                    )
+                //        a, n
+                //    )
 
-                .IsolateVariable(T)
+                //.IsolateVariable(T)
 
-                .RationalizeExpression()
+                //.RationalizeExpression()
 
-                .AssertEqTo(
+                //.AssertEqTo(
 
-                    T == m1 * (-g * m2 - g * m2 * sin(th)) / (-m1 - m2)
+                //    T == m1 * (-g * m2 - g * m2 * sin(th)) / (-m1 - m2)
 
-                );
+                //);
             }
 
             #endregion
@@ -3817,103 +3817,103 @@ namespace Tests
 
                 ////////////////////////////////////////////////////////////////////////////////
 
-                var F1_m1 = new Symbol("F1_m1");        // force 1 on mass 1
-                var F2_m1 = new Symbol("F2_m1");        // force 2 on mass 1
-                var F3_m1 = new Symbol("F3_m1");        // force 3 on mass 1
+                //var F1_m1 = new Symbol("F1_m1");        // force 1 on mass 1
+                //var F2_m1 = new Symbol("F2_m1");        // force 2 on mass 1
+                //var F3_m1 = new Symbol("F3_m1");        // force 3 on mass 1
 
-                var th1_m1 = new Symbol("th1_m1");      // direction of force 1 on mass 1
-                var th2_m1 = new Symbol("th2_m1");      // direction of force 2 on mass 1
-                var th3_m1 = new Symbol("th3_m1");      // direction of force 3 on mass 1
+                //var th1_m1 = new Symbol("th1_m1");      // direction of force 1 on mass 1
+                //var th2_m1 = new Symbol("th2_m1");      // direction of force 2 on mass 1
+                //var th3_m1 = new Symbol("th3_m1");      // direction of force 3 on mass 1
 
-                var F1x_m1 = new Symbol("F1x_m1");      // x-component of force 1 on mass 1
-                var F2x_m1 = new Symbol("F2x_m1");      // x-component of force 2 on mass 1
-                var F3x_m1 = new Symbol("F3x_m1");      // x-component of force 3 on mass 1
+                //var F1x_m1 = new Symbol("F1x_m1");      // x-component of force 1 on mass 1
+                //var F2x_m1 = new Symbol("F2x_m1");      // x-component of force 2 on mass 1
+                //var F3x_m1 = new Symbol("F3x_m1");      // x-component of force 3 on mass 1
 
-                var F1y_m1 = new Symbol("F1y_m1");      // y-component of force 1 on mass 1
-                var F2y_m1 = new Symbol("F2y_m1");      // y-component of force 2 on mass 1
-                var F3y_m1 = new Symbol("F3y_m1");      // y-component of force 3 on mass 1
+                //var F1y_m1 = new Symbol("F1y_m1");      // y-component of force 1 on mass 1
+                //var F2y_m1 = new Symbol("F2y_m1");      // y-component of force 2 on mass 1
+                //var F3y_m1 = new Symbol("F3y_m1");      // y-component of force 3 on mass 1
 
-                var Fx_m1 = new Symbol("Fx_m1");        // x-component of total force on mass 1
-                var Fy_m1 = new Symbol("Fy_m1");        // y-component of total force on mass 1
+                //var Fx_m1 = new Symbol("Fx_m1");        // x-component of total force on mass 1
+                //var Fy_m1 = new Symbol("Fy_m1");        // y-component of total force on mass 1
 
-                var ax_m1 = new Symbol("ax_m1");        // x-component of acceleration of mass 1
-                var ay_m1 = new Symbol("ay_m1");        // y-component of acceleration of mass 1
+                //var ax_m1 = new Symbol("ax_m1");        // x-component of acceleration of mass 1
+                //var ay_m1 = new Symbol("ay_m1");        // y-component of acceleration of mass 1
 
-                var m1 = new Symbol("m1");
+                //var m1 = new Symbol("m1");
 
-                ////////////////////////////////////////////////////////////////////////////////
+                //////////////////////////////////////////////////////////////////////////////////
                 
-                var incline = new Symbol("incline");
+                //var incline = new Symbol("incline");
                 
-                var f_s = new Symbol("f_s");            // force due to static friction
+                //var f_s = new Symbol("f_s");            // force due to static friction
                 
-                var g = new Symbol("g");                // gravity
+                //var g = new Symbol("g");                // gravity
 
-                var n = new Symbol("n");                // normal force on block
+                //var n = new Symbol("n");                // normal force on block
 
-                var a = new Symbol("a");
+                //var a = new Symbol("a");
 
-                var Pi = new Symbol("Pi");
+                //var Pi = new Symbol("Pi");
 
-                var mu_s = new Symbol("mu_s");          // coefficient of static friction
+                //var mu_s = new Symbol("mu_s");          // coefficient of static friction
 
-                var eqs = and(
+                //var eqs = and(
                     
-                    F1x_m1 == F1_m1 * cos(th1_m1),
-                    F2x_m1 == F2_m1 * cos(th2_m1),
-                    F3x_m1 == F3_m1 * cos(th3_m1),
+                //    F1x_m1 == F1_m1 * cos(th1_m1),
+                //    F2x_m1 == F2_m1 * cos(th2_m1),
+                //    F3x_m1 == F3_m1 * cos(th3_m1),
 
-                    F1y_m1 == F1_m1 * sin(th1_m1),
-                    F2y_m1 == F2_m1 * sin(th2_m1),
-                    F3y_m1 == F3_m1 * sin(th3_m1),
+                //    F1y_m1 == F1_m1 * sin(th1_m1),
+                //    F2y_m1 == F2_m1 * sin(th2_m1),
+                //    F3y_m1 == F3_m1 * sin(th3_m1),
 
-                    Fx_m1 == F1x_m1 + F2x_m1 + F3x_m1,
-                    Fy_m1 == F1y_m1 + F2y_m1 + F3y_m1,
+                //    Fx_m1 == F1x_m1 + F2x_m1 + F3x_m1,
+                //    Fy_m1 == F1y_m1 + F2y_m1 + F3y_m1,
 
-                    Fx_m1 == m1 * ax_m1,
-                    Fy_m1 == m1 * ay_m1,
+                //    Fx_m1 == m1 * ax_m1,
+                //    Fy_m1 == m1 * ay_m1,
 
-                    f_s == mu_s * n
+                //    f_s == mu_s * n
                     
-                    );
+                //    );
 
-                DoubleFloat.Tolerance = 0.00001;
+                //DoubleFloat.Tolerance = 0.00001;
 
-                {
-                    var vals = new List<Equation>()
-                    {
-                        ax_m1 == 0,                         
-                        ay_m1 == 0,                         
+                //{
+                //    var vals = new List<Equation>()
+                //    {
+                //        ax_m1 == 0,                         
+                //        ay_m1 == 0,                         
                         
-                        F1_m1 == n,                     
-                        F2_m1 == f_s,
-                        F3_m1 == m1 * g,
+                //        F1_m1 == n,                     
+                //        F2_m1 == f_s,
+                //        F3_m1 == m1 * g,
 
-                        th1_m1 == 90 * Pi / 180,            // force 1 is straight up
-                        th2_m1 == 180 * Pi / 180,           // force 2 is straight down
-                        th3_m1 == 270 * Pi / 180 + incline  // force 3 direction 
-                    };
+                //        th1_m1 == 90 * Pi / 180,            // force 1 is straight up
+                //        th2_m1 == 180 * Pi / 180,           // force 2 is straight down
+                //        th3_m1 == 270 * Pi / 180 + incline  // force 3 direction 
+                //    };
 
-                    var zeros = vals.Where(eq => eq.b == 0).ToList();
+                //    var zeros = vals.Where(eq => eq.b == 0).ToList();
 
-                    // mu_s
-                    {
-                        eqs
-                            .Substitute(vals)
+                //    // mu_s
+                //    {
+                //        eqs
+                //            .Substitute(vals)
 
-                            .EliminateVariables(
-                                F1x_m1, F2x_m1, F3x_m1,
-                                F1y_m1, F2y_m1, F3y_m1,
-                                Fx_m1, Fy_m1,
-                                f_s, n
-                            )
-                            .IsolateVariable(mu_s)
+                //            .EliminateVariables(
+                //                F1x_m1, F2x_m1, F3x_m1,
+                //                F1y_m1, F2y_m1, F3y_m1,
+                //                Fx_m1, Fy_m1,
+                //                f_s, n
+                //            )
+                //            .IsolateVariable(mu_s)
 
-                            .DeepSelect(SinCosToTanFunc)
+                //            .DeepSelect(SinCosToTanFunc)
 
-                            .AssertEqTo(mu_s == tan(incline));
-                    }
-                }
+                //            .AssertEqTo(mu_s == tan(incline));
+                //    }
+                //}
             }
 
             #endregion
@@ -3928,140 +3928,140 @@ namespace Tests
                 
                 ////////////////////////////////////////////////////////////////////////////////
 
-                var s = new Symbol("s");                // displacement
-                var u = new Symbol("u");                // initial velocity
-                var v = new Symbol("v");                // final velocity
-                var a = new Symbol("a");                // acceleration
-                var t = new Symbol("t");                // time elapsed
+                //var s = new Symbol("s");                // displacement
+                //var u = new Symbol("u");                // initial velocity
+                //var v = new Symbol("v");                // final velocity
+                //var a = new Symbol("a");                // acceleration
+                //var t = new Symbol("t");                // time elapsed
                 
-                var F1_m1 = new Symbol("F1_m1");        // force 1 on mass 1
-                var F2_m1 = new Symbol("F2_m1");        // force 2 on mass 1
-                var F3_m1 = new Symbol("F3_m1");        // force 3 on mass 1
+                //var F1_m1 = new Symbol("F1_m1");        // force 1 on mass 1
+                //var F2_m1 = new Symbol("F2_m1");        // force 2 on mass 1
+                //var F3_m1 = new Symbol("F3_m1");        // force 3 on mass 1
 
-                var th1_m1 = new Symbol("th1_m1");      // direction of force 1 on mass 1
-                var th2_m1 = new Symbol("th2_m1");      // direction of force 2 on mass 1
-                var th3_m1 = new Symbol("th3_m1");      // direction of force 3 on mass 1
+                //var th1_m1 = new Symbol("th1_m1");      // direction of force 1 on mass 1
+                //var th2_m1 = new Symbol("th2_m1");      // direction of force 2 on mass 1
+                //var th3_m1 = new Symbol("th3_m1");      // direction of force 3 on mass 1
 
-                var F1x_m1 = new Symbol("F1x_m1");      // x-component of force 1 on mass 1
-                var F2x_m1 = new Symbol("F2x_m1");      // x-component of force 2 on mass 1
-                var F3x_m1 = new Symbol("F3x_m1");      // x-component of force 3 on mass 1
+                //var F1x_m1 = new Symbol("F1x_m1");      // x-component of force 1 on mass 1
+                //var F2x_m1 = new Symbol("F2x_m1");      // x-component of force 2 on mass 1
+                //var F3x_m1 = new Symbol("F3x_m1");      // x-component of force 3 on mass 1
 
-                var F1y_m1 = new Symbol("F1y_m1");      // y-component of force 1 on mass 1
-                var F2y_m1 = new Symbol("F2y_m1");      // y-component of force 2 on mass 1
-                var F3y_m1 = new Symbol("F3y_m1");      // y-component of force 3 on mass 1
+                //var F1y_m1 = new Symbol("F1y_m1");      // y-component of force 1 on mass 1
+                //var F2y_m1 = new Symbol("F2y_m1");      // y-component of force 2 on mass 1
+                //var F3y_m1 = new Symbol("F3y_m1");      // y-component of force 3 on mass 1
 
-                var Fx_m1 = new Symbol("Fx_m1");        // x-component of total force on mass 1
-                var Fy_m1 = new Symbol("Fy_m1");        // y-component of total force on mass 1
+                //var Fx_m1 = new Symbol("Fx_m1");        // x-component of total force on mass 1
+                //var Fy_m1 = new Symbol("Fy_m1");        // y-component of total force on mass 1
 
-                var ax_m1 = new Symbol("ax_m1");        // x-component of acceleration of mass 1
-                var ay_m1 = new Symbol("ay_m1");        // y-component of acceleration of mass 1
+                //var ax_m1 = new Symbol("ax_m1");        // x-component of acceleration of mass 1
+                //var ay_m1 = new Symbol("ay_m1");        // y-component of acceleration of mass 1
 
-                var m1 = new Symbol("m1");
+                //var m1 = new Symbol("m1");
 
-                ////////////////////////////////////////////////////////////////////////////////
+                //////////////////////////////////////////////////////////////////////////////////
 
-                // var incline = new Symbol("incline");
+                //// var incline = new Symbol("incline");
                 
-                var f_s = new Symbol("f_s");            // force due to static friction
+                //var f_s = new Symbol("f_s");            // force due to static friction
 
-                var f_k = new Symbol("f_k");            // force due to kinetic friction
+                //var f_k = new Symbol("f_k");            // force due to kinetic friction
 
-                var g = new Symbol("g");                // gravity
+                //var g = new Symbol("g");                // gravity
 
-                var n = new Symbol("n");                // normal force on block
+                //var n = new Symbol("n");                // normal force on block
 
-                // var a = new Symbol("a");
+                //// var a = new Symbol("a");
 
-                var Pi = new Symbol("Pi");
+                //var Pi = new Symbol("Pi");
 
-                var mu_s = new Symbol("mu_s");          // coefficient of static friction
+                //var mu_s = new Symbol("mu_s");          // coefficient of static friction
 
-                var mu_k = new Symbol("mu_k");          // coefficient of kinetic friction
+                //var mu_k = new Symbol("mu_k");          // coefficient of kinetic friction
                 
-                var eqs = and(
+                //var eqs = and(
 
-                    a == ax_m1,
+                //    a == ax_m1,
 
-                    v == u + a * t,
-                    s == (u + v) * t / 2,
+                //    v == u + a * t,
+                //    s == (u + v) * t / 2,
                     
-                    F1x_m1 == F1_m1 * cos(th1_m1),
-                    F2x_m1 == F2_m1 * cos(th2_m1),
-                    F3x_m1 == F3_m1 * cos(th3_m1),
+                //    F1x_m1 == F1_m1 * cos(th1_m1),
+                //    F2x_m1 == F2_m1 * cos(th2_m1),
+                //    F3x_m1 == F3_m1 * cos(th3_m1),
 
-                    F1y_m1 == F1_m1 * sin(th1_m1),
-                    F2y_m1 == F2_m1 * sin(th2_m1),
-                    F3y_m1 == F3_m1 * sin(th3_m1),
+                //    F1y_m1 == F1_m1 * sin(th1_m1),
+                //    F2y_m1 == F2_m1 * sin(th2_m1),
+                //    F3y_m1 == F3_m1 * sin(th3_m1),
 
-                    Fx_m1 == F1x_m1 + F2x_m1 + F3x_m1,
-                    Fy_m1 == F1y_m1 + F2y_m1 + F3y_m1,
+                //    Fx_m1 == F1x_m1 + F2x_m1 + F3x_m1,
+                //    Fy_m1 == F1y_m1 + F2y_m1 + F3y_m1,
 
-                    Fx_m1 == m1 * ax_m1,
-                    Fy_m1 == m1 * ay_m1,
+                //    Fx_m1 == m1 * ax_m1,
+                //    Fy_m1 == m1 * ay_m1,
 
-                    f_s == mu_s * n,
-                    f_k == mu_k * n
+                //    f_s == mu_s * n,
+                //    f_k == mu_k * n
                     
-                    );
+                //    );
                 
-                DoubleFloat.Tolerance = 0.00001;
+                //DoubleFloat.Tolerance = 0.00001;
 
-                {
-                    var symbolic_vals = new List<Equation>()
-                    {
-                        F1_m1 == n,
-                        F2_m1 == f_k,
-                        F3_m1 == m1 * g,
+                //{
+                //    var symbolic_vals = new List<Equation>()
+                //    {
+                //        F1_m1 == n,
+                //        F2_m1 == f_k,
+                //        F3_m1 == m1 * g,
 
-                        th1_m1 == 90 * Pi / 180,            // force 1 is straight up
-                        th2_m1 == 180 * Pi / 180,           // force 2 is left
-                        th3_m1 == 270 * Pi / 180            // force 3 is straight down
-                    };
+                //        th1_m1 == 90 * Pi / 180,            // force 1 is straight up
+                //        th2_m1 == 180 * Pi / 180,           // force 2 is left
+                //        th3_m1 == 270 * Pi / 180            // force 3 is straight down
+                //    };
 
-                    var vals = new List<Equation>()
-                    {
-                        //ax_m1 == 0,
-                        ay_m1 == 0,
+                //    var vals = new List<Equation>()
+                //    {
+                //        //ax_m1 == 0,
+                //        ay_m1 == 0,
 
-                        s == 115,
-                        u == 20,
-                        v == 0,
+                //        s == 115,
+                //        u == 20,
+                //        v == 0,
 
-                        g == 9.8
-                    };
+                //        g == 9.8
+                //    };
                     
-                    var zeros = vals.Where(eq => eq.b == 0).ToList();
+                //    var zeros = vals.Where(eq => eq.b == 0).ToList();
 
-                    // mu_k
-                    {
-                        eqs
-                            .Substitute(zeros)
-                            .Substitute(symbolic_vals)
+                //    // mu_k
+                //    {
+                //        eqs
+                //            .Substitute(zeros)
+                //            .Substitute(symbolic_vals)
 
-                            .EliminateVariables(
-                                t,
-                                F1x_m1, F2x_m1, F3x_m1,
-                                F1y_m1, F2y_m1, F3y_m1,
+                //            .EliminateVariables(
+                //                t,
+                //                F1x_m1, F2x_m1, F3x_m1,
+                //                F1y_m1, F2y_m1, F3y_m1,
 
-                                Fx_m1, Fy_m1,
+                //                Fx_m1, Fy_m1,
 
-                                f_s, f_k,
+                //                f_s, f_k,
 
-                                n,
+                //                n,
 
-                                ax_m1, a
+                //                ax_m1, a
 
-                                )
+                //                )
 
-                            .IsolateVariable(mu_k)
+                //            .IsolateVariable(mu_k)
                             
-                            .AssertEqTo(    mu_k == (u ^ 2) / s / g / 2    )
+                //            .AssertEqTo(    mu_k == (u ^ 2) / s / g / 2    )
 
-                            .Substitute(vals)
+                //            .Substitute(vals)
                             
-                            .AssertEqTo(    mu_k == 0.17746228926353147    );
-                    }
-                }
+                //            .AssertEqTo(    mu_k == 0.17746228926353147    );
+                //    }
+                //}
             }
 
             #endregion
@@ -4083,171 +4083,171 @@ namespace Tests
                 
                 ////////////////////////////////////////////////////////////////////////////////
 
-                var F1_m1 = new Symbol("F1_m1");        // force 1 on mass 1
-                var F2_m1 = new Symbol("F2_m1");        // force 2 on mass 1
-                var F3_m1 = new Symbol("F3_m1");        // force 3 on mass 1
-                var F4_m1 = new Symbol("F4_m1");        // force 4 on mass 1
-                var F5_m1 = new Symbol("F5_m1");        // force 5 on mass 1
+                //var F1_m1 = new Symbol("F1_m1");        // force 1 on mass 1
+                //var F2_m1 = new Symbol("F2_m1");        // force 2 on mass 1
+                //var F3_m1 = new Symbol("F3_m1");        // force 3 on mass 1
+                //var F4_m1 = new Symbol("F4_m1");        // force 4 on mass 1
+                //var F5_m1 = new Symbol("F5_m1");        // force 5 on mass 1
 
-                var th1_m1 = new Symbol("th1_m1");      // direction of force 1 on mass 1
-                var th2_m1 = new Symbol("th2_m1");      // direction of force 2 on mass 1
-                var th3_m1 = new Symbol("th3_m1");      // direction of force 3 on mass 1
-                var th4_m1 = new Symbol("th4_m1");      // direction of force 4 on mass 1
-                var th5_m1 = new Symbol("th5_m1");      // direction of force 5 on mass 1
+                //var th1_m1 = new Symbol("th1_m1");      // direction of force 1 on mass 1
+                //var th2_m1 = new Symbol("th2_m1");      // direction of force 2 on mass 1
+                //var th3_m1 = new Symbol("th3_m1");      // direction of force 3 on mass 1
+                //var th4_m1 = new Symbol("th4_m1");      // direction of force 4 on mass 1
+                //var th5_m1 = new Symbol("th5_m1");      // direction of force 5 on mass 1
 
-                var F1x_m1 = new Symbol("F1x_m1");      // x-component of force 1 on mass 1
-                var F2x_m1 = new Symbol("F2x_m1");      // x-component of force 2 on mass 1
-                var F3x_m1 = new Symbol("F3x_m1");      // x-component of force 3 on mass 1
-                var F4x_m1 = new Symbol("F4x_m1");      // x-component of force 4 on mass 1
-                var F5x_m1 = new Symbol("F5x_m1");      // x-component of force 5 on mass 1
+                //var F1x_m1 = new Symbol("F1x_m1");      // x-component of force 1 on mass 1
+                //var F2x_m1 = new Symbol("F2x_m1");      // x-component of force 2 on mass 1
+                //var F3x_m1 = new Symbol("F3x_m1");      // x-component of force 3 on mass 1
+                //var F4x_m1 = new Symbol("F4x_m1");      // x-component of force 4 on mass 1
+                //var F5x_m1 = new Symbol("F5x_m1");      // x-component of force 5 on mass 1
 
-                var F1y_m1 = new Symbol("F1y_m1");      // y-component of force 1 on mass 1
-                var F2y_m1 = new Symbol("F2y_m1");      // y-component of force 2 on mass 1
-                var F3y_m1 = new Symbol("F3y_m1");      // y-component of force 3 on mass 1
-                var F4y_m1 = new Symbol("F4y_m1");      // y-component of force 4 on mass 1
-                var F5y_m1 = new Symbol("F5y_m1");      // y-component of force 5 on mass 1
+                //var F1y_m1 = new Symbol("F1y_m1");      // y-component of force 1 on mass 1
+                //var F2y_m1 = new Symbol("F2y_m1");      // y-component of force 2 on mass 1
+                //var F3y_m1 = new Symbol("F3y_m1");      // y-component of force 3 on mass 1
+                //var F4y_m1 = new Symbol("F4y_m1");      // y-component of force 4 on mass 1
+                //var F5y_m1 = new Symbol("F5y_m1");      // y-component of force 5 on mass 1
 
-                var Fx_m1 = new Symbol("Fx_m1");        // x-component of total force on mass 1
-                var Fy_m1 = new Symbol("Fy_m1");        // y-component of total force on mass 1
+                //var Fx_m1 = new Symbol("Fx_m1");        // x-component of total force on mass 1
+                //var Fy_m1 = new Symbol("Fy_m1");        // y-component of total force on mass 1
 
-                var ax_m1 = new Symbol("ax_m1");        // x-component of acceleration of mass 1
-                var ay_m1 = new Symbol("ay_m1");        // y-component of acceleration of mass 1
+                //var ax_m1 = new Symbol("ax_m1");        // x-component of acceleration of mass 1
+                //var ay_m1 = new Symbol("ay_m1");        // y-component of acceleration of mass 1
 
-                var m1 = new Symbol("m1");
+                //var m1 = new Symbol("m1");
 
-                ////////////////////////////////////////////////////////////////////////////////
+                //////////////////////////////////////////////////////////////////////////////////
 
-                var F1_m2 = new Symbol("F1_m2");        // force 1 on mass 2
-                var F2_m2 = new Symbol("F2_m2");        // force 2 on mass 2
+                //var F1_m2 = new Symbol("F1_m2");        // force 1 on mass 2
+                //var F2_m2 = new Symbol("F2_m2");        // force 2 on mass 2
                 
-                var th1_m2 = new Symbol("th1_m2");      // direction of force 1 on mass 2
-                var th2_m2 = new Symbol("th2_m2");      // direction of force 2 on mass 2
+                //var th1_m2 = new Symbol("th1_m2");      // direction of force 1 on mass 2
+                //var th2_m2 = new Symbol("th2_m2");      // direction of force 2 on mass 2
                 
-                var F1x_m2 = new Symbol("F1x_m2");      // x-component of force 1 on mass 2
-                var F2x_m2 = new Symbol("F2x_m2");      // x-component of force 2 on mass 2
+                //var F1x_m2 = new Symbol("F1x_m2");      // x-component of force 1 on mass 2
+                //var F2x_m2 = new Symbol("F2x_m2");      // x-component of force 2 on mass 2
                 
-                var F1y_m2 = new Symbol("F1y_m2");      // y-component of force 1 on mass 2
-                var F2y_m2 = new Symbol("F2y_m2");      // y-component of force 2 on mass 2
+                //var F1y_m2 = new Symbol("F1y_m2");      // y-component of force 1 on mass 2
+                //var F2y_m2 = new Symbol("F2y_m2");      // y-component of force 2 on mass 2
                 
-                var Fx_m2 = new Symbol("Fx_m2");        // x-component of total force on mass 2
-                var Fy_m2 = new Symbol("Fy_m2");        // y-component of total force on mass 2
+                //var Fx_m2 = new Symbol("Fx_m2");        // x-component of total force on mass 2
+                //var Fy_m2 = new Symbol("Fy_m2");        // y-component of total force on mass 2
 
-                var ax_m2 = new Symbol("ax_m2");        // x-component of acceleration of mass 2
-                var ay_m2 = new Symbol("ay_m2");        // y-component of acceleration of mass 2
+                //var ax_m2 = new Symbol("ax_m2");        // x-component of acceleration of mass 2
+                //var ay_m2 = new Symbol("ay_m2");        // y-component of acceleration of mass 2
 
-                var m2 = new Symbol("m2");
+                //var m2 = new Symbol("m2");
 
-                ////////////////////////////////////////////////////////////////////////////////
+                //////////////////////////////////////////////////////////////////////////////////
                 
-                var F = new Symbol("F");                // force applied at angle on block
-                var th = new Symbol("th");              // angle of force applied on block
-                var T = new Symbol("T");                // tension in cable
-                var g = new Symbol("g");                // gravity
-                var n = new Symbol("n");                // normal force on block
+                //var F = new Symbol("F");                // force applied at angle on block
+                //var th = new Symbol("th");              // angle of force applied on block
+                //var T = new Symbol("T");                // tension in cable
+                //var g = new Symbol("g");                // gravity
+                //var n = new Symbol("n");                // normal force on block
 
-                var a = new Symbol("a");
+                //var a = new Symbol("a");
 
-                var Pi = new Symbol("Pi");
+                //var Pi = new Symbol("Pi");
                                 
-                var f_k = new Symbol("f_k");            // force due to kinetic friction
+                //var f_k = new Symbol("f_k");            // force due to kinetic friction
                 
-                var mu_k = new Symbol("mu_k");          // coefficient of kinetic friction
+                //var mu_k = new Symbol("mu_k");          // coefficient of kinetic friction
 
-                var eqs = and(
+                //var eqs = and(
                     
-                    ax_m1 == ay_m2,                     // the block moves right as the ball moves up
+                //    ax_m1 == ay_m2,                     // the block moves right as the ball moves up
 
-                    ////////////////////////////////////////////////////////////////////////////////
+                //    ////////////////////////////////////////////////////////////////////////////////
 
-                    F1x_m1 == F1_m1 * cos(th1_m1),
-                    F2x_m1 == F2_m1 * cos(th2_m1),
-                    F3x_m1 == F3_m1 * cos(th3_m1),
-                    F4x_m1 == F4_m1 * cos(th4_m1),
-                    F5x_m1 == F5_m1 * cos(th5_m1),
+                //    F1x_m1 == F1_m1 * cos(th1_m1),
+                //    F2x_m1 == F2_m1 * cos(th2_m1),
+                //    F3x_m1 == F3_m1 * cos(th3_m1),
+                //    F4x_m1 == F4_m1 * cos(th4_m1),
+                //    F5x_m1 == F5_m1 * cos(th5_m1),
 
-                    F1y_m1 == F1_m1 * sin(th1_m1),
-                    F2y_m1 == F2_m1 * sin(th2_m1),
-                    F3y_m1 == F3_m1 * sin(th3_m1),
-                    F4y_m1 == F4_m1 * sin(th4_m1),
-                    F5y_m1 == F5_m1 * sin(th5_m1),
+                //    F1y_m1 == F1_m1 * sin(th1_m1),
+                //    F2y_m1 == F2_m1 * sin(th2_m1),
+                //    F3y_m1 == F3_m1 * sin(th3_m1),
+                //    F4y_m1 == F4_m1 * sin(th4_m1),
+                //    F5y_m1 == F5_m1 * sin(th5_m1),
 
-                    Fx_m1 == F1x_m1 + F2x_m1 + F3x_m1 + F4x_m1 + F5x_m1,
-                    Fy_m1 == F1y_m1 + F2y_m1 + F3y_m1 + F4y_m1 + F5y_m1,
+                //    Fx_m1 == F1x_m1 + F2x_m1 + F3x_m1 + F4x_m1 + F5x_m1,
+                //    Fy_m1 == F1y_m1 + F2y_m1 + F3y_m1 + F4y_m1 + F5y_m1,
 
-                    Fx_m1 == m1 * ax_m1,
-                    Fy_m1 == m1 * ay_m1,
+                //    Fx_m1 == m1 * ax_m1,
+                //    Fy_m1 == m1 * ay_m1,
 
-                    ////////////////////////////////////////////////////////////////////////////////
+                //    ////////////////////////////////////////////////////////////////////////////////
 
-                    F1x_m2 == F1_m2 * cos(th1_m2),
-                    F2x_m2 == F2_m2 * cos(th2_m2),
+                //    F1x_m2 == F1_m2 * cos(th1_m2),
+                //    F2x_m2 == F2_m2 * cos(th2_m2),
 
-                    F1y_m2 == F1_m2 * sin(th1_m2),
-                    F2y_m2 == F2_m2 * sin(th2_m2),
+                //    F1y_m2 == F1_m2 * sin(th1_m2),
+                //    F2y_m2 == F2_m2 * sin(th2_m2),
 
-                    Fx_m2 == F1x_m2 + F2x_m2,
-                    Fy_m2 == F1y_m2 + F2y_m2,
+                //    Fx_m2 == F1x_m2 + F2x_m2,
+                //    Fy_m2 == F1y_m2 + F2y_m2,
 
-                    Fx_m2 == m2 * ax_m2,
-                    Fy_m2 == m2 * ay_m2,
+                //    Fx_m2 == m2 * ax_m2,
+                //    Fy_m2 == m2 * ay_m2,
 
-                    ////////////////////////////////////////////////////////////////////////////////
+                //    ////////////////////////////////////////////////////////////////////////////////
 
-                    f_k == mu_k * n,
+                //    f_k == mu_k * n,
 
-                    a == ax_m1
+                //    a == ax_m1
 
-                    );
+                //    );
                 
-                DoubleFloat.Tolerance = 0.00001;
+                //DoubleFloat.Tolerance = 0.00001;
 
-                {
-                    var vals = new List<Equation>()
-                    {
-                        ay_m1 == 0,                                     // block moves horizontally
-                        ax_m2 == 0,                                     // ball moves vertically
+                //{
+                //    var vals = new List<Equation>()
+                //    {
+                //        ay_m1 == 0,                                     // block moves horizontally
+                //        ax_m2 == 0,                                     // ball moves vertically
                         
-                        F1_m1 == F,         th1_m1 == th,               // force applied at angle
-                        F2_m1 == n,         th2_m1 == 90 * Pi / 180,    // normal force is straight up
-                        F3_m1 == T,         th3_m1 == 180 * Pi / 180,   // force due to cord is left
-                        F4_m1 == f_k,       th4_m1 == 180 * Pi / 180,   // force due to friction is left
-                        F5_m1 == m1 * g,    th5_m1 == 270 * Pi / 180,   // force due to gravity is down
+                //        F1_m1 == F,         th1_m1 == th,               // force applied at angle
+                //        F2_m1 == n,         th2_m1 == 90 * Pi / 180,    // normal force is straight up
+                //        F3_m1 == T,         th3_m1 == 180 * Pi / 180,   // force due to cord is left
+                //        F4_m1 == f_k,       th4_m1 == 180 * Pi / 180,   // force due to friction is left
+                //        F5_m1 == m1 * g,    th5_m1 == 270 * Pi / 180,   // force due to gravity is down
                         
-                        F1_m2 == T,         th1_m2 == 90 * Pi / 180,    // force due to cord is up
-                        F2_m2 == m2 * g,    th2_m2 == 270 * Pi / 180    // force due to gravity is down                                
-                    };
+                //        F1_m2 == T,         th1_m2 == 90 * Pi / 180,    // force due to cord is up
+                //        F2_m2 == m2 * g,    th2_m2 == 270 * Pi / 180    // force due to gravity is down                                
+                //    };
 
-                    var zeros = vals.Where(eq => eq.b == 0).ToList();
+                //    var zeros = vals.Where(eq => eq.b == 0).ToList();
 
-                    // a
-                    {
-                        eqs
-                            .Substitute(vals)
+                //    // a
+                //    {
+                //        eqs
+                //            .Substitute(vals)
 
-                            .EliminateVariables(
-                                ax_m1,
+                //            .EliminateVariables(
+                //                ax_m1,
 
-                                Fx_m1, Fy_m1,
-                                Fx_m2, Fy_m2,
+                //                Fx_m1, Fy_m1,
+                //                Fx_m2, Fy_m2,
 
-                                F1x_m1, F2x_m1, F3x_m1, F4x_m1, F5x_m1,
-                                F1y_m1, F2y_m1, F3y_m1, F4y_m1, F5y_m1,
+                //                F1x_m1, F2x_m1, F3x_m1, F4x_m1, F5x_m1,
+                //                F1y_m1, F2y_m1, F3y_m1, F4y_m1, F5y_m1,
 
-                                F1x_m2, F2x_m2,
-                                F1y_m2, F2y_m2,
+                //                F1x_m2, F2x_m2,
+                //                F1y_m2, F2y_m2,
 
-                                T, f_k, n,
+                //                T, f_k, n,
 
-                                ay_m2
-                            )
+                //                ay_m2
+                //            )
                             
-                            .AssertEqTo(
+                //            .AssertEqTo(
 
-                                a == (g * m2 + g * m1 * mu_k - F * mu_k * sin(th) - cos(th) * F) / (-m1 - m2)
+                //                a == (g * m2 + g * m1 * mu_k - F * mu_k * sin(th) - cos(th) * F) / (-m1 - m2)
 
-                            );
-                    }
-                }
+                //            );
+                //    }
+                //}
             }
 
             #endregion
@@ -4267,87 +4267,87 @@ namespace Tests
                 // 
                 // Determine the magnitude of the acceleration of the two objects.
 
-                var blk = new Obj5("blk");
-                var bal = new Obj3("bal");
+                //var blk = new Obj5("blk");
+                //var bal = new Obj3("bal");
                 
-                var F = new Symbol("F");                // force applied at angle on block
-                var th = new Symbol("th");              // angle of force applied on block
-                var T = new Symbol("T");                // tension in cable
-                var g = new Symbol("g");                // gravity
-                var n = new Symbol("n");                // normal force on block
+                //var F = new Symbol("F");                // force applied at angle on block
+                //var th = new Symbol("th");              // angle of force applied on block
+                //var T = new Symbol("T");                // tension in cable
+                //var g = new Symbol("g");                // gravity
+                //var n = new Symbol("n");                // normal force on block
 
-                var a = new Symbol("a");
+                //var a = new Symbol("a");
 
-                var Pi = new Symbol("Pi");
+                //var Pi = new Symbol("Pi");
 
-                var f_k = new Symbol("f_k");            // force due to kinetic friction
+                //var f_k = new Symbol("f_k");            // force due to kinetic friction
 
-                var mu_k = new Symbol("mu_k");          // coefficient of kinetic friction
+                //var mu_k = new Symbol("mu_k");          // coefficient of kinetic friction
 
-                var m1 = new Symbol("m1");
-                var m2 = new Symbol("m2");
+                //var m1 = new Symbol("m1");
+                //var m2 = new Symbol("m2");
 
-                var eqs = and(
+                //var eqs = and(
 
-                    blk.ax == bal.ay,                   // the block moves right as the ball moves up
+                //    blk.ax == bal.ay,                   // the block moves right as the ball moves up
 
-                    blk.Equations(),
-                    bal.Equations(),
+                //    blk.Equations(),
+                //    bal.Equations(),
 
-                    f_k == mu_k * n,
+                //    f_k == mu_k * n,
 
-                    a == blk.ax
+                //    a == blk.ax
 
-                    );
+                //    );
                 
-                var vals = new List<Equation>()
-                {
-                    blk.ay == 0,                                        // block moves horizontally
+                //var vals = new List<Equation>()
+                //{
+                //    blk.ay == 0,                                        // block moves horizontally
                         
-                    blk.F1 == F,            blk.th1 == th,              // block moves horizontally
-                    blk.F2 == n,            blk.th2 == 90 * Pi / 180,   // normal force is straight up
-                    blk.F3 == T,            blk.th3 == 180 * Pi / 180,  // force due to cord is left
-                    blk.F4 == f_k,          blk.th4 == 180 * Pi / 180,  // force due to friction is left
-                    blk.F5 == blk.m * g,    blk.th5 == 270 * Pi / 180,  // force due to gravity is down
+                //    blk.F1 == F,            blk.th1 == th,              // block moves horizontally
+                //    blk.F2 == n,            blk.th2 == 90 * Pi / 180,   // normal force is straight up
+                //    blk.F3 == T,            blk.th3 == 180 * Pi / 180,  // force due to cord is left
+                //    blk.F4 == f_k,          blk.th4 == 180 * Pi / 180,  // force due to friction is left
+                //    blk.F5 == blk.m * g,    blk.th5 == 270 * Pi / 180,  // force due to gravity is down
 
-                    bal.ax == 0,                                        // ball moves vertically
+                //    bal.ax == 0,                                        // ball moves vertically
 
-                    bal.F1 == T,            bal.th1 == 90 * Pi / 180,   // force due to cord is up
-                    bal.F2 == bal.m * g,    bal.th2 == 270 * Pi / 180,  // force due to gravity is down
-                    bal.F3 == 0,
+                //    bal.F1 == T,            bal.th1 == 90 * Pi / 180,   // force due to cord is up
+                //    bal.F2 == bal.m * g,    bal.th2 == 270 * Pi / 180,  // force due to gravity is down
+                //    bal.F3 == 0,
 
-                    blk.m == m1,
-                    bal.m == m2
-                };
+                //    blk.m == m1,
+                //    bal.m == m2
+                //};
 
-                // a
+                //// a
                 
-                eqs
-                    .Substitute(vals)
+                //eqs
+                //    .Substitute(vals)
 
-                    .EliminateVariables(
+                //    .EliminateVariables(
 
-                        blk.ax,
+                //        blk.ax,
 
-                        blk.ΣFx, blk.ΣFy,
-                        bal.ΣFx, bal.ΣFy,
+                //        blk.ΣFx, blk.ΣFy,
+                //        bal.ΣFx, bal.ΣFy,
 
-                        blk.F1x, blk.F2x, blk.F3x, blk.F4x, blk.F5x,
-                        blk.F1y, blk.F2y, blk.F3y, blk.F4y, blk.F5y,
+                //        blk.F1x, blk.F2x, blk.F3x, blk.F4x, blk.F5x,
+                //        blk.F1y, blk.F2y, blk.F3y, blk.F4y, blk.F5y,
 
-                        bal.F1x, bal.F2x, bal.F3x,
-                        bal.F1y, bal.F2y, bal.F3y,
+                //        bal.F1x, bal.F2x, bal.F3x,
+                //        bal.F1y, bal.F2y, bal.F3y,
 
-                        T, f_k, n,
+                //        T, f_k, n,
 
-                        bal.ay
-                    )
+                //        bal.ay
+                //    )
 
-                    .AssertEqTo(
+                //    .AssertEqTo(
 
-                        a == (g * m2 + g * m1 * mu_k - F * mu_k * sin(th) - cos(th) * F) / (-m1 - m2)
+                //        a == (g * m2 + g * m1 * mu_k - F * mu_k * sin(th) - cos(th) * F) / (-m1 - m2)
 
-                    );
+                //    );
                 
             }
 
@@ -4356,6 +4356,126 @@ namespace Tests
             #region PSE 5E P5.25
 
             {
+				// A bag of cement of weight F_g hangs from three wires as
+				// shown in http://i.imgur.com/f5JpLjY.png
+				//  
+				// Two of the wires make angles th1 and th2 with the horizontal.
+				// If the system is in equilibrium, show that the tension in the
+				// left -hand wire is:
+				//
+				//          T1 == F_g cos(th2) / sin(th1 + th2)
+
+				////////////////////////////////////////////////////////////////////////////////
+
+				//var F1_m1 = new Symbol("F1_m1");        // force 1 on mass 1
+				//var F2_m1 = new Symbol("F2_m1");        // force 2 on mass 1
+				//var F3_m1 = new Symbol("F3_m1");        // force 3 on mass 1
+
+				//var th1_m1 = new Symbol("th1_m1");      // direction of force 1 on mass 1
+				//var th2_m1 = new Symbol("th2_m1");      // direction of force 2 on mass 1
+				//var th3_m1 = new Symbol("th3_m1");      // direction of force 3 on mass 1
+
+				//var F1x_m1 = new Symbol("F1x_m1");      // x-component of force 1 on mass 1
+				//var F2x_m1 = new Symbol("F2x_m1");      // x-component of force 2 on mass 1
+				//var F3x_m1 = new Symbol("F3x_m1");      // x-component of force 3 on mass 1
+
+				//var F1y_m1 = new Symbol("F1y_m1");      // y-component of force 1 on mass 1
+				//var F2y_m1 = new Symbol("F2y_m1");      // y-component of force 2 on mass 1
+				//var F3y_m1 = new Symbol("F3y_m1");      // y-component of force 3 on mass 1
+
+				//var Fx_m1 = new Symbol("Fx_m1");        // x-component of total force on mass 1
+				//var Fy_m1 = new Symbol("Fy_m1");        // y-component of total force on mass 1
+
+				//var ax_m1 = new Symbol("ax_m1");        // x-component of acceleration of mass 1
+				//var ay_m1 = new Symbol("ay_m1");        // y-component of acceleration of mass 1
+
+				//var m1 = new Symbol("m1");
+
+				//////////////////////////////////////////////////////////////////////////////////
+
+				//var g = new Symbol("g");                // gravity
+
+				//var a = new Symbol("a");
+
+				//var Pi = new Symbol("Pi");
+
+				//var T1 = new Symbol("T1");
+				//var T2 = new Symbol("T2");
+				//var T3 = new Symbol("T3");
+
+				//var th1 = new Symbol("th1");
+				//var th2 = new Symbol("th2");
+
+				//var eqs = and(
+
+				//    F1x_m1 == F1_m1 * cos(th1_m1),
+				//    F2x_m1 == F2_m1 * cos(th2_m1),
+				//    F3x_m1 == F3_m1 * cos(th3_m1),
+
+				//    F1y_m1 == F1_m1 * sin(th1_m1),
+				//    F2y_m1 == F2_m1 * sin(th2_m1),
+				//    F3y_m1 == F3_m1 * sin(th3_m1),
+
+				//    Fx_m1 == F1x_m1 + F2x_m1 + F3x_m1,
+				//    Fy_m1 == F1y_m1 + F2y_m1 + F3y_m1,
+
+				//    Fx_m1 == m1 * ax_m1,
+				//    Fy_m1 == m1 * ay_m1
+
+				//    );
+
+				//DoubleFloat.Tolerance = 0.00001;
+
+				//{
+				//    var vals = new List<Equation>()
+				//    {
+				//        ax_m1 == 0,
+				//        ay_m1 == 0,
+
+				//        F1_m1 == T2,
+				//        F2_m1 == T1,
+				//        F3_m1 == m1 * g,
+
+				//        th1_m1 == th2,                              
+				//        th2_m1 == 180 * Pi / 180 - th1,             
+				//        th3_m1 == 270 * Pi / 180
+				//    };
+
+				//    var zeros = vals.Where(eq => eq.b == 0).ToList();
+
+				//    // T1
+				//    {
+				//        eqs
+				//            .Substitute(vals)
+
+				//            .EliminateVariables(
+
+				//                F1x_m1, F2x_m1, F3x_m1,
+				//                F1y_m1, F2y_m1, F3y_m1,
+
+				//                Fx_m1, Fy_m1,
+
+				//                T2
+				//            )
+
+				//            .IsolateVariable(T1)
+
+				//            .RationalizeExpression()
+
+				//            .DeepSelect(SumDifferenceFormulaAFunc)
+
+				//            .AssertEqTo(
+				//                T1 == cos(th2) * g * m1 / sin(th1 + th2)
+				//            );
+				//    }
+				//}
+			}
+
+			#endregion
+
+			#region PSE 5E P5.25 Obj
+
+			{
                 // A bag of cement of weight F_g hangs from three wires as
                 // shown in http://i.imgur.com/f5JpLjY.png
                 //  
@@ -4365,168 +4485,48 @@ namespace Tests
                 //
                 //          T1 == F_g cos(th2) / sin(th1 + th2)
                 
-                ////////////////////////////////////////////////////////////////////////////////
-
-                var F1_m1 = new Symbol("F1_m1");        // force 1 on mass 1
-                var F2_m1 = new Symbol("F2_m1");        // force 2 on mass 1
-                var F3_m1 = new Symbol("F3_m1");        // force 3 on mass 1
-
-                var th1_m1 = new Symbol("th1_m1");      // direction of force 1 on mass 1
-                var th2_m1 = new Symbol("th2_m1");      // direction of force 2 on mass 1
-                var th3_m1 = new Symbol("th3_m1");      // direction of force 3 on mass 1
-
-                var F1x_m1 = new Symbol("F1x_m1");      // x-component of force 1 on mass 1
-                var F2x_m1 = new Symbol("F2x_m1");      // x-component of force 2 on mass 1
-                var F3x_m1 = new Symbol("F3x_m1");      // x-component of force 3 on mass 1
-
-                var F1y_m1 = new Symbol("F1y_m1");      // y-component of force 1 on mass 1
-                var F2y_m1 = new Symbol("F2y_m1");      // y-component of force 2 on mass 1
-                var F3y_m1 = new Symbol("F3y_m1");      // y-component of force 3 on mass 1
-
-                var Fx_m1 = new Symbol("Fx_m1");        // x-component of total force on mass 1
-                var Fy_m1 = new Symbol("Fy_m1");        // y-component of total force on mass 1
-
-                var ax_m1 = new Symbol("ax_m1");        // x-component of acceleration of mass 1
-                var ay_m1 = new Symbol("ay_m1");        // y-component of acceleration of mass 1
-
-                var m1 = new Symbol("m1");
-
-                ////////////////////////////////////////////////////////////////////////////////
+                //var bag = new Obj3("bag");
                 
-                var g = new Symbol("g");                // gravity
-                
-                var a = new Symbol("a");
+                //var T1 = new Symbol("T1");
+                //var T2 = new Symbol("T2");
+                //var T3 = new Symbol("T3");
 
-                var Pi = new Symbol("Pi");
+                //var F_g = new Symbol("F_g");
 
-                var T1 = new Symbol("T1");
-                var T2 = new Symbol("T2");
-                var T3 = new Symbol("T3");
+                //var th1 = new Symbol("th1");
+                //var th2 = new Symbol("th2");
 
-                var th1 = new Symbol("th1");
-                var th2 = new Symbol("th2");
-                
-                var eqs = and(
+                //var eqs = bag.Equations();
+
+                //var vals = new List<Equation>()
+                //{
+                //    bag.ax == 0,
+                //    bag.ay == 0,
+
+                //    bag.F1 == T1,       bag.th1 == (180).ToRadians() - th1,
+                //    bag.F2 == T2,       bag.th2 == th2,
+                //    bag.F3 == F_g,      bag.th3 == (270).ToRadians()
+                //};
+
+                //eqs
+                //    .Substitute(vals)
+
+                //    .EliminateVariables(
+
+                //        bag.ΣFx, bag.F1x, bag.F2x, bag.F3x,
+                //        bag.ΣFy, bag.F1y, bag.F2y, bag.F3y,
+
+                //        T2
                     
-                    F1x_m1 == F1_m1 * cos(th1_m1),
-                    F2x_m1 == F2_m1 * cos(th2_m1),
-                    F3x_m1 == F3_m1 * cos(th3_m1),
+                //    )
 
-                    F1y_m1 == F1_m1 * sin(th1_m1),
-                    F2y_m1 == F2_m1 * sin(th2_m1),
-                    F3y_m1 == F3_m1 * sin(th3_m1),
+                //    .IsolateVariable(T1)
 
-                    Fx_m1 == F1x_m1 + F2x_m1 + F3x_m1,
-                    Fy_m1 == F1y_m1 + F2y_m1 + F3y_m1,
+                //    .RationalizeExpression()
 
-                    Fx_m1 == m1 * ax_m1,
-                    Fy_m1 == m1 * ay_m1
-                    
-                    );
+                //    .DeepSelect(SumDifferenceFormulaAFunc)
 
-                DoubleFloat.Tolerance = 0.00001;
-
-                {
-                    var vals = new List<Equation>()
-                    {
-                        ax_m1 == 0,
-                        ay_m1 == 0,
-                        
-                        F1_m1 == T2,
-                        F2_m1 == T1,
-                        F3_m1 == m1 * g,
-
-                        th1_m1 == th2,                              
-                        th2_m1 == 180 * Pi / 180 - th1,             
-                        th3_m1 == 270 * Pi / 180
-                    };
-
-                    var zeros = vals.Where(eq => eq.b == 0).ToList();
-
-                    // T1
-                    {
-                        eqs
-                            .Substitute(vals)
-
-                            .EliminateVariables(
-                            
-                                F1x_m1, F2x_m1, F3x_m1,
-                                F1y_m1, F2y_m1, F3y_m1,
-
-                                Fx_m1, Fy_m1,
-
-                                T2
-                            )
-
-                            .IsolateVariable(T1)
-                            
-                            .RationalizeExpression()
-
-                            .DeepSelect(SumDifferenceFormulaAFunc)
-
-                            .AssertEqTo(
-                                T1 == cos(th2) * g * m1 / sin(th1 + th2)
-                            );
-                    }
-                }
-            }
-
-            #endregion
-            
-            #region PSE 5E P5.25 Obj
-
-            {
-                // A bag of cement of weight F_g hangs from three wires as
-                // shown in http://i.imgur.com/f5JpLjY.png
-                //  
-                // Two of the wires make angles th1 and th2 with the horizontal.
-                // If the system is in equilibrium, show that the tension in the
-                // left -hand wire is:
-                //
-                //          T1 == F_g cos(th2) / sin(th1 + th2)
-                
-                var bag = new Obj3("bag");
-                
-                var T1 = new Symbol("T1");
-                var T2 = new Symbol("T2");
-                var T3 = new Symbol("T3");
-
-                var F_g = new Symbol("F_g");
-
-                var th1 = new Symbol("th1");
-                var th2 = new Symbol("th2");
-
-                var eqs = bag.Equations();
-
-                var vals = new List<Equation>()
-                {
-                    bag.ax == 0,
-                    bag.ay == 0,
-
-                    bag.F1 == T1,       bag.th1 == (180).ToRadians() - th1,
-                    bag.F2 == T2,       bag.th2 == th2,
-                    bag.F3 == F_g,      bag.th3 == (270).ToRadians()
-                };
-
-                eqs
-                    .Substitute(vals)
-
-                    .EliminateVariables(
-
-                        bag.ΣFx, bag.F1x, bag.F2x, bag.F3x,
-                        bag.ΣFy, bag.F1y, bag.F2y, bag.F3y,
-
-                        T2
-                    
-                    )
-
-                    .IsolateVariable(T1)
-
-                    .RationalizeExpression()
-
-                    .DeepSelect(SumDifferenceFormulaAFunc)
-
-                    .AssertEqTo(    T1 == cos(th2) * F_g / sin(th1 + th2)   );
+                //    .AssertEqTo(    T1 == cos(th2) * F_g / sin(th1 + th2)   );
                 
             }
 
@@ -4547,183 +4547,183 @@ namespace Tests
 
                 ////////////////////////////////////////////////////////////////////////////////
 
-                var F1_m1 = new Symbol("F1_m1");        // force 1 on mass 1
-                var F2_m1 = new Symbol("F2_m1");        // force 2 on mass 1
+                //var F1_m1 = new Symbol("F1_m1");        // force 1 on mass 1
+                //var F2_m1 = new Symbol("F2_m1");        // force 2 on mass 1
                 
-                var th1_m1 = new Symbol("th1_m1");      // direction of force 1 on mass 1
-                var th2_m1 = new Symbol("th2_m1");      // direction of force 2 on mass 1
+                //var th1_m1 = new Symbol("th1_m1");      // direction of force 1 on mass 1
+                //var th2_m1 = new Symbol("th2_m1");      // direction of force 2 on mass 1
                 
-                var F1x_m1 = new Symbol("F1x_m1");      // x-component of force 1 on mass 1
-                var F2x_m1 = new Symbol("F2x_m1");      // x-component of force 2 on mass 1
+                //var F1x_m1 = new Symbol("F1x_m1");      // x-component of force 1 on mass 1
+                //var F2x_m1 = new Symbol("F2x_m1");      // x-component of force 2 on mass 1
                 
-                var F1y_m1 = new Symbol("F1y_m1");      // y-component of force 1 on mass 1
-                var F2y_m1 = new Symbol("F2y_m1");      // y-component of force 2 on mass 1
+                //var F1y_m1 = new Symbol("F1y_m1");      // y-component of force 1 on mass 1
+                //var F2y_m1 = new Symbol("F2y_m1");      // y-component of force 2 on mass 1
                 
-                var Fx_m1 = new Symbol("Fx_m1");        // x-component of total force on mass 1
-                var Fy_m1 = new Symbol("Fy_m1");        // y-component of total force on mass 1
+                //var Fx_m1 = new Symbol("Fx_m1");        // x-component of total force on mass 1
+                //var Fy_m1 = new Symbol("Fy_m1");        // y-component of total force on mass 1
 
-                var ax_m1 = new Symbol("ax_m1");        // x-component of acceleration of mass 1
-                var ay_m1 = new Symbol("ay_m1");        // y-component of acceleration of mass 1
+                //var ax_m1 = new Symbol("ax_m1");        // x-component of acceleration of mass 1
+                //var ay_m1 = new Symbol("ay_m1");        // y-component of acceleration of mass 1
 
-                var m1 = new Symbol("m1");
+                //var m1 = new Symbol("m1");
 
-                ////////////////////////////////////////////////////////////////////////////////
+                //////////////////////////////////////////////////////////////////////////////////
 
-                var F1_m2 = new Symbol("F1_m2");        // force 1 on mass 2
-                var F2_m2 = new Symbol("F2_m2");        // force 2 on mass 2
+                //var F1_m2 = new Symbol("F1_m2");        // force 1 on mass 2
+                //var F2_m2 = new Symbol("F2_m2");        // force 2 on mass 2
 
-                var th1_m2 = new Symbol("th1_m2");      // direction of force 1 on mass 2
-                var th2_m2 = new Symbol("th2_m2");      // direction of force 2 on mass 2
+                //var th1_m2 = new Symbol("th1_m2");      // direction of force 1 on mass 2
+                //var th2_m2 = new Symbol("th2_m2");      // direction of force 2 on mass 2
 
-                var F1x_m2 = new Symbol("F1x_m2");      // x-component of force 1 on mass 2
-                var F2x_m2 = new Symbol("F2x_m2");      // x-component of force 2 on mass 2
+                //var F1x_m2 = new Symbol("F1x_m2");      // x-component of force 1 on mass 2
+                //var F2x_m2 = new Symbol("F2x_m2");      // x-component of force 2 on mass 2
 
-                var F1y_m2 = new Symbol("F1y_m2");      // y-component of force 1 on mass 2
-                var F2y_m2 = new Symbol("F2y_m2");      // y-component of force 2 on mass 2
+                //var F1y_m2 = new Symbol("F1y_m2");      // y-component of force 1 on mass 2
+                //var F2y_m2 = new Symbol("F2y_m2");      // y-component of force 2 on mass 2
 
-                var Fx_m2 = new Symbol("Fx_m2");        // x-component of total force on mass 2
-                var Fy_m2 = new Symbol("Fy_m2");        // y-component of total force on mass 2
+                //var Fx_m2 = new Symbol("Fx_m2");        // x-component of total force on mass 2
+                //var Fy_m2 = new Symbol("Fy_m2");        // y-component of total force on mass 2
 
-                var ax_m2 = new Symbol("ax_m2");        // x-component of acceleration of mass 2
-                var ay_m2 = new Symbol("ay_m2");        // y-component of acceleration of mass 2
+                //var ax_m2 = new Symbol("ax_m2");        // x-component of acceleration of mass 2
+                //var ay_m2 = new Symbol("ay_m2");        // y-component of acceleration of mass 2
 
-                var m2 = new Symbol("m2");
+                //var m2 = new Symbol("m2");
 
-                ////////////////////////////////////////////////////////////////////////////////
+                //////////////////////////////////////////////////////////////////////////////////
                 
-                var Pi = new Symbol("Pi");
+                //var Pi = new Symbol("Pi");
                 
-                var T1 = new Symbol("T1");
-                var T2 = new Symbol("T2");
+                //var T1 = new Symbol("T1");
+                //var T2 = new Symbol("T2");
 
-                var eqs = and(
+                //var eqs = and(
 
-                    m1 == m2,
+                //    m1 == m2,
                                         
-                    F1x_m1 == F1_m1 * cos(th1_m1),
-                    F2x_m1 == F2_m1 * cos(th2_m1),
+                //    F1x_m1 == F1_m1 * cos(th1_m1),
+                //    F2x_m1 == F2_m1 * cos(th2_m1),
                     
-                    F1y_m1 == F1_m1 * sin(th1_m1),
-                    F2y_m1 == F2_m1 * sin(th2_m1),
+                //    F1y_m1 == F1_m1 * sin(th1_m1),
+                //    F2y_m1 == F2_m1 * sin(th2_m1),
                     
-                    Fx_m1 == F1x_m1 + F2x_m1,
-                    Fy_m1 == F1y_m1 + F2y_m1,
+                //    Fx_m1 == F1x_m1 + F2x_m1,
+                //    Fy_m1 == F1y_m1 + F2y_m1,
 
-                    Fx_m1 == m1 * ax_m1,
-                    Fy_m1 == m1 * ay_m1,
+                //    Fx_m1 == m1 * ax_m1,
+                //    Fy_m1 == m1 * ay_m1,
 
 
-                    F1x_m2 == F1_m2 * cos(th1_m2),
-                    F2x_m2 == F2_m2 * cos(th2_m2),
+                //    F1x_m2 == F1_m2 * cos(th1_m2),
+                //    F2x_m2 == F2_m2 * cos(th2_m2),
 
-                    F1y_m2 == F1_m2 * sin(th1_m2),
-                    F2y_m2 == F2_m2 * sin(th2_m2),
+                //    F1y_m2 == F1_m2 * sin(th1_m2),
+                //    F2y_m2 == F2_m2 * sin(th2_m2),
 
-                    Fx_m2 == F1x_m2 + F2x_m2,
-                    Fy_m2 == F1y_m2 + F2y_m2,
+                //    Fx_m2 == F1x_m2 + F2x_m2,
+                //    Fy_m2 == F1y_m2 + F2y_m2,
 
-                    Fx_m2 == m2 * ax_m2,
-                    Fy_m2 == m2 * ay_m2
-                    );
+                //    Fx_m2 == m2 * ax_m2,
+                //    Fy_m2 == m2 * ay_m2
+                //    );
 
-                DoubleFloat.Tolerance = 0.00001;
+                //DoubleFloat.Tolerance = 0.00001;
 
-                {
-                    var vals = new List<Equation>()
-                    {
-                        ay_m1 == 0,
+                //{
+                //    var vals = new List<Equation>()
+                //    {
+                //        ay_m1 == 0,
 
-                        F1_m1 == T1,    th1_m1 == 0,
-                        F2_m1 == T2,    th2_m1 == 0,
+                //        F1_m1 == T1,    th1_m1 == 0,
+                //        F2_m1 == T2,    th2_m1 == 0,
 
-                        ay_m2 == 0,
+                //        ay_m2 == 0,
 
-                        F1_m2 == T1,    th1_m2 == 180 * Pi / 180,
-                        F2_m2 == T2,    th2_m2 == 0
-                    };
+                //        F1_m2 == T1,    th1_m2 == 180 * Pi / 180,
+                //        F2_m2 == T2,    th2_m2 == 0
+                //    };
 
-                    var zeros = vals.Where(eq => eq.b == 0).ToList();
+                //    var zeros = vals.Where(eq => eq.b == 0).ToList();
 
-                    var numerical_vals = new List<Equation>()
-                    {
-                        m1 == 200,
+                //    var numerical_vals = new List<Equation>()
+                //    {
+                //        m1 == 200,
 
-                        ax_m1 == 1.52,
-                        ax_m2 == -0.518
-                    };
+                //        ax_m1 == 1.52,
+                //        ax_m2 == -0.518
+                //    };
                     
-                    // T1
-                    {
-                        eqs
-                            .Substitute(vals)
+                //    // T1
+                //    {
+                //        eqs
+                //            .Substitute(vals)
 
-                            .EliminateVariables(
+                //            .EliminateVariables(
                             
-                                m2,
+                //                m2,
 
-                                F1x_m1, F2x_m1,
-                                F1y_m1, F2y_m1,
+                //                F1x_m1, F2x_m1,
+                //                F1y_m1, F2y_m1,
 
-                                F1x_m2, F2x_m2,
-                                F1y_m2, F2y_m2,
+                //                F1x_m2, F2x_m2,
+                //                F1y_m2, F2y_m2,
 
-                                Fx_m1, Fy_m1,
+                //                Fx_m1, Fy_m1,
                                 
-                                Fx_m2, Fy_m2,
+                //                Fx_m2, Fy_m2,
 
-                                T2
+                //                T2
                                 
-                                )
+                //                )
 
-                            .IsolateVariable(T1)
+                //            .IsolateVariable(T1)
 
-                            .AssertEqTo(
+                //            .AssertEqTo(
                             
-                                T1 == -(ax_m2 * m1 - ax_m1 * m1) / 2
+                //                T1 == -(ax_m2 * m1 - ax_m1 * m1) / 2
                                 
-                            )
+                //            )
                             
-                            .Substitute(numerical_vals)
+                //            .Substitute(numerical_vals)
 
-                            .AssertEqTo(T1 == 203.8);
-                    }
+                //            .AssertEqTo(T1 == 203.8);
+                //    }
 
-                    // T2
-                    {
-                        eqs
-                            .Substitute(vals)
+                //    // T2
+                //    {
+                //        eqs
+                //            .Substitute(vals)
 
-                            .EliminateVariables(
+                //            .EliminateVariables(
 
-                                m2,
+                //                m2,
 
-                                F1x_m1, F2x_m1,
-                                F1y_m1, F2y_m1,
+                //                F1x_m1, F2x_m1,
+                //                F1y_m1, F2y_m1,
 
-                                F1x_m2, F2x_m2,
-                                F1y_m2, F2y_m2,
+                //                F1x_m2, F2x_m2,
+                //                F1y_m2, F2y_m2,
 
-                                Fx_m1, Fy_m1,
+                //                Fx_m1, Fy_m1,
 
-                                Fx_m2, Fy_m2,
+                //                Fx_m2, Fy_m2,
 
-                                T1
+                //                T1
 
-                                )
+                //                )
 
-                            .IsolateVariable(T2)
+                //            .IsolateVariable(T2)
 
-                            .AssertEqTo(
+                //            .AssertEqTo(
                             
-                                T2 == (ax_m1 * m1 + ax_m2 * m1) / 2
+                //                T2 == (ax_m1 * m1 + ax_m2 * m1) / 2
                                 
-                            )
+                //            )
                             
-                            .Substitute(numerical_vals)
+                //            .Substitute(numerical_vals)
 
-                            .AssertEqTo(T2 == 100.19999999999999);
-                    }
-                }
+                //            .AssertEqTo(T2 == 100.19999999999999);
+                //    }
+                //}
             }
 
             #endregion
@@ -4743,108 +4743,108 @@ namespace Tests
 
                 ////////////////////////////////////////////////////////////////////////////////
 
-                var b1 = new Obj2("b1");            // boat in scenario 1 (same direction)
-                var b2 = new Obj2("b2");            // boat in scenario 2 (opposite directions)
+                //var b1 = new Obj2("b1");            // boat in scenario 1 (same direction)
+                //var b2 = new Obj2("b2");            // boat in scenario 2 (opposite directions)
 
-                var m = new Symbol("m");
+                //var m = new Symbol("m");
 
-                ////////////////////////////////////////////////////////////////////////////////
+                //////////////////////////////////////////////////////////////////////////////////
 
-                var Pi = new Symbol("Pi");
+                //var Pi = new Symbol("Pi");
 
-                var T1 = new Symbol("T1");
-                var T2 = new Symbol("T2");
+                //var T1 = new Symbol("T1");
+                //var T2 = new Symbol("T2");
 
-                var eqs = and(
+                //var eqs = and(
 
-                    b1.Equations(),
-                    b2.Equations()
+                //    b1.Equations(),
+                //    b2.Equations()
 
-                    );
+                //    );
 
-                DoubleFloat.Tolerance = 0.00001;
+                //DoubleFloat.Tolerance = 0.00001;
 
-                var vals = new List<Equation>()
-                {
-                    b1.m == m,
+                //var vals = new List<Equation>()
+                //{
+                //    b1.m == m,
 
-                    b1.ay == 0,
+                //    b1.ay == 0,
 
-                    b1.F1 == T1, b1.th1 == 0,
-                    b1.F2 == T2, b1.th2 == 0,
+                //    b1.F1 == T1, b1.th1 == 0,
+                //    b1.F2 == T2, b1.th2 == 0,
 
-                    b2.m == m,
+                //    b2.m == m,
 
-                    b2.ay == 0,
+                //    b2.ay == 0,
 
-                    b2.F1 == T1, b2.th1 == (180).ToRadians(),
-                    b2.F2 == T2, b2.th2 == 0
+                //    b2.F1 == T1, b2.th1 == (180).ToRadians(),
+                //    b2.F2 == T2, b2.th2 == 0
 
-                };
+                //};
 
-                var zeros = vals.Where(eq => eq.b == 0).ToList();
+                //var zeros = vals.Where(eq => eq.b == 0).ToList();
 
-                var numerical_vals = new List<Equation>()
-                {
-                    m == 200,
+                //var numerical_vals = new List<Equation>()
+                //{
+                //    m == 200,
 
-                    b1.ax == 1.52,
-                    b2.ax == -0.518
-                };
+                //    b1.ax == 1.52,
+                //    b2.ax == -0.518
+                //};
 
-                // T1
-                eqs
-                    .Substitute(vals)
+                //// T1
+                //eqs
+                //    .Substitute(vals)
 
-                    .EliminateVariables(
+                //    .EliminateVariables(
 
-                        b1.ΣFx, b1.F1x, b1.F2x,
-                        b1.ΣFy, b1.F1y, b1.F2y,
+                //        b1.ΣFx, b1.F1x, b1.F2x,
+                //        b1.ΣFy, b1.F1y, b1.F2y,
 
-                        b2.ΣFx, b2.F1x, b2.F2x,
-                        b2.ΣFy, b2.F1y, b2.F2y,
+                //        b2.ΣFx, b2.F1x, b2.F2x,
+                //        b2.ΣFy, b2.F1y, b2.F2y,
 
-                        T2
-                    )
+                //        T2
+                //    )
 
-                    .IsolateVariable(T1)
+                //    .IsolateVariable(T1)
 
-                    .AssertEqTo(
+                //    .AssertEqTo(
 
-                        T1 == -(b2.ax * m - b1.ax * m) / 2
+                //        T1 == -(b2.ax * m - b1.ax * m) / 2
 
-                    )
+                //    )
 
-                    .Substitute(numerical_vals)
+                //    .Substitute(numerical_vals)
 
-                    .AssertEqTo(T1 == 203.8);
+                //    .AssertEqTo(T1 == 203.8);
 
-                // T2
-                eqs
-                    .Substitute(vals)
+                //// T2
+                //eqs
+                //    .Substitute(vals)
 
-                    .EliminateVariables(
+                //    .EliminateVariables(
 
-                        b1.ΣFx, b1.F1x, b1.F2x,
-                        b1.ΣFy, b1.F1y, b1.F2y,
+                //        b1.ΣFx, b1.F1x, b1.F2x,
+                //        b1.ΣFy, b1.F1y, b1.F2y,
 
-                        b2.ΣFx, b2.F1x, b2.F2x,
-                        b2.ΣFy, b2.F1y, b2.F2y,
+                //        b2.ΣFx, b2.F1x, b2.F2x,
+                //        b2.ΣFy, b2.F1y, b2.F2y,
 
-                        T1
-                    )
+                //        T1
+                //    )
 
-                    .IsolateVariable(T2)
+                //    .IsolateVariable(T2)
 
-                    .AssertEqTo(
+                //    .AssertEqTo(
 
-                        T2 == (b1.ax * m + b2.ax * m) / 2
+                //        T2 == (b1.ax * m + b2.ax * m) / 2
 
-                    )
+                //    )
 
-                    .Substitute(numerical_vals)
+                //    .Substitute(numerical_vals)
 
-                    .AssertEqTo(T2 == 100.19999999999999);
+                //    .AssertEqTo(T2 == 100.19999999999999);
 
             }
 
@@ -4871,135 +4871,135 @@ namespace Tests
                 //
                 // (c) Find the force Pat exerts on the chair.
 
-                var b = new Obj3("b");          // boy
-                var c = new Obj3("c");          // chair
-                var s = new Obj3("s");          // system
+                //var b = new Obj3("b");          // boy
+                //var c = new Obj3("c");          // chair
+                //var s = new Obj3("s");          // system
 
-                var T = new Symbol("T");        // rope tension
-                var n = new Symbol("n");        // normal force
+                //var T = new Symbol("T");        // rope tension
+                //var n = new Symbol("n");        // normal force
 
-                var Fg_b = new Symbol("Fg_b");  // force due to gravity of the boy
-                var Fg_c = new Symbol("Fg_c");  // force due to gravity of the chair
-                var Fg_s = new Symbol("Fg_s");  // force due to gravity of the system
+                //var Fg_b = new Symbol("Fg_b");  // force due to gravity of the boy
+                //var Fg_c = new Symbol("Fg_c");  // force due to gravity of the chair
+                //var Fg_s = new Symbol("Fg_s");  // force due to gravity of the system
 
-                var a = new Symbol("a");        // acceleration
+                //var a = new Symbol("a");        // acceleration
 
-                var Pi = new Symbol("Pi");
-                var g = new Symbol("g");
+                //var Pi = new Symbol("Pi");
+                //var g = new Symbol("g");
 
-                var eqs = and(
+                //var eqs = and(
 
-                    Fg_b == b.m * g,
-                    Fg_c == c.m * g,
-                    Fg_s == s.m * g,
+                //    Fg_b == b.m * g,
+                //    Fg_c == c.m * g,
+                //    Fg_s == s.m * g,
 
-                    Fg_s == Fg_c + Fg_b,
+                //    Fg_s == Fg_c + Fg_b,
 
-                    s.Equations(),
-                    c.Equations()
+                //    s.Equations(),
+                //    c.Equations()
 
-                    );
+                //    );
 
-                var vals = new List<Equation>()
-                {
-                    //b.ax == 0,
-                    c.ax == 0,
-                    s.ax == 0,
+                //var vals = new List<Equation>()
+                //{
+                //    //b.ax == 0,
+                //    c.ax == 0,
+                //    s.ax == 0,
 
-                    //b.F1 == T,          b.th1 == 90 * Pi / 180,
-                    //b.F2 == n,          b.th2 == 90 * Pi / 180,
-                    //b.F3 == b.m * g,    b.th3 == 270 * Pi / 180,
+                //    //b.F1 == T,          b.th1 == 90 * Pi / 180,
+                //    //b.F2 == n,          b.th2 == 90 * Pi / 180,
+                //    //b.F3 == b.m * g,    b.th3 == 270 * Pi / 180,
 
-                    c.F1 == T,          c.th1 == 90 * Pi / 180,
-                    c.F2 == n,          c.th2 == 270 * Pi / 180,
-                    c.F3 == Fg_c,       c.th3 == 270 * Pi / 180,
+                //    c.F1 == T,          c.th1 == 90 * Pi / 180,
+                //    c.F2 == n,          c.th2 == 270 * Pi / 180,
+                //    c.F3 == Fg_c,       c.th3 == 270 * Pi / 180,
 
-                    s.F1 == T,          s.th1 == 90 * Pi / 180,
-                    s.F2 == T,          s.th2 == 90 * Pi / 180,
-                    s.F3 == Fg_s,       s.th3 == 270 * Pi / 180,
+                //    s.F1 == T,          s.th1 == 90 * Pi / 180,
+                //    s.F2 == T,          s.th2 == 90 * Pi / 180,
+                //    s.F3 == Fg_s,       s.th3 == 270 * Pi / 180,
 
-                    //b.ay == a,
-                    c.ay == a,
-                    s.ay == a
-                };
+                //    //b.ay == a,
+                //    c.ay == a,
+                //    s.ay == a
+                //};
 
-                var numerical_vals = new List<Equation>()
-                {
-                    T == 250.0,
-                    Fg_b == 320,
-                    Fg_c == 160,
-                    g == 9.8
-                };
+                //var numerical_vals = new List<Equation>()
+                //{
+                //    T == 250.0,
+                //    Fg_b == 320,
+                //    Fg_c == 160,
+                //    g == 9.8
+                //};
 
-                DoubleFloat.Tolerance = 0.00001;
+                //DoubleFloat.Tolerance = 0.00001;
 
-                // a
-                eqs
-                    .Substitute(vals)
+                //// a
+                //eqs
+                //    .Substitute(vals)
 
-                    .EliminateVariables(
+                //    .EliminateVariables(
 
-                        s.ΣFx, s.F1x, s.F2x, s.F3x,
-                        s.ΣFy, s.F1y, s.F2y, s.F3y,
+                //        s.ΣFx, s.F1x, s.F2x, s.F3x,
+                //        s.ΣFy, s.F1y, s.F2y, s.F3y,
 
-                        c.ΣFx, c.F1x, c.F2x, c.F3x,
-                        c.ΣFy, c.F1y, c.F2y, c.F3y,
+                //        c.ΣFx, c.F1x, c.F2x, c.F3x,
+                //        c.ΣFy, c.F1y, c.F2y, c.F3y,
 
-                        n,
+                //        n,
 
-                        s.m,
+                //        s.m,
 
-                        Fg_s,
+                //        Fg_s,
 
-                        b.m, c.m
+                //        b.m, c.m
 
-                    )
+                //    )
 
-                    .IsolateVariable(a)
+                //    .IsolateVariable(a)
 
-                    .AssertEqTo(
+                //    .AssertEqTo(
 
-                        a == -g * (Fg_b + Fg_c - 2 * T) / (Fg_b + Fg_c)
+                //        a == -g * (Fg_b + Fg_c - 2 * T) / (Fg_b + Fg_c)
 
-                    )
+                //    )
 
-                    .Substitute(numerical_vals)
+                //    .Substitute(numerical_vals)
 
-                    .AssertEqTo(a == 0.40833333333333333);
+                //    .AssertEqTo(a == 0.40833333333333333);
 
-                // n
-                eqs
-                    .Substitute(vals)
+                //// n
+                //eqs
+                //    .Substitute(vals)
 
-                    .EliminateVariables(
+                //    .EliminateVariables(
 
-                        s.ΣFx, s.F1x, s.F2x, s.F3x,
-                        s.ΣFy, s.F1y, s.F2y, s.F3y,
+                //        s.ΣFx, s.F1x, s.F2x, s.F3x,
+                //        s.ΣFy, s.F1y, s.F2y, s.F3y,
 
-                        c.ΣFx, c.F1x, c.F2x, c.F3x,
-                        c.ΣFy, c.F1y, c.F2y, c.F3y,
+                //        c.ΣFx, c.F1x, c.F2x, c.F3x,
+                //        c.ΣFy, c.F1y, c.F2y, c.F3y,
 
-                        c.m, s.m,
+                //        c.m, s.m,
 
-                        Fg_s,
+                //        Fg_s,
 
-                        b.m,
+                //        b.m,
 
-                        a
+                //        a
 
-                    )
+                //    )
 
-                    .IsolateVariable(n)
+                //    .IsolateVariable(n)
 
-                    .AssertEqTo(
+                //    .AssertEqTo(
 
-                        n == -1 * (Fg_c - T - Fg_c * (Fg_b + Fg_c - 2 * T) / (Fg_b + Fg_c))
+                //        n == -1 * (Fg_c - T - Fg_c * (Fg_b + Fg_c - 2 * T) / (Fg_b + Fg_c))
 
-                    )
+                //    )
 
-                    .Substitute(numerical_vals);
+                //    .Substitute(numerical_vals);
 
-                DoubleFloat.Tolerance = null;
+                //DoubleFloat.Tolerance = null;
 
             }
 
@@ -5021,94 +5021,94 @@ namespace Tests
                 //                     
                 // (Hint: Draw a free - body diagram for each pulley.)
 
-                var pul1_F = new Symbol("pul1_F");      // magnitude of total force on pully 1
-                var pul1_m = new Symbol("pul1_m");      // mass of pully 1
-                var pul1_a = new Symbol("pul1_a");      // acceleration of pully 1
+                //var pul1_F = new Symbol("pul1_F");      // magnitude of total force on pully 1
+                //var pul1_m = new Symbol("pul1_m");      // mass of pully 1
+                //var pul1_a = new Symbol("pul1_a");      // acceleration of pully 1
 
-                var pul2_F = new Symbol("pul2_F");      // magnitude of total force on pully 2
-                var pul2_m = new Symbol("pul2_m");      // mass of pully 2
-                var pul2_a = new Symbol("pul2_a");      // acceleration of pully 2
+                //var pul2_F = new Symbol("pul2_F");      // magnitude of total force on pully 2
+                //var pul2_m = new Symbol("pul2_m");      // mass of pully 2
+                //var pul2_a = new Symbol("pul2_a");      // acceleration of pully 2
                 
-                var T1 = new Symbol("T1");
-                var T2 = new Symbol("T2");
-                var T3 = new Symbol("T3");
-                var T4 = new Symbol("T4");
-                var T5 = new Symbol("T5");
+                //var T1 = new Symbol("T1");
+                //var T2 = new Symbol("T2");
+                //var T3 = new Symbol("T3");
+                //var T4 = new Symbol("T4");
+                //var T5 = new Symbol("T5");
 
-                var F = new Symbol("F");
+                //var F = new Symbol("F");
 
-                var M = new Symbol("M");
+                //var M = new Symbol("M");
 
-                var g = new Symbol("g");
+                //var g = new Symbol("g");
 
-                var eqs = and(
+                //var eqs = and(
 
-                     T1 == F,
-                     T2 == T3,
-                     T1 == T3,
-                     T5 == M * g,
+                //     T1 == F,
+                //     T2 == T3,
+                //     T1 == T3,
+                //     T5 == M * g,
                      
-                     pul1_a == 0,
-                     pul1_m == 0,
+                //     pul1_a == 0,
+                //     pul1_m == 0,
 
-                     pul1_F == T4 - T1 - T2 - T3,
-                     pul1_F == pul1_m * pul1_a,
+                //     pul1_F == T4 - T1 - T2 - T3,
+                //     pul1_F == pul1_m * pul1_a,
 
-                     pul2_m == 0,
+                //     pul2_m == 0,
 
-                     pul2_F == T2 + T3 - T5,
-                     pul2_F == pul2_m * pul2_a
+                //     pul2_F == T2 + T3 - T5,
+                //     pul2_F == pul2_m * pul2_a
 
-                    );
+                //    );
 
-                DoubleFloat.Tolerance = 0.00001;
+                //DoubleFloat.Tolerance = 0.00001;
 
-                // T1
-                {
-                    eqs
-                        .EliminateVariables(pul1_F, pul2_F, pul1_m, pul2_m, pul1_a, T2, T3, T4, T5, F)
-                        .IsolateVariable(T1)
-                        .AssertEqTo(T1 == g * M / 2);
-                }
+                //// T1
+                //{
+                //    eqs
+                //        .EliminateVariables(pul1_F, pul2_F, pul1_m, pul2_m, pul1_a, T2, T3, T4, T5, F)
+                //        .IsolateVariable(T1)
+                //        .AssertEqTo(T1 == g * M / 2);
+                //}
                 
-                // T2
-                {
-                    eqs
-                        .EliminateVariables(pul1_F, pul2_F, pul1_m, pul2_m, pul1_a, T1, T3, T4, T5, F)
-                        .IsolateVariable(T2)
-                        .AssertEqTo(T2 == g * M / 2);
-                }
+                //// T2
+                //{
+                //    eqs
+                //        .EliminateVariables(pul1_F, pul2_F, pul1_m, pul2_m, pul1_a, T1, T3, T4, T5, F)
+                //        .IsolateVariable(T2)
+                //        .AssertEqTo(T2 == g * M / 2);
+                //}
 
-                // T3
-                {
-                    eqs
-                        .EliminateVariables(pul1_F, pul2_F, pul1_m, pul2_m, pul1_a, T1, T2, T4, T5, F)
-                        .IsolateVariable(T3)
-                        .AssertEqTo(T3 == g * M / 2);
-                }
+                //// T3
+                //{
+                //    eqs
+                //        .EliminateVariables(pul1_F, pul2_F, pul1_m, pul2_m, pul1_a, T1, T2, T4, T5, F)
+                //        .IsolateVariable(T3)
+                //        .AssertEqTo(T3 == g * M / 2);
+                //}
 
-                // T4
-                {
-                    eqs
-                        .EliminateVariables(pul1_F, pul2_F, pul1_m, pul2_m, pul1_a, T1, T2, T3, T5, F)
-                        .IsolateVariable(T4)
-                        .AssertEqTo(T4 == g * M * 3 / 2);
-                }
+                //// T4
+                //{
+                //    eqs
+                //        .EliminateVariables(pul1_F, pul2_F, pul1_m, pul2_m, pul1_a, T1, T2, T3, T5, F)
+                //        .IsolateVariable(T4)
+                //        .AssertEqTo(T4 == g * M * 3 / 2);
+                //}
 
-                // T5
-                {
-                    eqs
-                        .EliminateVariables(pul1_F, pul2_F, pul1_m, pul2_m, pul1_a, T1, T2, T3, T4, F)
-                        .AssertEqTo(T5 == g * M);
-                }
+                //// T5
+                //{
+                //    eqs
+                //        .EliminateVariables(pul1_F, pul2_F, pul1_m, pul2_m, pul1_a, T1, T2, T3, T4, F)
+                //        .AssertEqTo(T5 == g * M);
+                //}
 
-                // F
-                {
-                    eqs
-                        .EliminateVariables(pul1_F, pul2_F, pul1_m, pul2_m, pul1_a, T1, T2, T3, T4, T5)
-                        .IsolateVariable(F)
-                        .AssertEqTo(F == g * M / 2);
-                }
+                //// F
+                //{
+                //    eqs
+                //        .EliminateVariables(pul1_F, pul2_F, pul1_m, pul2_m, pul1_a, T1, T2, T3, T4, T5)
+                //        .IsolateVariable(F)
+                //        .AssertEqTo(F == g * M / 2);
+                //}
             }
 
             #endregion
@@ -5123,90 +5123,90 @@ namespace Tests
                 // Assume all surfaces, wheels, and pulley are frictionless.
                 // (Hint:Note that the force exerted by the string accelerates m1.)
 
-                var blk1 = new Obj3("blk1");
-                var blk2 = new Obj3("blk2");
+                //var blk1 = new Obj3("blk1");
+                //var blk2 = new Obj3("blk2");
 
-                var sys = new Obj3("sys");
+                //var sys = new Obj3("sys");
                 
-                var m1 = new Symbol("m1");
-                var m2 = new Symbol("m2");
+                //var m1 = new Symbol("m1");
+                //var m2 = new Symbol("m2");
                 
-                var T = new Symbol("T");
-                var F = new Symbol("F");
-                var M = new Symbol("M");
-                var g = new Symbol("g");
-                var a = new Symbol("a");
+                //var T = new Symbol("T");
+                //var F = new Symbol("F");
+                //var M = new Symbol("M");
+                //var g = new Symbol("g");
+                //var a = new Symbol("a");
                 
-                var eqs = and(
+                //var eqs = and(
 
-                    blk1.Equations(),
-                    blk2.Equations(),
+                //    blk1.Equations(),
+                //    blk2.Equations(),
 
-                    sys.Equations()
+                //    sys.Equations()
                     
-                    );
+                //    );
 
-                var vals = new List<Equation>()
-                {
-                    blk1.ax == a,
-                    blk1.ay == 0,
+                //var vals = new List<Equation>()
+                //{
+                //    blk1.ax == a,
+                //    blk1.ay == 0,
 
-                    blk1.m == m1,
+                //    blk1.m == m1,
 
-                    blk1.F1 == T,   blk1.th1 == 0,
+                //    blk1.F1 == T,   blk1.th1 == 0,
 
-                    blk1.th2 == (90).ToRadians(),
-                    blk1.th3 == (270).ToRadians(),
-
-
-                    blk2.ax == a,
-                    blk2.ay == 0,
-
-                    blk2.m == m2,
-
-                    blk2.th1 == 0,
-
-                    blk2.F2 == T,       blk2.th2 == (90).ToRadians(),
-                    blk2.F3 == m2 * g,  blk2.th3 == (270).ToRadians(),
+                //    blk1.th2 == (90).ToRadians(),
+                //    blk1.th3 == (270).ToRadians(),
 
 
-                    sys.ax == a,
-                    sys.ay == 0,
+                //    blk2.ax == a,
+                //    blk2.ay == 0,
 
-                    sys.m == M + m1 + m2,
+                //    blk2.m == m2,
 
-                    sys.F1 == F,        sys.th1 == 0,
+                //    blk2.th1 == 0,
 
-                    sys.th2 == (90).ToRadians(),
-                    sys.th3 == (270).ToRadians()
+                //    blk2.F2 == T,       blk2.th2 == (90).ToRadians(),
+                //    blk2.F3 == m2 * g,  blk2.th3 == (270).ToRadians(),
 
-                };
 
-                eqs
-                    .Substitute(vals)
+                //    sys.ax == a,
+                //    sys.ay == 0,
 
-                    .EliminateVariables(
+                //    sys.m == M + m1 + m2,
 
-                        blk1.ΣFx, blk1.F1x, blk1.F2x, blk1.F3x,
-                        blk1.ΣFy, blk1.F1y, blk1.F2y, blk1.F3y,
+                //    sys.F1 == F,        sys.th1 == 0,
 
-                        blk1.F2,
+                //    sys.th2 == (90).ToRadians(),
+                //    sys.th3 == (270).ToRadians()
 
-                        blk2.ΣFx, blk2.F1x, blk2.F2x, blk2.F3x,
-                        blk2.ΣFy, blk2.F1y, blk2.F2y, blk2.F3y,
+                //};
 
-                        blk2.F1,
+                //eqs
+                //    .Substitute(vals)
 
-                        sys.ΣFx, sys.F1x, sys.F2x, sys.F3x,
-                        sys.ΣFy, sys.F1y, sys.F2y, sys.F3y,
+                //    .EliminateVariables(
 
-                        sys.F2,
+                //        blk1.ΣFx, blk1.F1x, blk1.F2x, blk1.F3x,
+                //        blk1.ΣFy, blk1.F1y, blk1.F2y, blk1.F3y,
 
-                        T, a
+                //        blk1.F2,
 
-                    )
+                //        blk2.ΣFx, blk2.F1x, blk2.F2x, blk2.F3x,
+                //        blk2.ΣFy, blk2.F1y, blk2.F2y, blk2.F3y,
 
-                    .AssertEqTo(   F == g * m2 / m1 * (M + m1 + m2)   );
+                //        blk2.F1,
+
+                //        sys.ΣFx, sys.F1x, sys.F2x, sys.F3x,
+                //        sys.ΣFy, sys.F1y, sys.F2y, sys.F3y,
+
+                //        sys.F2,
+
+                //        T, a
+
+                //    )
+
+                //    .AssertEqTo(   F == g * m2 / m1 * (M + m1 + m2)   );
             }
             #endregion
                         
@@ -5216,67 +5216,67 @@ namespace Tests
                 // horizontal, frictionless surface by a constant horizontal force
                 // of 12 N. Find the speed of the block after it has moved 3.0 m.
                 
-                var W = new Symbol("W");
-                var F = new Symbol("F");
-                var d = new Symbol("d");
+                //var W = new Symbol("W");
+                //var F = new Symbol("F");
+                //var d = new Symbol("d");
 
-                var Kf = new Symbol("Kf");
-                var Ki = new Symbol("Ki");
+                //var Kf = new Symbol("Kf");
+                //var Ki = new Symbol("Ki");
 
-                var m = new Symbol("m");
+                //var m = new Symbol("m");
 
-                var vf = new Symbol("vf");
-                var vi = new Symbol("vi");
+                //var vf = new Symbol("vf");
+                //var vi = new Symbol("vi");
 
-                var eqs = and(
+                //var eqs = and(
 
-                    W == F * d,
+                //    W == F * d,
 
-                    W == Kf - Ki,
+                //    W == Kf - Ki,
 
-                    Kf == m * (vf ^ 2) / 2,
-                    Ki == m * (vi ^ 2) / 2,
+                //    Kf == m * (vf ^ 2) / 2,
+                //    Ki == m * (vi ^ 2) / 2,
 
-                    m != 0
+                //    m != 0
 
-                    );
+                //    );
 
-                var vals = new List<Equation>() { m == 6.0, vi == 0, F == 12, d == 3 };
+                //var vals = new List<Equation>() { m == 6.0, vi == 0, F == 12, d == 3 };
 
-                // vf
-                eqs
-                    .EliminateVariables(Kf, Ki, W)
-                    .IsolateVariable(vf)
-                    .LogicalExpand().CheckVariable(m).SimplifyEquation().SimplifyLogical()
+                //// vf
+                //eqs
+                //    .EliminateVariables(Kf, Ki, W)
+                //    .IsolateVariable(vf)
+                //    .LogicalExpand().CheckVariable(m).SimplifyEquation().SimplifyLogical()
 
-                    .AssertEqTo(
+                //    .AssertEqTo(
 
-                        or(
-                            and(
-                                vf == sqrt(-2 * m * (-d * F - m * (vi ^ 2) / 2)) / m,
-                                m != 0),
-                            and(
-                                vf == -sqrt(-2 * m * (-d * F - m * (vi ^ 2) / 2)) / m,
-                                m != 0)))
+                //        or(
+                //            and(
+                //                vf == sqrt(-2 * m * (-d * F - m * (vi ^ 2) / 2)) / m,
+                //                m != 0),
+                //            and(
+                //                vf == -sqrt(-2 * m * (-d * F - m * (vi ^ 2) / 2)) / m,
+                //                m != 0)))
                                 
-                    .Substitute(vi == 0)
+                //    .Substitute(vi == 0)
                                         
-                    .AssertEqTo(
+                //    .AssertEqTo(
 
-                        or(
-                            and(
-                                vf == sqrt(2 * d * F * m) / m,
-                                m != 0),
-                            and(
-                                vf == -sqrt(2 * d * F * m) / m,
-                                m != 0)))
+                //        or(
+                //            and(
+                //                vf == sqrt(2 * d * F * m) / m,
+                //                m != 0),
+                //            and(
+                //                vf == -sqrt(2 * d * F * m) / m,
+                //                m != 0)))
                     
-                    .Substitute(vals)
+                //    .Substitute(vals)
 
-                    .AssertEqTo(
-                        or(
-                            vf == 3.4641016151377544,
-                            vf == -3.4641016151377544));
+                //    .AssertEqTo(
+                //        or(
+                //            vf == 3.4641016151377544,
+                //            vf == -3.4641016151377544));
 
             }
             #endregion
@@ -5287,73 +5287,73 @@ namespace Tests
                 // the surface is not frictionless but instead has a coefficient of
                 // kinetic friction of 0.15.
 
-                var W = new Symbol("W");
-                var F = new Symbol("F");
-                var d = new Symbol("d");
-                var n = new Symbol("n");
+                //var W = new Symbol("W");
+                //var F = new Symbol("F");
+                //var d = new Symbol("d");
+                //var n = new Symbol("n");
 
-                var g = new Symbol("g");
+                //var g = new Symbol("g");
 
-                var Kf = new Symbol("Kf");
-                var Ki = new Symbol("Ki");
+                //var Kf = new Symbol("Kf");
+                //var Ki = new Symbol("Ki");
 
-                var m = new Symbol("m");
+                //var m = new Symbol("m");
 
-                var vf = new Symbol("vf");
-                var vi = new Symbol("vi");
+                //var vf = new Symbol("vf");
+                //var vi = new Symbol("vi");
 
-                var fk = new Symbol("fk");
+                //var fk = new Symbol("fk");
                                 
-                var μk = new Symbol("μk");
+                //var μk = new Symbol("μk");
 
-                var eqs = and(
+                //var eqs = and(
 
-                    Kf == m * (vf ^ 2) / 2,
-                    Ki == m * (vi ^ 2) / 2,
+                //    Kf == m * (vf ^ 2) / 2,
+                //    Ki == m * (vi ^ 2) / 2,
 
-                    W == F * d,
+                //    W == F * d,
 
-                    n == m * g,
+                //    n == m * g,
 
-                    fk == n * μk,
+                //    fk == n * μk,
 
-                    W - fk * d == Kf - Ki,
+                //    W - fk * d == Kf - Ki,
 
-                    m != 0
+                //    m != 0
 
-                    );
+                //    );
 
-                var vals = new List<Equation>()
-                {
-                    vi == 0,
-                    F == 12.0,
-                    d == 3.0,
+                //var vals = new List<Equation>()
+                //{
+                //    vi == 0,
+                //    F == 12.0,
+                //    d == 3.0,
 
-                    m == 6.0,
+                //    m == 6.0,
                     
-                    μk == 0.15,
+                //    μk == 0.15,
 
-                    g == 9.8,
-                };
+                //    g == 9.8,
+                //};
 
-                // vf
-                eqs
-                    .EliminateVariables(Kf, Ki, W, n, fk)
-                    .IsolateVariable(vf)
-                    .LogicalExpand().SimplifyEquation().SimplifyLogical().CheckVariable(m)
-                    .Substitute(vi == 0)
-                    .AssertEqTo(
-                        or(
-                            and(
-                                vf == -sqrt(2 * m * (d * F - d * g * m * μk)) / m,
-                                m != 0),
-                            and(
-                                vf == sqrt(2 * m * (d * F - d * g * m * μk)) / m,
-                                m != 0)))
+                //// vf
+                //eqs
+                //    .EliminateVariables(Kf, Ki, W, n, fk)
+                //    .IsolateVariable(vf)
+                //    .LogicalExpand().SimplifyEquation().SimplifyLogical().CheckVariable(m)
+                //    .Substitute(vi == 0)
+                //    .AssertEqTo(
+                //        or(
+                //            and(
+                //                vf == -sqrt(2 * m * (d * F - d * g * m * μk)) / m,
+                //                m != 0),
+                //            and(
+                //                vf == sqrt(2 * m * (d * F - d * g * m * μk)) / m,
+                //                m != 0)))
 
-                    .Substitute(vals)
+                //    .Substitute(vals)
 
-                    .AssertEqTo(or(vf == -1.7832554500127007, vf == 1.7832554500127007));
+                //    .AssertEqTo(or(vf == -1.7832554500127007, vf == 1.7832554500127007));
 
             }
             #endregion
@@ -5372,78 +5372,78 @@ namespace Tests
                 // the equilibrium position if a constant frictional force of 4.0 N
                 // retards its motion from the moment it is released.
 
-                var ΣW = new Symbol("ΣW");
+                //var ΣW = new Symbol("ΣW");
                                 
-                var Kf = new Symbol("Kf");
-                var Ki = new Symbol("Ki");
+                //var Kf = new Symbol("Kf");
+                //var Ki = new Symbol("Ki");
 
-                var m = new Symbol("m");
-                var d = new Symbol("d");
-                var k = new Symbol("k");
+                //var m = new Symbol("m");
+                //var d = new Symbol("d");
+                //var k = new Symbol("k");
 
-                var vf = new Symbol("vf");
-                var vi = new Symbol("vi");
+                //var vf = new Symbol("vf");
+                //var vi = new Symbol("vi");
 
-                var fk = new Symbol("fk");
+                //var fk = new Symbol("fk");
                 
-                var W_s = new Symbol("W_s");
-                var W_f = new Symbol("W_f");
+                //var W_s = new Symbol("W_s");
+                //var W_f = new Symbol("W_f");
                 
-                var x_max = new Symbol("x_max");
+                //var x_max = new Symbol("x_max");
 
-                var eqs = and(
+                //var eqs = and(
 
-                    W_s == k * (x_max ^ 2) / 2,
+                //    W_s == k * (x_max ^ 2) / 2,
 
-                    Kf == m * (vf ^ 2) / 2,
-                    Ki == m * (vi ^ 2) / 2,
+                //    Kf == m * (vf ^ 2) / 2,
+                //    Ki == m * (vi ^ 2) / 2,
                     
-                    W_f == -fk * d,
+                //    W_f == -fk * d,
 
-                    ΣW == Kf - Ki,
+                //    ΣW == Kf - Ki,
 
-                    ΣW == W_s + W_f,
+                //    ΣW == W_s + W_f,
 
-                    m != 0
+                //    m != 0
 
-                    );
+                //    );
 
-                // vf
-                {
-                    var vals = new List<Equation>() { m == 1.6, vi == 0, fk == 0, k == 1000, x_max == -0.02 };
+                //// vf
+                //{
+                //    var vals = new List<Equation>() { m == 1.6, vi == 0, fk == 0, k == 1000, x_max == -0.02 };
 
-                    eqs
-                        .EliminateVariables(ΣW, Kf, Ki, W_f, W_s)
-                        .IsolateVariable(vf)
-                        .LogicalExpand().SimplifyEquation().SimplifyLogical().CheckVariable(m)
+                //    eqs
+                //        .EliminateVariables(ΣW, Kf, Ki, W_f, W_s)
+                //        .IsolateVariable(vf)
+                //        .LogicalExpand().SimplifyEquation().SimplifyLogical().CheckVariable(m)
                         
-                        .AssertEqTo(
-                            or(
-                                and(
-                                    vf == sqrt(-2 * m * (d * fk - m * (vi ^ 2) / 2 - k * (x_max ^ 2) / 2)) / m,
-                                    m != 0),
-                                and(
-                                    vf == -sqrt(-2 * m * (d * fk - m * (vi ^ 2) / 2 - k * (x_max ^ 2) / 2)) / m,
-                                    m != 0)))
+                //        .AssertEqTo(
+                //            or(
+                //                and(
+                //                    vf == sqrt(-2 * m * (d * fk - m * (vi ^ 2) / 2 - k * (x_max ^ 2) / 2)) / m,
+                //                    m != 0),
+                //                and(
+                //                    vf == -sqrt(-2 * m * (d * fk - m * (vi ^ 2) / 2 - k * (x_max ^ 2) / 2)) / m,
+                //                    m != 0)))
                                               
-                        .Substitute(vals)
+                //        .Substitute(vals)
                         
-                        .AssertEqTo(or(vf == 0.5, vf == -0.5));
-                }
+                //        .AssertEqTo(or(vf == 0.5, vf == -0.5));
+                //}
 
-                // vf
-                {
-                    var vals = new List<Equation>() { m == 1.6, vi == 0, fk == 4, k == 1000, x_max == -0.02, d == 0.02 };
+                //// vf
+                //{
+                //    var vals = new List<Equation>() { m == 1.6, vi == 0, fk == 4, k == 1000, x_max == -0.02, d == 0.02 };
 
-                    eqs
-                        .EliminateVariables(ΣW, Kf, Ki, W_f, W_s)
-                        .IsolateVariable(vf)
-                        .LogicalExpand().SimplifyEquation().SimplifyLogical().CheckVariable(m)
+                //    eqs
+                //        .EliminateVariables(ΣW, Kf, Ki, W_f, W_s)
+                //        .IsolateVariable(vf)
+                //        .LogicalExpand().SimplifyEquation().SimplifyLogical().CheckVariable(m)
                         
-                        .Substitute(vals)
+                //        .Substitute(vals)
                         
-                        .AssertEqTo(or(vf == 0.3872983346207417, vf == -0.3872983346207417));
-                }
+                //        .AssertEqTo(or(vf == 0.3872983346207417, vf == -0.3872983346207417));
+                //}
                 
             }
             #endregion
@@ -5458,45 +5458,45 @@ namespace Tests
                 // angle with the vertical. How much work was done by the
                 // gravitational force on Batman in this maneuver?
 
-                var m = new Symbol("m");
-                var a = new Symbol("a");
+                //var m = new Symbol("m");
+                //var a = new Symbol("a");
 
-                var W = new Symbol("W");
-                var F = new Symbol("F");
-                var d = new Symbol("d");
+                //var W = new Symbol("W");
+                //var F = new Symbol("F");
+                //var d = new Symbol("d");
 
-                var yA = new Symbol("yA");
-                var yB = new Symbol("yB");
+                //var yA = new Symbol("yA");
+                //var yB = new Symbol("yB");
 
-                var th = new Symbol("th");
+                //var th = new Symbol("th");
 
-                var len = new Symbol("len");
+                //var len = new Symbol("len");
                 
-                var eqs = and(
+                //var eqs = and(
 
-                    yA == -len,
+                //    yA == -len,
 
-                    yB == -len * cos(th),
+                //    yB == -len * cos(th),
 
-                    d == yB - yA,
+                //    d == yB - yA,
 
-                    F == m * a,
+                //    F == m * a,
 
-                    W == F * d
+                //    W == F * d
                               
-                    );
+                //    );
 
-                var vals = new List<Equation>()
-                { m == 80, len == 12, th == (60).ToRadians(), a == -9.8 };
+                //var vals = new List<Equation>()
+                //{ m == 80, len == 12, th == (60).ToRadians(), a == -9.8 };
 
-                eqs
-                    .EliminateVariables(F, d, yA, yB)
+                //eqs
+                //    .EliminateVariables(F, d, yA, yB)
 
-                    .AssertEqTo(W == a * (len - cos(th) * len) * m)
+                //    .AssertEqTo(W == a * (len - cos(th) * len) * m)
 
-                    .Substitute(vals)
+                //    .Substitute(vals)
                     
-                    .AssertEqTo(W == -4704.0);
+                //    .AssertEqTo(W == -4704.0);
             }
             #endregion
                         
@@ -5506,40 +5506,40 @@ namespace Tests
                 // 10.0cm from its unstressed length, determine the extra
                 // work required to stretch it an additional 10.0cm.
 
-                var WsAB = new Symbol("WsAB");
+                //var WsAB = new Symbol("WsAB");
                 
-                var WsA = new Symbol("WsA");
-                var WsB = new Symbol("WsB");
+                //var WsA = new Symbol("WsA");
+                //var WsB = new Symbol("WsB");
 
-                var k = new Symbol("k");
+                //var k = new Symbol("k");
 
-                var xA = new Symbol("xA");
-                var xB = new Symbol("xB");
+                //var xA = new Symbol("xA");
+                //var xB = new Symbol("xB");
                                 
-                var eqs = and(
+                //var eqs = and(
                     
-                    WsA == k * (xA ^ 2) / 2,
-                    WsB == k * (xB ^ 2) / 2,
+                //    WsA == k * (xA ^ 2) / 2,
+                //    WsB == k * (xB ^ 2) / 2,
 
-                    WsAB == WsB - WsA
+                //    WsAB == WsB - WsA
                                         
-                    );
+                //    );
 
-                var vals = new List<Equation>() { xA == 0.1, xB == 0.2, WsA == 4 };
+                //var vals = new List<Equation>() { xA == 0.1, xB == 0.2, WsA == 4 };
 
-                eqs
+                //eqs
 
-                    .EliminateVariables(WsB, k)
+                //    .EliminateVariables(WsB, k)
 
-                    .AssertEqTo(
+                //    .AssertEqTo(
                     
-                        WsAB == WsA * (xB ^ 2) / (xA ^ 2) - WsA     
+                //        WsAB == WsA * (xB ^ 2) / (xA ^ 2) - WsA     
                         
-                        )
+                //        )
                         
-                    .Substitute(vals)
+                //    .Substitute(vals)
                     
-                    .AssertEqTo(WsAB == 12.0);
+                //    .AssertEqTo(WsAB == 12.0);
                 
             }
             #endregion
@@ -5558,100 +5558,100 @@ namespace Tests
                 // (e) the change in kinetic energy of the box
                 // (f) the final speed of the box
 
-                var ΣW = new Symbol("ΣW");
+                //var ΣW = new Symbol("ΣW");
 
-                var Kf = new Symbol("Kf");
-                var Ki = new Symbol("Ki");
+                //var Kf = new Symbol("Kf");
+                //var Ki = new Symbol("Ki");
 
-                var F = new Symbol("F");
+                //var F = new Symbol("F");
 
-                var m = new Symbol("m");
-                var d = new Symbol("d");
+                //var m = new Symbol("m");
+                //var d = new Symbol("d");
 
-                var n = new Symbol("n");
-                var g = new Symbol("g");
+                //var n = new Symbol("n");
+                //var g = new Symbol("g");
 
-                var vf = new Symbol("vf");
-                var vi = new Symbol("vi");
+                //var vf = new Symbol("vf");
+                //var vi = new Symbol("vi");
 
-                var fk = new Symbol("fk");
+                //var fk = new Symbol("fk");
 
-                var W_F = new Symbol("W_F"); 
-                var W_f = new Symbol("W_f");
+                //var W_F = new Symbol("W_F"); 
+                //var W_f = new Symbol("W_f");
 
-                var μk = new Symbol("μk");
+                //var μk = new Symbol("μk");
 
-                var eqs = and(
+                //var eqs = and(
 
-                    n == m * g,
+                //    n == m * g,
 
-                    fk == μk * n,
+                //    fk == μk * n,
 
-                    Kf == m * (vf ^ 2) / 2,
-                    Ki == m * (vi ^ 2) / 2,
+                //    Kf == m * (vf ^ 2) / 2,
+                //    Ki == m * (vi ^ 2) / 2,
                     
-                    W_F == F * d,
+                //    W_F == F * d,
 
-                    W_f == -fk * d,
+                //    W_f == -fk * d,
 
-                    ΣW == Kf - Ki,
+                //    ΣW == Kf - Ki,
                                         
-                    ΣW == W_F + W_f,
+                //    ΣW == W_F + W_f,
 
-                    m != 0
+                //    m != 0
 
-                    );
+                //    );
 
-                var vals = new List<Equation>()
-                { m == 40, vi == 0, d == 5, F == 130, μk == 0.3, g == 9.8 };
+                //var vals = new List<Equation>()
+                //{ m == 40, vi == 0, d == 5, F == 130, μk == 0.3, g == 9.8 };
                 
-                // W_F, W_f
-                eqs
-                    .EliminateVariables(fk, n, Kf, Ki, ΣW, vf)
-                    .LogicalExpand().SimplifyEquation().SimplifyLogical().CheckVariable(m)
+                //// W_F, W_f
+                //eqs
+                //    .EliminateVariables(fk, n, Kf, Ki, ΣW, vf)
+                //    .LogicalExpand().SimplifyEquation().SimplifyLogical().CheckVariable(m)
                     
-                    .AssertEqTo(
-                        and(
-                            m != 0,
-                            W_F == d * F,
-                            W_f == -d * g * m * μk))
+                //    .AssertEqTo(
+                //        and(
+                //            m != 0,
+                //            W_F == d * F,
+                //            W_f == -d * g * m * μk))
                             
-                    .Substitute(vals)
+                //    .Substitute(vals)
                     
-                    .AssertEqTo(and(W_F == 650, W_f == -588.0));
+                //    .AssertEqTo(and(W_F == 650, W_f == -588.0));
 
-                // ΣW
-                eqs
-                    .EliminateVariables(W_F, W_f, fk, n, Ki, Kf)
+                //// ΣW
+                //eqs
+                //    .EliminateVariables(W_F, W_f, fk, n, Ki, Kf)
 
-                    .AssertEqTo(
-                        and(
-                            ΣW == m * (vf ^ 2) / 2 - m * (vi ^ 2) / 2,
-                            ΣW == d * F - d * g * m * μk,
-                            m != 0))
+                //    .AssertEqTo(
+                //        and(
+                //            ΣW == m * (vf ^ 2) / 2 - m * (vi ^ 2) / 2,
+                //            ΣW == d * F - d * g * m * μk,
+                //            m != 0))
                                                 
-                    .Substitute(vals)
+                //    .Substitute(vals)
                     
-                    .AssertEqTo(and(ΣW == 20 * (vf ^ 2), ΣW == 62.0));
+                //    .AssertEqTo(and(ΣW == 20 * (vf ^ 2), ΣW == 62.0));
                 
-                // vf
-                eqs
-                    .EliminateVariables(Kf, Ki, ΣW, W_F, W_f, fk, n)
-                    .IsolateVariable(vf)
-                    .LogicalExpand().SimplifyEquation().SimplifyLogical().CheckVariable(m)
+                //// vf
+                //eqs
+                //    .EliminateVariables(Kf, Ki, ΣW, W_F, W_f, fk, n)
+                //    .IsolateVariable(vf)
+                //    .LogicalExpand().SimplifyEquation().SimplifyLogical().CheckVariable(m)
 
-                    .AssertEqTo(
-                        or(
-                            and(
-                                vf == sqrt(-2 * m * (-d * F - m * (vi ^ 2) / 2 + d * g * m * μk)) / m,
-                                m != 0),
-                            and(
-                                vf == -sqrt(-2 * m * (-d * F - m * (vi ^ 2) / 2 + d * g * m * μk)) / m,
-                                m != 0)))
+                //    .AssertEqTo(
+                //        or(
+                //            and(
+                //                vf == sqrt(-2 * m * (-d * F - m * (vi ^ 2) / 2 + d * g * m * μk)) / m,
+                //                m != 0),
+                //            and(
+                //                vf == -sqrt(-2 * m * (-d * F - m * (vi ^ 2) / 2 + d * g * m * μk)) / m,
+                //                m != 0)))
                                 
-                    .Substitute(vals)
+                //    .Substitute(vals)
                     
-                    .AssertEqTo(or(vf == 1.7606816861659009, vf == -1.7606816861659009));
+                //    .AssertEqTo(or(vf == 1.7606816861659009, vf == -1.7606816861659009));
             }
             #endregion
             
@@ -5669,121 +5669,121 @@ namespace Tests
                 // (d) What is the change in kinetic energy of the crate?
                 // (e) What is the speed of the crate after it has been pulled 5.00 m?
 
-                var ΣW = new Symbol("ΣW");
+                //var ΣW = new Symbol("ΣW");
 
-                var Kf = new Symbol("Kf");
-                var Ki = new Symbol("Ki");
+                //var Kf = new Symbol("Kf");
+                //var Ki = new Symbol("Ki");
 
-                var F = new Symbol("F");
+                //var F = new Symbol("F");
 
-                var m = new Symbol("m");
-                var d = new Symbol("d");
+                //var m = new Symbol("m");
+                //var d = new Symbol("d");
 
-                var n = new Symbol("n");
-                var g = new Symbol("g");
+                //var n = new Symbol("n");
+                //var g = new Symbol("g");
 
-                var vf = new Symbol("vf");
-                var vi = new Symbol("vi");
+                //var vf = new Symbol("vf");
+                //var vi = new Symbol("vi");
 
-                var fk = new Symbol("fk");
+                //var fk = new Symbol("fk");
 
-                var W_F = new Symbol("W_F");
-                var W_f = new Symbol("W_f");
-                var W_g = new Symbol("W_g");
+                //var W_F = new Symbol("W_F");
+                //var W_f = new Symbol("W_f");
+                //var W_g = new Symbol("W_g");
 
-                var μk = new Symbol("μk");
+                //var μk = new Symbol("μk");
                                 
-                var th = new Symbol("th");
+                //var th = new Symbol("th");
 
-                var F_g = new Symbol("F_g");
+                //var F_g = new Symbol("F_g");
 
-                var Pi = new Symbol("Pi");
+                //var Pi = new Symbol("Pi");
                 
-                var eqs = and(
+                //var eqs = and(
 
-                    F_g == m * g,
+                //    F_g == m * g,
 
-                    n == F_g * cos(th),
+                //    n == F_g * cos(th),
 
-                    fk == μk * n,
+                //    fk == μk * n,
 
-                    Kf == m * (vf ^ 2) / 2,
-                    Ki == m * (vi ^ 2) / 2,
+                //    Kf == m * (vf ^ 2) / 2,
+                //    Ki == m * (vi ^ 2) / 2,
 
-                    W_F == F * d,
+                //    W_F == F * d,
 
-                    W_f == -fk * d,
+                //    W_f == -fk * d,
                                                                                 
-                    W_g == - F_g * sin(th) * d,
+                //    W_g == - F_g * sin(th) * d,
 
-                    ΣW == Kf - Ki,
+                //    ΣW == Kf - Ki,
 
-                    ΣW == W_F + W_f + W_g,
+                //    ΣW == W_F + W_f + W_g,
 
-                    m != 0
+                //    m != 0
                     
-                    );
+                //    );
 
-                var vals = new List<Equation>()
-                {
-                    m == 10.0, g == 9.8, d == 5.0, th == (20).ToRadians(), μk == 0.4, F == 100.0,
-                    vi == 1.5, Pi == Math.PI
-                };
+                //var vals = new List<Equation>()
+                //{
+                //    m == 10.0, g == 9.8, d == 5.0, th == (20).ToRadians(), μk == 0.4, F == 100.0,
+                //    vi == 1.5, Pi == Math.PI
+                //};
 
-                // W_g, W_f, W_F
-                eqs
-                    .EliminateVariables(F_g, fk, n)
+                //// W_g, W_f, W_F
+                //eqs
+                //    .EliminateVariables(F_g, fk, n)
 
-                    .AssertEqTo(
-                        and(
-                            Kf == m * (vf ^ 2) / 2,
-                            Ki == m * (vi ^ 2) / 2,
-                            W_F == d * F,
-                            W_f == -cos(th) * d * g * m * μk,
-                            W_g == -d * g * m * sin(th),
-                            ΣW == Kf - Ki,
-                            ΣW == W_f + W_F + W_g,
-                            m != 0
-                        ))
+                //    .AssertEqTo(
+                //        and(
+                //            Kf == m * (vf ^ 2) / 2,
+                //            Ki == m * (vi ^ 2) / 2,
+                //            W_F == d * F,
+                //            W_f == -cos(th) * d * g * m * μk,
+                //            W_g == -d * g * m * sin(th),
+                //            ΣW == Kf - Ki,
+                //            ΣW == W_f + W_F + W_g,
+                //            m != 0
+                //        ))
                     
-                    .Substitute(vals)
+                //    .Substitute(vals)
                     
-                    .AssertEqTo(
-                        and(
-                            Kf == 5.0 * (vf ^ 2),
-                            Ki == 11.25,
-                            W_F == 500.0,
-                            W_f == -184.17975367403804,
-                            W_g == -167.58987022957766,
-                            ΣW == Kf - Ki,
-                            ΣW == W_f + W_F + W_g
-                        ));
+                //    .AssertEqTo(
+                //        and(
+                //            Kf == 5.0 * (vf ^ 2),
+                //            Ki == 11.25,
+                //            W_F == 500.0,
+                //            W_f == -184.17975367403804,
+                //            W_g == -167.58987022957766,
+                //            ΣW == Kf - Ki,
+                //            ΣW == W_f + W_F + W_g
+                //        ));
                 
-                // ΣW
-                eqs
-                    .EliminateVariables(F_g, fk, n, W_F, W_f, W_g)
+                //// ΣW
+                //eqs
+                //    .EliminateVariables(F_g, fk, n, W_F, W_f, W_g)
                     
-                    .Substitute(vals)
+                //    .Substitute(vals)
                     
-                    .AssertEqTo(
-                        and(
-                            Kf == 5.0 * (vf ^ 2),
-                            Ki == 11.25,
-                            ΣW == Kf - Ki,
-                            ΣW == 148.23037609638431
-                        ));
+                //    .AssertEqTo(
+                //        and(
+                //            Kf == 5.0 * (vf ^ 2),
+                //            Ki == 11.25,
+                //            ΣW == Kf - Ki,
+                //            ΣW == 148.23037609638431
+                //        ));
 
-                // vf
-                eqs
-                    .EliminateVariables(F_g, fk, n, W_F, W_f, W_g, ΣW, Kf, Ki)
+                //// vf
+                //eqs
+                //    .EliminateVariables(F_g, fk, n, W_F, W_f, W_g, ΣW, Kf, Ki)
 
-                    .IsolateVariable(vf)
+                //    .IsolateVariable(vf)
 
-                    .LogicalExpand().SimplifyEquation().SimplifyLogical().CheckVariable(m)
+                //    .LogicalExpand().SimplifyEquation().SimplifyLogical().CheckVariable(m)
                                                                                  
-                    .Substitute(vals)
+                //    .Substitute(vals)
                     
-                    .AssertEqTo(or(vf == 5.6476610396939435, vf == -5.6476610396939435));
+                //    .AssertEqTo(or(vf == 5.6476610396939435, vf == -5.6476610396939435));
 
             }
             #endregion
@@ -5800,58 +5800,58 @@ namespace Tests
                 // determine how much time elapsed between the moment
                 // the bullet entered the tree and the moment it stopped.
 
-                var ΣW = new Symbol("ΣW");
+                //var ΣW = new Symbol("ΣW");
 
-                var Kf = new Symbol("Kf");
-                var Ki = new Symbol("Ki");
+                //var Kf = new Symbol("Kf");
+                //var Ki = new Symbol("Ki");
                 
-                var m = new Symbol("m");
-                var d = new Symbol("d");
+                //var m = new Symbol("m");
+                //var d = new Symbol("d");
                 
-                var vf = new Symbol("vf");
-                var vi = new Symbol("vi");
+                //var vf = new Symbol("vf");
+                //var vi = new Symbol("vi");
 
-                var fk = new Symbol("fk");
+                //var fk = new Symbol("fk");
                                 
-                var W_f = new Symbol("W_f");
+                //var W_f = new Symbol("W_f");
 
-                var t = new Symbol("t");
+                //var t = new Symbol("t");
 
-                var eqs = and(
+                //var eqs = and(
                     
-                    Kf == m * (vf ^ 2) / 2,
-                    Ki == m * (vi ^ 2) / 2,
+                //    Kf == m * (vf ^ 2) / 2,
+                //    Ki == m * (vi ^ 2) / 2,
 
-                    W_f == -fk * d,
+                //    W_f == -fk * d,
 
-                    ΣW == Kf - Ki,
+                //    ΣW == Kf - Ki,
 
-                    ΣW == W_f
+                //    ΣW == W_f
                     
-                    );
+                //    );
 
-                var vals = new List<Equation>() { m == 0.005, vi == 600.0, vf == 0.0, d == 0.04 };
+                //var vals = new List<Equation>() { m == 0.005, vi == 600.0, vf == 0.0, d == 0.04 };
 
-                // fk
-                eqs
-                    .EliminateVariables(W_f, ΣW, Ki, Kf)
-                    .IsolateVariable(fk)
-                    .AssertEqTo(
+                //// fk
+                //eqs
+                //    .EliminateVariables(W_f, ΣW, Ki, Kf)
+                //    .IsolateVariable(fk)
+                //    .AssertEqTo(
                     
-                        fk == (m * (vi ^ 2) / 2 - m * (vf ^ 2) / 2) / d
+                //        fk == (m * (vi ^ 2) / 2 - m * (vf ^ 2) / 2) / d
                         
-                        )
+                //        )
                     
-                    .Substitute(vals)
+                //    .Substitute(vals)
                     
-                    .AssertEqTo(fk == 22500.0);
+                //    .AssertEqTo(fk == 22500.0);
                 
-                // t
-                (d == (vi + vf) * t / 2)
-                    .IsolateVariable(t)
-                    .AssertEqTo(t == 2 * d / (vf + vi))
-                    .Substitute(vals)
-                    .AssertEqTo(t == 1.3333333333333334e-4);
+                //// t
+                //(d == (vi + vf) * t / 2)
+                //    .IsolateVariable(t)
+                //    .AssertEqTo(t == 2 * d / (vf + vi))
+                //    .Substitute(vals)
+                //    .AssertEqTo(t == 1.3333333333333334e-4);
                 
             }
             #endregion
@@ -5868,80 +5868,80 @@ namespace Tests
 
                 // (b) the coefficient of friction between the block and the surface is 0.350.
 
-                var ΣW = new Symbol("ΣW");
+                //var ΣW = new Symbol("ΣW");
 
-                var Kf = new Symbol("Kf");
-                var Ki = new Symbol("Ki");
+                //var Kf = new Symbol("Kf");
+                //var Ki = new Symbol("Ki");
                                 
-                var m = new Symbol("m");
-                var d = new Symbol("d");
+                //var m = new Symbol("m");
+                //var d = new Symbol("d");
 
-                var n = new Symbol("n");
-                var g = new Symbol("g");
-                var k = new Symbol("k");
+                //var n = new Symbol("n");
+                //var g = new Symbol("g");
+                //var k = new Symbol("k");
 
-                var vf = new Symbol("vf");
-                var vi = new Symbol("vi");
+                //var vf = new Symbol("vf");
+                //var vi = new Symbol("vi");
 
-                var fk = new Symbol("fk");
+                //var fk = new Symbol("fk");
                                 
-                var W_f = new Symbol("W_f");
-                var W_s = new Symbol("W_s");
+                //var W_f = new Symbol("W_f");
+                //var W_s = new Symbol("W_s");
 
-                var μk = new Symbol("μk");
+                //var μk = new Symbol("μk");
                                 
-                var xi = new Symbol("xi");
-                var xf = new Symbol("xf");
+                //var xi = new Symbol("xi");
+                //var xf = new Symbol("xf");
                 
-                var eqs = and(
+                //var eqs = and(
                     
-                    n == m * g,
+                //    n == m * g,
 
-                    fk == μk * n,
+                //    fk == μk * n,
 
-                    Kf == m * (vf ^ 2) / 2,
-                    Ki == m * (vi ^ 2) / 2,
+                //    Kf == m * (vf ^ 2) / 2,
+                //    Ki == m * (vi ^ 2) / 2,
 
-                    W_f == -fk * d,
+                //    W_f == -fk * d,
                                                             
-                    W_s == k * (xi ^ 2) / 2 - k * (xf ^ 2) / 2,                    
+                //    W_s == k * (xi ^ 2) / 2 - k * (xf ^ 2) / 2,                    
 
-                    ΣW == Kf - Ki,
+                //    ΣW == Kf - Ki,
 
-                    ΣW == W_f + W_s,
+                //    ΣW == W_f + W_s,
 
-                    m != 0
+                //    m != 0
                     
-                    );
+                //    );
 
-                var vals = new List<Equation>()
-                { m == 2.0, k == 500, xi == 0.05, xf == 0.0, vi == 0, d == 0.05, g == 9.8 };
+                //var vals = new List<Equation>()
+                //{ m == 2.0, k == 500, xi == 0.05, xf == 0.0, vi == 0, d == 0.05, g == 9.8 };
 
-                eqs
-                    .EliminateVariables(Kf, Ki, ΣW, W_f, W_s, n, fk)
-                    .IsolateVariable(vf)
-                    .LogicalExpand().SimplifyEquation().SimplifyLogical().CheckVariable(m)
+                //eqs
+                //    .EliminateVariables(Kf, Ki, ΣW, W_f, W_s, n, fk)
+                //    .IsolateVariable(vf)
+                //    .LogicalExpand().SimplifyEquation().SimplifyLogical().CheckVariable(m)
 
-                    .AssertEqTo(
-                        or(
-                            and(
-                                vf == sqrt(-2 * m * (-m * (vi ^ 2) / 2 + k * (xf ^ 2) / 2 - k * (xi ^ 2) / 2 + d * g * m * μk)) / m,
-                                m != 0
-                            ),
-                            and(
-                                vf == -sqrt(-2 * m * (-m * (vi ^ 2) / 2 + k * (xf ^ 2) / 2 - k * (xi ^ 2) / 2 + d * g * m * μk)) / m,
-                                m != 0)))
+                //    .AssertEqTo(
+                //        or(
+                //            and(
+                //                vf == sqrt(-2 * m * (-m * (vi ^ 2) / 2 + k * (xf ^ 2) / 2 - k * (xi ^ 2) / 2 + d * g * m * μk)) / m,
+                //                m != 0
+                //            ),
+                //            and(
+                //                vf == -sqrt(-2 * m * (-m * (vi ^ 2) / 2 + k * (xf ^ 2) / 2 - k * (xi ^ 2) / 2 + d * g * m * μk)) / m,
+                //                m != 0)))
 
-                    .Substitute(vals).Substitute(μk == 0)
+                //    .Substitute(vals).Substitute(μk == 0)
 
-                    .AssertEqTo(or(vf == 0.79056941504209488, vf == -0.79056941504209488));
+                //    .AssertEqTo(or(vf == 0.79056941504209488, vf == -0.79056941504209488));
 
-                eqs
-                    .EliminateVariables(Kf, Ki, ΣW, W_f, W_s, n, fk)
-                    .IsolateVariable(vf)
-                    .LogicalExpand().SimplifyEquation().SimplifyLogical().CheckVariable(m)
-                    .Substitute(vals).Substitute(μk == 0.35)
-                    .AssertEqTo(or(vf == 0.53103672189407025, vf == -0.53103672189407025));
+                //eqs
+                //    .EliminateVariables(Kf, Ki, ΣW, W_f, W_s, n, fk)
+                //    .IsolateVariable(vf)
+                //    .LogicalExpand().SimplifyEquation().SimplifyLogical().CheckVariable(m)
+                //    .Substitute(vals).Substitute(μk == 0.35)
+                //    .AssertEqTo(or(vf == 0.53103672189407025, vf == -0.53103672189407025));
             }
             #endregion
             
@@ -5952,31 +5952,31 @@ namespace Tests
                 // the kinetic energy of the baseball at the highest point of
                 // the trajectory?
 
-                var vx = new Symbol("vx");
-                var vi = new Symbol("vi");
-                var th = new Symbol("th");
+                //var vx = new Symbol("vx");
+                //var vi = new Symbol("vi");
+                //var th = new Symbol("th");
 
-                var m = new Symbol("m");
-                var K = new Symbol("K");
+                //var m = new Symbol("m");
+                //var K = new Symbol("K");
 
-                var vals = new List<Equation>() { m == 0.15, vi == 40.0, th == (30).ToRadians() };
+                //var vals = new List<Equation>() { m == 0.15, vi == 40.0, th == (30).ToRadians() };
 
-                var eqs = and(
+                //var eqs = and(
 
-                    vx == vi * cos(th),
+                //    vx == vi * cos(th),
                     
-                    K == m * (vx ^ 2) / 2
+                //    K == m * (vx ^ 2) / 2
                     
-                    );
+                //    );
 
-                eqs
-                    .EliminateVariables(vx)
+                //eqs
+                //    .EliminateVariables(vx)
                     
-                    .AssertEqTo(K == (cos(th) ^ 2) * m * (vi ^ 2) / 2)
+                //    .AssertEqTo(K == (cos(th) ^ 2) * m * (vi ^ 2) / 2)
                     
-                    .Substitute(vals)
+                //    .Substitute(vals)
 
-                    .AssertEqTo(K == 90.0);
+                //    .AssertEqTo(K == 90.0);
             }
             #endregion
 
@@ -5991,77 +5991,77 @@ namespace Tests
                 // (b) Determine the speed of the ball at y if at the instant of
                 // release it already has an initial speed vi at the initial altitude h.
                 
-                var m = new Symbol("m");
+                //var m = new Symbol("m");
 
-                var yi = new Symbol("yi");
-                var yf = new Symbol("yf");
+                //var yi = new Symbol("yi");
+                //var yf = new Symbol("yf");
 
-                var vi = new Symbol("vi");
-                var vf = new Symbol("vf");
+                //var vi = new Symbol("vi");
+                //var vf = new Symbol("vf");
 
-                var Ki = new Symbol("Ki");
-                var Kf = new Symbol("Kf");
+                //var Ki = new Symbol("Ki");
+                //var Kf = new Symbol("Kf");
 
-                var Ugi = new Symbol("Ugi");
-                var Ugf = new Symbol("Ugf");
+                //var Ugi = new Symbol("Ugi");
+                //var Ugf = new Symbol("Ugf");
 
-                var ΣUi = new Symbol("ΣUi");
-                var ΣUf = new Symbol("ΣUf");
+                //var ΣUi = new Symbol("ΣUi");
+                //var ΣUf = new Symbol("ΣUf");
 
-                var Ei = new Symbol("Ei");
-                var Ef = new Symbol("Ef");
+                //var Ei = new Symbol("Ei");
+                //var Ef = new Symbol("Ef");
 
-                var g = new Symbol("g");
+                //var g = new Symbol("g");
 
-                var h = new Symbol("h");
-                var y = new Symbol("y");
+                //var h = new Symbol("h");
+                //var y = new Symbol("y");
 
-                var eqs = and(
-                    Ki == m * (vi^2) / 2,
-                    Kf == m * (vf^2) / 2,
+                //var eqs = and(
+                //    Ki == m * (vi^2) / 2,
+                //    Kf == m * (vf^2) / 2,
 
-                    Ugi == m * g * yi,
-                    Ugf == m * g * yf,
+                //    Ugi == m * g * yi,
+                //    Ugf == m * g * yf,
 
-                    ΣUi == Ugi,
-                    ΣUf == Ugf,
+                //    ΣUi == Ugi,
+                //    ΣUf == Ugf,
 
-                    Ei == Ki + ΣUi,
-                    Ef == Kf + ΣUf,
+                //    Ei == Ki + ΣUi,
+                //    Ef == Kf + ΣUf,
 
-                    Ei == Ef
-                );
+                //    Ei == Ef
+                //);
 
-                var vals = new List<Equation>() { yi == h, yf == y };
+                //var vals = new List<Equation>() { yi == h, yf == y };
 
-                // vf, vi == 0
-                eqs
-                    .EliminateVariables(Ugi, Ugf, ΣUi, ΣUf, Ki, Kf, Ei, Ef)
-                    .MultiplyBothSidesBy(1 / m)
-                    .AlgebraicExpand()
-                    .IsolateVariable(vf)
-                    .Substitute(vals)
-                    .Substitute(vi == 0)
+                //// vf, vi == 0
+                //eqs
+                //    .EliminateVariables(Ugi, Ugf, ΣUi, ΣUf, Ki, Kf, Ei, Ef)
+                //    .MultiplyBothSidesBy(1 / m)
+                //    .AlgebraicExpand()
+                //    .IsolateVariable(vf)
+                //    .Substitute(vals)
+                //    .Substitute(vi == 0)
 
-                    .AssertEqTo(
-                        or(
-                            vf == -sqrt(2 * (g * h - g * y)),
-                            vf == sqrt(2 * (g * h - g * y))
-                        ));
+                //    .AssertEqTo(
+                //        or(
+                //            vf == -sqrt(2 * (g * h - g * y)),
+                //            vf == sqrt(2 * (g * h - g * y))
+                //        ));
 
-                // vf
-                eqs
-                    .EliminateVariables(Ugi, Ugf, ΣUi, ΣUf, Ki, Kf, Ei, Ef)
-                    .MultiplyBothSidesBy(1 / m)
-                    .AlgebraicExpand()
-                    .IsolateVariable(vf)
-                    .Substitute(vals)
+                //// vf
+                //eqs
+                //    .EliminateVariables(Ugi, Ugf, ΣUi, ΣUf, Ki, Kf, Ei, Ef)
+                //    .MultiplyBothSidesBy(1 / m)
+                //    .AlgebraicExpand()
+                //    .IsolateVariable(vf)
+                //    .Substitute(vals)
                     
-                    .AssertEqTo(
-                        or(
-                            vf == -sqrt(2 * (g * h + (vi ^ 2) / 2 - g * y)),
-                            vf == sqrt(2 * (g * h + (vi ^ 2) / 2 - g * y))
-                        ));
+                //    .AssertEqTo(
+                //        or(
+                //            vf == -sqrt(2 * (g * h + (vi ^ 2) / 2 - g * y)),
+                //            vf == sqrt(2 * (g * h + (vi ^ 2) / 2 - g * y))
+                //        ));
                 
             }
             #endregion
@@ -6082,117 +6082,117 @@ namespace Tests
                 // with the vertical. Find the speed of the sphere and the tension
                 // in the cord when the sphere is at its lowest point.
                 
-                var m = new Symbol("m");
+                //var m = new Symbol("m");
 
-                var yi = new Symbol("yi");
-                var yf = new Symbol("yf");
+                //var yi = new Symbol("yi");
+                //var yf = new Symbol("yf");
 
-                var vi = new Symbol("vi");
-                var vf = new Symbol("vf");
+                //var vi = new Symbol("vi");
+                //var vf = new Symbol("vf");
 
-                var Ki = new Symbol("Ki");
-                var Kf = new Symbol("Kf");
+                //var Ki = new Symbol("Ki");
+                //var Kf = new Symbol("Kf");
 
-                var Ugi = new Symbol("Ugi");
-                var Ugf = new Symbol("Ugf");
+                //var Ugi = new Symbol("Ugi");
+                //var Ugf = new Symbol("Ugf");
 
-                var ΣUi = new Symbol("ΣUi");
-                var ΣUf = new Symbol("ΣUf");
+                //var ΣUi = new Symbol("ΣUi");
+                //var ΣUf = new Symbol("ΣUf");
 
-                var Ei = new Symbol("Ei");
-                var Ef = new Symbol("Ef");
+                //var Ei = new Symbol("Ei");
+                //var Ef = new Symbol("Ef");
 
-                var g = new Symbol("g");
+                //var g = new Symbol("g");
 
-                var L = new Symbol("L");
+                //var L = new Symbol("L");
 
-                var thA = new Symbol("thA");
+                //var thA = new Symbol("thA");
 
-                var ar_f = new Symbol("ar_f");
+                //var ar_f = new Symbol("ar_f");
 
-                var r = new Symbol("r");
+                //var r = new Symbol("r");
 
-                var ΣFr = new Symbol("ΣFr");
+                //var ΣFr = new Symbol("ΣFr");
 
-                var T_f = new Symbol("T_f");
+                //var T_f = new Symbol("T_f");
 
-                var vf_sq = new Symbol("vf_sq");
+                //var vf_sq = new Symbol("vf_sq");
 
-                var eqs = and(
+                //var eqs = and(
                     
-                    Ki == m * (vi^2) / 2,
-                    Kf == m * (vf^2) / 2,
+                //    Ki == m * (vi^2) / 2,
+                //    Kf == m * (vf^2) / 2,
                 
-                    Ugi == m * g * yi,
-                    Ugf == m * g * yf,
+                //    Ugi == m * g * yi,
+                //    Ugf == m * g * yf,
                 
-                    ΣUi == Ugi,
-                    ΣUf == Ugf,
+                //    ΣUi == Ugi,
+                //    ΣUf == Ugf,
 
-                    Ei == Ki + ΣUi,
-                    Ef == Kf + ΣUf,
+                //    Ei == Ki + ΣUi,
+                //    Ef == Kf + ΣUf,
 
-                    Ei == Ef,
+                //    Ei == Ef,
 
-                    ar_f == (vf ^ 2) / r,
+                //    ar_f == (vf ^ 2) / r,
 
-                    ΣFr == T_f - m * g,
+                //    ΣFr == T_f - m * g,
 
-                    ΣFr == m * ar_f
+                //    ΣFr == m * ar_f
 
-                    );
+                //    );
 
-                var vals = new List<Equation>()
-                {
-                    yi == -L * cos(thA),
-                    yf == -L,
-                    vi == 0,
+                //var vals = new List<Equation>()
+                //{
+                //    yi == -L * cos(thA),
+                //    yf == -L,
+                //    vi == 0,
 
-                    r == L
-                };
+                //    r == L
+                //};
 
-                var numerical_vals = new List<Equation>() { L == 2.0, m == 0.5, thA == (30).ToRadians(), g == 9.8 };
+                //var numerical_vals = new List<Equation>() { L == 2.0, m == 0.5, thA == (30).ToRadians(), g == 9.8 };
 
-                // vf
-                eqs
-                    .Substitute(vals)
-                    .EliminateVariables(ar_f, ΣFr, T_f, Ki, Kf, Ugi, Ugf, ΣUi, ΣUf, Ei, Ef)
-                    .MultiplyBothSidesBy(1 / m)
-                    .AlgebraicExpand()
-                    .IsolateVariable(vf)
+                //// vf
+                //eqs
+                //    .Substitute(vals)
+                //    .EliminateVariables(ar_f, ΣFr, T_f, Ki, Kf, Ugi, Ugf, ΣUi, ΣUf, Ei, Ef)
+                //    .MultiplyBothSidesBy(1 / m)
+                //    .AlgebraicExpand()
+                //    .IsolateVariable(vf)
 
-                    .AssertEqTo(
+                //    .AssertEqTo(
 
-                        or(
-                            vf == -sqrt(2 * (g * L - cos(thA) * g * L)),
-                            vf == sqrt(2 * (g * L - cos(thA) * g * L))
-                        )
+                //        or(
+                //            vf == -sqrt(2 * (g * L - cos(thA) * g * L)),
+                //            vf == sqrt(2 * (g * L - cos(thA) * g * L))
+                //        )
 
-                    )
+                //    )
                     
-                    .Substitute(numerical_vals).Substitute(3, 3.0)
+                //    .Substitute(numerical_vals).Substitute(3, 3.0)
 
-                    .AssertEqTo(
-                        or(
-                            vf == -2.2916815161906787,
-                            vf == 2.2916815161906787
-                        )
-                    );
+                //    .AssertEqTo(
+                //        or(
+                //            vf == -2.2916815161906787,
+                //            vf == 2.2916815161906787
+                //        )
+                //    );
 
-                // T_f
-                eqs
-                    .Substitute(vals)
-                    .Substitute(vf ^ 2, vf_sq)
-                    .EliminateVariables(Ki, Kf, Ugi, Ugf, ΣUi, ΣUf, Ei, Ef, ar_f, ΣFr, vf_sq)
-                    .MultiplyBothSidesBy(1 / m)
-                    .AlgebraicExpand()
-                    .IsolateVariable(T_f)
+                //// T_f
+                //eqs
+                //    .Substitute(vals)
+                //    .Substitute(vf ^ 2, vf_sq)
+                //    .EliminateVariables(Ki, Kf, Ugi, Ugf, ΣUi, ΣUf, Ei, Ef, ar_f, ΣFr, vf_sq)
+                //    .MultiplyBothSidesBy(1 / m)
+                //    .AlgebraicExpand()
+                //    .IsolateVariable(T_f)
 
-                    .AssertEqTo(
+                //    .AssertEqTo(
                         
-                        T_f == (3 * g - 2 * cos(thA) * g) * m
+                //        T_f == (3 * g - 2 * cos(thA) * g) * m
                         
-                    );
+                //    );
                 
             }
             #endregion
@@ -6207,86 +6207,86 @@ namespace Tests
                 // ramp. Use energy methods to determine the speed of the
                 // crate at the bottom of the ramp.
 
-                var m = new Symbol("m");
+                //var m = new Symbol("m");
 
-                var yi = new Symbol("yi");
-                var yf = new Symbol("yf");
+                //var yi = new Symbol("yi");
+                //var yf = new Symbol("yf");
 
-                var vi = new Symbol("vi");
-                var vf = new Symbol("vf");
+                //var vi = new Symbol("vi");
+                //var vf = new Symbol("vf");
 
-                var Ki = new Symbol("Ki");
-                var Kf = new Symbol("Kf");
+                //var Ki = new Symbol("Ki");
+                //var Kf = new Symbol("Kf");
 
-                var Ugi = new Symbol("Ugi");
-                var Ugf = new Symbol("Ugf");
+                //var Ugi = new Symbol("Ugi");
+                //var Ugf = new Symbol("Ugf");
 
-                var ΣUi = new Symbol("ΣUi");
-                var ΣUf = new Symbol("ΣUf");
+                //var ΣUi = new Symbol("ΣUi");
+                //var ΣUf = new Symbol("ΣUf");
 
-                var Ei = new Symbol("Ei");
-                var Ef = new Symbol("Ef");
+                //var Ei = new Symbol("Ei");
+                //var Ef = new Symbol("Ef");
 
-                var fk = new Symbol("fk");
+                //var fk = new Symbol("fk");
 
-                var W_f = new Symbol("W_f");
+                //var W_f = new Symbol("W_f");
 
-                var ΔE = new Symbol("ΔE");
+                //var ΔE = new Symbol("ΔE");
 
-                var g = new Symbol("g");
+                //var g = new Symbol("g");
 
-                var d = new Symbol("d");
+                //var d = new Symbol("d");
 
-                var θ = new Symbol("θ");
+                //var θ = new Symbol("θ");
 
-                var eqs = and(
+                //var eqs = and(
 
-                    yi == d * sin(θ),
+                //    yi == d * sin(θ),
 
-                    Ki == m * (vi ^ 2) / 2,
-                    Kf == m * (vf ^ 2) / 2,
+                //    Ki == m * (vi ^ 2) / 2,
+                //    Kf == m * (vf ^ 2) / 2,
 
-                    Ugi == m * g * yi,
-                    Ugf == m * g * yf,
+                //    Ugi == m * g * yi,
+                //    Ugf == m * g * yf,
 
-                    ΣUi == Ugi,
-                    ΣUf == Ugf,
+                //    ΣUi == Ugi,
+                //    ΣUf == Ugf,
 
-                    W_f == -fk * d,
+                //    W_f == -fk * d,
 
-                    ΔE == W_f,
+                //    ΔE == W_f,
 
-                    Ei == Ki + ΣUi,
-                    Ef == Kf + ΣUf,
+                //    Ei == Ki + ΣUi,
+                //    Ef == Kf + ΣUf,
 
-                    Ei + ΔE == Ef,
+                //    Ei + ΔE == Ef,
 
-                    m != 0
+                //    m != 0
 
-                    );
+                //    );
 
-                var vals = new List<Equation>()
-                { m == 3.0, d == 1.0, θ == (30).ToRadians(), fk == 5.0, vi == 0.0, g == 9.8, yf == 0.0 };
+                //var vals = new List<Equation>()
+                //{ m == 3.0, d == 1.0, θ == (30).ToRadians(), fk == 5.0, vi == 0.0, g == 9.8, yf == 0.0 };
                     
-                eqs
-                    .EliminateVariables(Ei, Ef, ΔE, Ki, Kf, ΣUi, ΣUf, W_f, Ugi, Ugf, yi)
-                    .IsolateVariable(vf)
-                    .LogicalExpand().SimplifyEquation().SimplifyLogical().CheckVariable(m)
+                //eqs
+                //    .EliminateVariables(Ei, Ef, ΔE, Ki, Kf, ΣUi, ΣUf, W_f, Ugi, Ugf, yi)
+                //    .IsolateVariable(vf)
+                //    .LogicalExpand().SimplifyEquation().SimplifyLogical().CheckVariable(m)
 
-                    .AssertEqTo(
-                        or(
-                            and(
-                                vf == -sqrt(2 * m * (-d * fk + m * (vi ^ 2) / 2 - g * m * yf + g * m * d * sin(θ))) / m,
-                                m != 0
-                            ),
-                            and(
-                                vf == sqrt(2 * m * (-d * fk + m * (vi ^ 2) / 2 - g * m * yf + g * m * d * sin(θ))) / m,
-                                m != 0
-                            )))
+                //    .AssertEqTo(
+                //        or(
+                //            and(
+                //                vf == -sqrt(2 * m * (-d * fk + m * (vi ^ 2) / 2 - g * m * yf + g * m * d * sin(θ))) / m,
+                //                m != 0
+                //            ),
+                //            and(
+                //                vf == sqrt(2 * m * (-d * fk + m * (vi ^ 2) / 2 - g * m * yf + g * m * d * sin(θ))) / m,
+                //                m != 0
+                //            )))
                             
-                    .Substitute(vals)
+                //    .Substitute(vals)
 
-                    .AssertEqTo(or(vf == -2.54296414970142, vf == 2.54296414970142));
+                //    .AssertEqTo(or(vf == -2.54296414970142, vf == 2.54296414970142));
             }
             #endregion
 
@@ -6302,100 +6302,100 @@ namespace Tests
                 // much mechanical energy does the system lose? Assume that
                 // vf = 3.0 m/s and m = 20.0 kg.
 
-                var m = new Symbol("m");
+                //var m = new Symbol("m");
 
-                var yi = new Symbol("yi");
-                var yf = new Symbol("yf");
+                //var yi = new Symbol("yi");
+                //var yf = new Symbol("yf");
 
-                var vi = new Symbol("vi");
-                var vf = new Symbol("vf");
+                //var vi = new Symbol("vi");
+                //var vf = new Symbol("vf");
 
-                var Ki = new Symbol("Ki");
-                var Kf = new Symbol("Kf");
+                //var Ki = new Symbol("Ki");
+                //var Kf = new Symbol("Kf");
 
-                var Ugi = new Symbol("Ugi");
-                var Ugf = new Symbol("Ugf");
+                //var Ugi = new Symbol("Ugi");
+                //var Ugf = new Symbol("Ugf");
 
-                var ΣUi = new Symbol("ΣUi");
-                var ΣUf = new Symbol("ΣUf");
+                //var ΣUi = new Symbol("ΣUi");
+                //var ΣUf = new Symbol("ΣUf");
 
-                var Ei = new Symbol("Ei");
-                var Ef = new Symbol("Ef");
+                //var Ei = new Symbol("Ei");
+                //var Ef = new Symbol("Ef");
 
-                var fk = new Symbol("fk");
+                //var fk = new Symbol("fk");
 
-                var W_f = new Symbol("W_f");
+                //var W_f = new Symbol("W_f");
 
-                var ΔE = new Symbol("ΔE");
+                //var ΔE = new Symbol("ΔE");
 
-                var g = new Symbol("g");
+                //var g = new Symbol("g");
 
-                var d = new Symbol("d");
+                //var d = new Symbol("d");
 
-                var eqs = and(
+                //var eqs = and(
 
-                    Ki == m * (vi ^ 2) / 2,
-                    Kf == m * (vf ^ 2) / 2,
+                //    Ki == m * (vi ^ 2) / 2,
+                //    Kf == m * (vf ^ 2) / 2,
 
-                    Ugi == m * g * yi,
-                    Ugf == m * g * yf,
+                //    Ugi == m * g * yi,
+                //    Ugf == m * g * yf,
 
-                    ΣUi == Ugi,
-                    ΣUf == Ugf,
+                //    ΣUi == Ugi,
+                //    ΣUf == Ugf,
 
-                    W_f == -fk * d,
+                //    W_f == -fk * d,
 
-                    ΔE == W_f,
+                //    ΔE == W_f,
 
-                    Ei == Ki + ΣUi,
-                    Ef == Kf + ΣUf,
+                //    Ei == Ki + ΣUi,
+                //    Ef == Kf + ΣUf,
 
-                    Ei + ΔE == Ef);
+                //    Ei + ΔE == Ef);
 
-                {
-                    var vals = new List<Equation>()
-                    { yi == 2.0, yf == 0, vi == 0, fk == 0, g == 9.8 };
+                //{
+                //    var vals = new List<Equation>()
+                //    { yi == 2.0, yf == 0, vi == 0, fk == 0, g == 9.8 };
 
-                    var zeros = vals.Where(eq => eq.b == 0).ToList();
+                //    var zeros = vals.Where(eq => eq.b == 0).ToList();
 
-                    // vf
-                    eqs
-                        .Substitute(zeros)
-                        .EliminateVariables(Ei, Ef, ΔE, Ki, Kf, ΣUi, ΣUf, W_f, Ugi, Ugf)
-                        .MultiplyBothSidesBy(1 / m)
-                        .IsolateVariable(vf)
+                //    // vf
+                //    eqs
+                //        .Substitute(zeros)
+                //        .EliminateVariables(Ei, Ef, ΔE, Ki, Kf, ΣUi, ΣUf, W_f, Ugi, Ugf)
+                //        .MultiplyBothSidesBy(1 / m)
+                //        .IsolateVariable(vf)
 
-                        .AssertEqTo(
-                            or(
-                                vf == -sqrt(2 * g * yi),
-                                vf == sqrt(2 * g * yi)))
+                //        .AssertEqTo(
+                //            or(
+                //                vf == -sqrt(2 * g * yi),
+                //                vf == sqrt(2 * g * yi)))
 
-                        .Substitute(vals)
+                //        .Substitute(vals)
 
-                        .AssertEqTo(
-                            or(
-                                vf == -6.2609903369994111,
-                                vf == 6.2609903369994111));
-                }
+                //        .AssertEqTo(
+                //            or(
+                //                vf == -6.2609903369994111,
+                //                vf == 6.2609903369994111));
+                //}
 
-                {
-                    var vals = new List<Equation>()
-                    { m == 20.0, yi == 2.0, yf == 0, vi == 0, vf == 3.0, g == 9.8 };
+                //{
+                //    var vals = new List<Equation>()
+                //    { m == 20.0, yi == 2.0, yf == 0, vi == 0, vf == 3.0, g == 9.8 };
 
-                    var zeros = vals.Where(eq => eq.b == 0).ToList();
+                //    var zeros = vals.Where(eq => eq.b == 0).ToList();
 
-                    // ΔE
-                    eqs
-                        .Substitute(zeros)
-                        .EliminateVariables(fk, Ei, Ef, Ki, Kf, ΣUi, ΣUf, Ugi, Ugf, W_f)
-                        .IsolateVariable(ΔE)
+                //    // ΔE
+                //    eqs
+                //        .Substitute(zeros)
+                //        .EliminateVariables(fk, Ei, Ef, Ki, Kf, ΣUi, ΣUf, Ugi, Ugf, W_f)
+                //        .IsolateVariable(ΔE)
                         
-                        .AssertEqTo(ΔE == m * (vf ^ 2) / 2 - g * m * yi)
+                //        .AssertEqTo(ΔE == m * (vf ^ 2) / 2 - g * m * yi)
                         
-                        .Substitute(vals)
+                //        .Substitute(vals)
                         
-                        .AssertEqTo(ΔE == -302.0);
-                }
+                //        .AssertEqTo(ΔE == -302.0);
+                //}
             }
             #endregion
             

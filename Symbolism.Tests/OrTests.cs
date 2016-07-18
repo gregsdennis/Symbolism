@@ -7,7 +7,7 @@ namespace Symbolism.Tests
 	[TestClass]
 	public class OrTests
 	{
-		[TestMethod] // TODO: how should and() work with numbers?
+		[TestMethod] // TODO: how should or() work with numbers?
 		public void SingleNonBoolParameter()
 		{
 			Assert.AreEqual(10, or(10));

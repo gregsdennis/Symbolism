@@ -52,7 +52,7 @@ namespace Symbolism
 		}
 
 		// TODO: create params and IEnumerable<> versions of this.
-		public static MathObject Substitute(this MathObject obj, List<Equation> eqs)
+		public static MathObject Substitute(this MathObject obj, IEnumerable<Equation> eqs)
 		{
 			return eqs.Aggregate(obj, (a, eq) => a.Substitute(eq));
 		}

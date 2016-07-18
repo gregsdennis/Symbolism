@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using static Symbolism.Functions;
@@ -12,6 +11,7 @@ namespace Symbolism.Tests
 	[TestClass]
 	public class DeepSelectTests
 	{
+		// sin(u) cos(v) - cos(u) sin(v) -> sin(u - v)
 		public static MathObject SumDifferenceFormulaFunc(MathObject elt)
 		{
 			if (elt is Sum)
@@ -43,6 +43,47 @@ namespace Symbolism.Tests
 							items = items.Where(obj => match(obj) == false).ToList();
 
 							items.Add(sin(u_ - v_));
+						}
+						else items.Add(item);
+					}
+					else items.Add(item);
+				}
+
+				return new Sum(items).Simplify();
+			}
+
+			return elt;
+		}
+		// sin(u) cos(v) + cos(u) sin(v) -> sin(u + v)
+		public static MathObject SumDifferenceFormulaAFunc(MathObject elt)
+		{
+			if (elt is Sum)
+			{
+				var items = new List<MathObject>();
+
+				foreach (var item in (elt as Sum).Elements)
+				{
+					if (
+						item is Product &&
+						(item as Product).Elements[0] is Cos &&
+						(item as Product).Elements[1] is Sin
+						)
+					{
+						var u_ = ((item as Product).Elements[0] as Cos).Parameters[0];
+						var v_ = ((item as Product).Elements[1] as Sin).Parameters[0];
+
+						Func<MathObject, bool> match = obj =>
+						                               obj is Product &&
+						                               (obj as Product).Elements[0] is Cos &&
+						                               (obj as Product).Elements[1] is Sin &&
+						                               ((obj as Product).Elements[1] as Sin).Parameters[0] == u_ &&
+						                               ((obj as Product).Elements[0] as Cos).Parameters[0] == v_;
+
+						if (items.Any(obj => match(obj)))
+						{
+							items = items.Where(obj => match(obj) == false).ToList();
+
+							items.Add(sin(u_ + v_));
 						}
 						else items.Add(item);
 					}
@@ -95,12 +136,33 @@ namespace Symbolism.Tests
 			}
 			return elt;
 		}
+		public static MathObject SinCosToTanFunc(MathObject elt)
+		{
+			if (elt is Product)
+			{
+				if ((elt as Product).Elements.Any(obj1 =>
+												  obj1 is Sin &&
+												  (elt as Product).Elements.Any(obj2 => obj2 == 1 / cos((obj1 as Sin).Parameters[0]))))
+				{
+					var sin_ = (elt as Product).Elements.First(obj1 =>
+															   obj1 is Sin &&
+															   (elt as Product).Elements.Any(obj2 => obj2 == 1 / cos((obj1 as Sin).Parameters[0])));
+
+					var arg = (sin_ as Sin).Parameters[0];
+
+					return elt * cos(arg) / sin(arg) * tan(arg);
+				}
+
+				return elt;
+			}
+
+			return elt;
+		}
+
 
 		[TestMethod]
 		public void SumDifferenceFormulaFunc1()
 		{
-			// sin(u) cos(v) - cos(u) sin(v) -> sin(u - v)
-
 			var u = new Symbol("u");
 			var v = new Symbol("v");
 
@@ -109,49 +171,6 @@ namespace Symbolism.Tests
 		[TestMethod]
 		public void SumDifferenceFormulaFunc2()
 		{
-			// sin(u) cos(v) + cos(u) sin(v) -> sin(u + v)
-
-			Func<MathObject, MathObject> SumDifferenceFormulaAFunc = elt =>
-				{
-					if (elt is Sum)
-					{
-						var items = new List<MathObject>();
-
-						foreach (var item in (elt as Sum).Elements)
-						{
-							if (
-								item is Product &&
-								(item as Product).Elements[0] is Cos &&
-								(item as Product).Elements[1] is Sin
-								)
-							{
-								var u_ = ((item as Product).Elements[0] as Cos).Parameters[0];
-								var v_ = ((item as Product).Elements[1] as Sin).Parameters[0];
-
-								Func<MathObject, bool> match = obj =>
-								                               obj is Product &&
-								                               (obj as Product).Elements[0] is Cos &&
-								                               (obj as Product).Elements[1] is Sin &&
-								                               ((obj as Product).Elements[1] as Sin).Parameters[0] == u_ &&
-								                               ((obj as Product).Elements[0] as Cos).Parameters[0] == v_;
-
-								if (items.Any(obj => match(obj)))
-								{
-									items = items.Where(obj => match(obj) == false).ToList();
-
-									items.Add(sin(u_ + v_));
-								}
-								else items.Add(item);
-							}
-							else items.Add(item);
-						}
-
-						return new Sum(items).Simplify();
-					}
-
-					return elt;
-				};
-
 			var u = new Symbol("u");
 			var v = new Symbol("v");
 
