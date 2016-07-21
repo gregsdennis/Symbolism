@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace Symbolism
 {
-	[DebuggerDisplay("{StandardForm()}")]
 	public class And : Function
 	{
 		private static MathObject AndProc(MathObject[] ls)
@@ -30,10 +28,10 @@ namespace Symbolism
 					else parameters.Add(elt);
 				}
 
-				return new And(parameters).Simplify();
+				return new And(parameters.Distinct());
 			}
 
-			return new And(ls);
+			return new And(ls.Distinct());
 		}
 
 		public And(params MathObject[] ls)
@@ -41,6 +39,6 @@ namespace Symbolism
 		public And(IEnumerable<MathObject> ls)
 			: base("and", AndProc, ls) { }
 
-		public override MathObject Map(Func<MathObject, MathObject> map) => new And(Parameters.Select(map)).Simplify();
+		public override MathObject Map(Func<MathObject, MathObject> map) => new And(Parameters.Select(map));
 	}
 }

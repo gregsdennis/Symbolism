@@ -33,7 +33,7 @@ namespace Symbolism
 				if (vi != null)
 					return ud.Value < vi.Value;
 				if (vf != null)
-					return ud.Value * vf.denominator.Value < vf.numerator.Value;
+					return ud.Value * vf.Denominator.Value < vf.Numerator.Value;
 			}
 
 			if (ui != null)
@@ -43,17 +43,17 @@ namespace Symbolism
 				if (vi != null)
 					return ui.Value < vi.Value;
 				if (vf != null)
-					return ui.Value * vf.denominator.Value < vf.numerator.Value;
+					return ui.Value * vf.Denominator.Value < vf.Numerator.Value;
 			}
 
 			if (uf != null)
 			{
 				if (vd != null)
-					return uf.numerator.Value < vd.Value * uf.denominator.Value;
+					return uf.Numerator.Value < vd.Value * uf.Denominator.Value;
 				if (vi != null)
-					return uf.numerator.Value < vi.Value * uf.denominator.Value;
+					return uf.Numerator.Value < vi.Value * uf.Denominator.Value;
 				if (vf != null)
-					return uf.numerator.Value * vf.denominator.Value < vf.numerator.Value * uf.denominator.Value;
+					return uf.Numerator.Value * vf.Denominator.Value < vf.Numerator.Value * uf.Denominator.Value;
 			}
 
 			Symbol uSym = u as Symbol, vSym = v as Symbol;
@@ -72,7 +72,7 @@ namespace Symbolism
 				return O3(a, b);
 			}
 
-			Sum uSum = u as Sum, vSum = v as Sum;
+			IAdditiveOperation uSum = u as IAdditiveOperation, vSum = v as IAdditiveOperation;
 			if (uSum != null && vSum != null)
 				return O3(uSum.Elements.Reverse().ToList(),
 						  vSum.Elements.Reverse().ToList());

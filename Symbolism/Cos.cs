@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
+
 using static Symbolism.Constants;
 
 namespace Symbolism
 {
-	[DebuggerDisplay("{StandardForm()}")]
 	public class Cos : Function
 	{
 		// TODO: this should be a Function subclass
@@ -15,7 +14,7 @@ namespace Symbolism
 		{
 			if (x is Number && y is Number)
 			{
-				if (y == 0) return Undefined.Instance;
+				if (y == 0) return undef;
 
 				var number = x / y as Number;
 				if (number != null)
@@ -45,14 +44,14 @@ namespace Symbolism
 				return new DoubleFloat(Math.Cos(d0.Value));
 
 			var n0 = u as Number;
-			if (n0 != null && u < 0) return new Cos(-u).Simplify();
+			if (n0 != null && u < 0) return new Cos(-u);
 
 			var prod0 = u as Product;
 			if (prod0 != null)
 			{
 				var prod0n0 = prod0.Elements[0] as Number;
 				if (prod0n0 != null && prod0n0 < 0)
-					return new Cos(-u).Simplify();
+					return new Cos(-u);
 
 				// cos(a/b * Pi)
 				// a/b > 1/2         
@@ -63,13 +62,13 @@ namespace Symbolism
 				{
 					var n = prod0.Elements[0];
 
-					if (n > 2) return new Cos(Mod(n, 2)*pi).Simplify();
+					if (n > 2) return new Cos(Mod(n, 2)*pi);
 
-					if (n > 1) return -new Cos(n*pi - pi).Simplify();
+					if (n > 1) return -new Cos(n*pi - pi);
 
-					if (n > half) return -new Cos(pi - n*pi).Simplify();
+					if (n > half) return -new Cos(pi - n*pi);
 
-					return new Cos(n*pi).Simplify();
+					return new Cos(n*pi);
 				}
 
 				// cos(k/n Pi)
@@ -127,7 +126,7 @@ namespace Symbolism
 			if (sum != null)
 			{
 				if (sum.Elements.Any(elt => elt == pi))
-					return -new Cos(u - pi).Simplify();
+					return -new Cos(u - pi);
 
 				// cos(n Pi + x + y)
 
@@ -150,7 +149,7 @@ namespace Symbolism
 					{
 						var n = piProd.Elements[0];
 
-						return new Cos(u - pi_elt + Mod(n, 2)*pi).Simplify();
+						return new Cos(u - pi_elt + Mod(n, 2)*pi);
 					}
 				}
 
@@ -188,6 +187,6 @@ namespace Symbolism
 		public Cos(MathObject param)
 			: base("cos", CosProc, param) {}
 
-		public override MathObject Map(Func<MathObject, MathObject> map) => new Cos(map(Parameters[0])).Simplify();
+		public override MathObject Map(Func<MathObject, MathObject> map) => new Cos(map(Parameters[0]));
 	}
 }

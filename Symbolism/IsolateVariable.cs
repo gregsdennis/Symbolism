@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using static Symbolism.Constants;
+using static Symbolism.Functions;
 
 namespace Symbolism
 {
@@ -103,10 +104,10 @@ namespace Symbolism
 
 				if (a == null || b == null || c == null) return eq;
 
-				return new Or(new And(sym == (-b + (((b ^ 2) - 4*a*c) ^ new Fraction(1, 2)))/(2*a), (a != 0).Simplify()).Simplify(),
-				              new And(sym == (-b - (((b ^ 2) - 4*a*c) ^ new Fraction(1, 2)))/(2*a), (a != 0).Simplify()).Simplify(),
-				              new And(sym == -c/b, a == 0, (b != 0).Simplify()).Simplify(),
-				              new And((a == 0).Simplify(), (b == 0).Simplify(), (c == 0).Simplify()).Simplify()).Simplify();
+				return new Or(new And(sym == (-b + sqrt((b ^ 2) - 4*a*c))/(2*a), a != 0),
+				              new And(sym == (-b - sqrt((b ^ 2) - 4*a*c))/(2*a), a != 0),
+				              new And(sym == -c/b, a == 0, b != 0),
+				              new And(a == 0, b == 0, c == 0));
 			}
 
 
@@ -121,15 +122,15 @@ namespace Symbolism
 
 					//return IsolateVariable(
 					//    new Equation(
-					//        eq.a - new Sum() { elts = items }.Simplify(),
-					//        eq.b - new Sum() { elts = items }.Simplify()),
+					//        eq.a - new Sum() { elts = items },
+					//        eq.b - new Sum() { elts = items }),
 					//    sym);
 
 
 					//var new_a = eq.a; items.ForEach(elt => new_a = new_a - elt);
 					//var new_b = eq.b; items.ForEach(elt => new_b = new_b - elt);
 
-					var new_a = new Sum(a_sum.Elements.Where(elt => items.Contains(elt) == false).ToList()).Simplify();
+					var new_a = new Sum(a_sum.Elements.Where(elt => items.Contains(elt) == false).ToList());
 					var new_b = eq.b;
 					foreach (var elt in items) new_b = new_b - elt;
 
@@ -139,8 +140,8 @@ namespace Symbolism
 
 					//return IsolateVariable(
 					//    new Equation(
-					//        eq.a + new Sum() { elts = items.ConvertAll(elt => elt * -1) }.Simplify(),
-					//        eq.b - new Sum() { elts = items }.Simplify()),
+					//        eq.a + new Sum() { elts = items.ConvertAll(elt => elt * -1) },
+					//        eq.b - new Sum() { elts = items }),
 					//    sym);
 				}
 
@@ -151,10 +152,10 @@ namespace Symbolism
 				if (a_sum.Elements.All(elt => elt.DegreeGpe(new List<MathObject> {sym}) == 1))
 				{
 					//return 
-					//    (new Sum() { elts = (eq.a as Sum).elts.Select(elt => elt / sym).ToList() }.Simplify() == eq.b / sym)
+					//    (new Sum() { elts = (eq.a as Sum).elts.Select(elt => elt / sym).ToList() } == eq.b / sym)
 					//    .IsolateVariable(sym);
 
-					return (sym*new Sum(a_sum.Elements.Select(elt => elt/sym).ToList()).Simplify() == eq.b)
+					return (sym*new Sum(a_sum.Elements.Select(elt => elt/sym).ToList()) == eq.b)
 						.IsolateVariable(sym);
 				}
 
@@ -191,8 +192,8 @@ namespace Symbolism
 
 				var items = ((Product) eq.a).Elements.Where(elt => elt.FreeOf(sym)).ToList();
 
-				return IsolateVariableEq(new Equation(eq.a/new Product(items).Simplify(),
-				                                      eq.b/new Product(items).Simplify()),
+				return IsolateVariableEq(new Equation(eq.a/new Product(items),
+				                                      eq.b/new Product(items)),
 				                         sym);
 			}
 
@@ -238,10 +239,10 @@ namespace Symbolism
 		public static MathObject IsolateVariable(this MathObject obj, Symbol sym)
 		{
 			var or = obj as Or;
-			if (or != null) return new Or (or.Parameters.Select(elt => elt.IsolateVariable(sym))).Simplify();
+			if (or != null) return new Or (or.Parameters.Select(elt => elt.IsolateVariable(sym)));
 
 			var and = obj as And;
-			if (and != null) return new And (and.Parameters.Select(elt => elt.IsolateVariable(sym))).Simplify();
+			if (and != null) return new And (and.Parameters.Select(elt => elt.IsolateVariable(sym)));
 
 			var equation = obj as Equation;
 			if (equation != null) return equation.IsolateVariableEq(sym);

@@ -20,16 +20,15 @@ namespace Symbolism
 	// so we're using it.
 	public static class Functions
 	{
-		// TODO: sqrt should be a proper function that simplifies to the expression below.
-		public static MathObject sqrt(MathObject obj) => obj ^ new Fraction(1, 2);
+		public static MathObject sqrt(MathObject obj) => new Sqrt(obj);
 
-		public static MathObject and(params MathObject[] ls) => new And(ls).Simplify();
-		public static MathObject or(params MathObject[] ls) => new Or(ls).Simplify();
+		public static MathObject and(params MathObject[] ls) => new And(ls);
+		public static MathObject or(params MathObject[] ls) => new Or(ls);
 
-		public static MathObject sin(MathObject obj) => new Sin(obj).Simplify();
-		public static MathObject cos(MathObject obj) => new Cos(obj).Simplify();
-		public static MathObject tan(MathObject obj) => new Tan(obj).Simplify();
-		public static MathObject asin(MathObject obj) => new Asin(obj).Simplify();
-		public static MathObject atan(MathObject obj) => new Atan(obj).Simplify();
+		public static MathObject sin(MathObject obj) => new Sin(obj);
+		public static MathObject cos(MathObject obj) => new Cos(obj);
+		public static MathObject tan(MathObject obj) => new Tan(obj);
+		public static MathObject asin(MathObject obj) => new Asin(obj);
+		public static MathObject atan(MathObject obj) => new Atan(obj);
 	}
 }

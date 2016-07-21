@@ -1,9 +1,7 @@
 using System;
-using System.Diagnostics;
 
 namespace Symbolism
 {
-	[DebuggerDisplay("{StandardForm()}")]
 	public abstract class MathObject
 	{
 		//////////////////////////////////////////////////////////////////////
@@ -65,15 +63,15 @@ namespace Symbolism
 		public static Equation operator !=(MathObject a, int b) => new Equation(a, new Integer(b), Equation.Operators.NotEqual);
 		public static Equation operator !=(int a, MathObject b) => new Equation(new Integer(a), b, Equation.Operators.NotEqual);
 		//////////////////////////////////////////////////////////////////////
-		public static MathObject operator +(MathObject a, MathObject b) => new Sum(a, b).Simplify();
-		public static MathObject operator -(MathObject a, MathObject b) => new Difference(a, b).Simplify();
-		public static MathObject operator *(MathObject a, MathObject b) => new Product(a, b).Simplify();
-		public static MathObject operator /(MathObject a, MathObject b) => new Quotient(a, b).Simplify();
-		public static MathObject operator ^(MathObject a, MathObject b) => new Power(a, b).Simplify();
+		public static MathObject operator +(MathObject a, MathObject b) => new Sum(a, b);
+		public static MathObject operator -(MathObject a, MathObject b) => new Difference(a, b);
+		public static MathObject operator *(MathObject a, MathObject b) => new Product(a, b);
+		public static MathObject operator /(MathObject a, MathObject b) => new Quotient(a, b);
+		public static MathObject operator ^(MathObject a, MathObject b) => new Power(a, b);
 
 		public static MathObject operator -(MathObject a)
 		{
-			return new Difference(a).Simplify();
+			return new Difference(a);
 		}
 
 		// Precedence is used for printing purposes.
@@ -86,13 +84,13 @@ namespace Symbolism
 		private int GetPrecedence()
 		{
 			if (this is Integer ||
-				this is DoubleFloat ||
-				this is Symbol ||
-				this is Function ||
-				this is Fraction) return 1000;
+			    this is DoubleFloat ||
+			    this is Symbol ||
+			    this is Function ||
+			    this is Fraction) return 1000;
 			if (this is Power) return 130;
-			if (this is Product) return 120;
-			if (this is Sum) return 110;
+			if (this is IMultiplicativeOperation) return 120;
+			if (this is IAdditiveOperation) return 110;
 
 			throw new ArgumentOutOfRangeException();
 		}
@@ -101,35 +99,17 @@ namespace Symbolism
 
 		public int Precedence => _precedence ?? (_precedence = GetPrecedence()).Value;
 
-		public static ToStringForms ToStringForm = ToStringForms.Full;
-
-		public virtual string FullForm() => base.ToString();
-
-		public virtual string StandardForm() => FullForm();
+		public virtual MathObject Simplify() => this;
+		internal abstract MathObject Expand();
 
 		public override string ToString()
 		{
-			switch (ToStringForm)
-			{
-				case ToStringForms.Full:
-					return FullForm();
-				case ToStringForms.Standard:
-					return StandardForm();
-				default:
-					throw new ArgumentOutOfRangeException(nameof(ToStringForm));
-			}
+			throw new InvalidOperationException("MathObject.ToString() called in an abstract class");
 		}
-
-		// TODO: this should only be part of fractions (or an extension method).
-		//		 this is part of the simplification logic for Product.  It definitely
-		//		 should not be public...
-		public virtual MathObject Numerator() => this;
-
-		public virtual MathObject Denominator() => 1;
 
 		public override bool Equals(object obj)
 		{
-			throw new InvalidOperationException("MathObject.Equals called - abstract class");
+			throw new InvalidOperationException("MathObject.Equals() called in an abstract class");
 		}
 
 		public override int GetHashCode() => base.GetHashCode();

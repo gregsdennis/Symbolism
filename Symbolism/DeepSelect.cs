@@ -27,11 +27,11 @@ namespace Symbolism
 
 			var sum = result as Sum;
 			if (sum != null)
-				return new Sum(sum.Elements.Select(elt => elt.DeepSelect(proc)).ToList()).Simplify();
+				return new Sum(sum.Elements.Select(elt => elt.DeepSelect(proc)).ToList());
 
 			var product = result as Product;
 			if (product != null)
-				return new Product(product.Elements.Select(elt => elt.DeepSelect(proc)).ToList()).Simplify();
+				return new Product(product.Elements.Select(elt => elt.DeepSelect(proc)).ToList());
 
 			return result;
 		}

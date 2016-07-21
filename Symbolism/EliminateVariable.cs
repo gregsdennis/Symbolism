@@ -124,7 +124,7 @@ namespace Symbolism
 				if (res_eq.a != sym || res_eq.b.Has(sym))
 					return new And(eqs.Select(elt => elt as MathObject));
 
-				return new And(rest.Select(elt => elt.Substitute(sym, res_eq.b))).Simplify();
+				return new And(rest.Select(elt => elt.Substitute(sym, res_eq.b)));
 
 				// return new And() { args = rest.Select(rest_eq => rest_eq.SubstituteEq(eq_sym)).ToList() };
 

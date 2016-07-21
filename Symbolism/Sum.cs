@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
+
+using static Symbolism.Constants;
 
 namespace Symbolism
 {
-	[DebuggerDisplay("{StandardForm()}")]
-	public class Sum : MathObject
+	internal class Sum : MathObject, IAdditiveOperation
 	{
 		private readonly List<MathObject> _elements;
 
@@ -16,10 +16,16 @@ namespace Symbolism
 			: this((IEnumerable<MathObject>) ls) {}
 		public Sum(IEnumerable<MathObject> ls)
 		{
-			_elements = ls.ToList();
+			_elements = GetAllTerms(ls).ToList();
 		}
 
-		public override int GetHashCode() => Elements.GetHashCode();
+		public override int GetHashCode()
+		{
+			unchecked
+			{
+				return Elements.GetCollectionHashCode() * 397 + typeof(Sum).GetHashCode();
+			}
+		}
 
 		public override bool Equals(object obj) => Equals(obj as Sum);
 
@@ -28,139 +34,112 @@ namespace Symbolism
 			if (ReferenceEquals(null, obj)) return false;
 			if (ReferenceEquals(this, obj)) return true;
 
-			// TODO: does this need to require sequence equality or just set equality?
-			return Elements.SequenceEqual(obj.Elements);
+			return Elements.SetEqual(obj.Elements);
 		}
 
-		public static MathObject Term(MathObject u)
+		// guaranteed:  all numbers are definable.  i.e. no fractions with 0 denominator
+		private static Number CombineTwoNumbers(Number p, Number q)
 		{
-			var product = u as Product;
-			if (product != null && product.Elements[0] is Number)
-				return new Product(product.Elements.Skip(1));
-			;
+			if (p == 0) return q;
+			if (q == 0) return p;
 
-			if (product != null) return u;
+			DoubleFloat dp = p as DoubleFloat, dq = q as DoubleFloat;
 
-			return new Product(u);
+			if (dp != null || dq != null)
+				return new DoubleFloat(p.ToDouble().Value + q.ToDouble().Value);
+
+			return Rational.SimplifyRNE(new Sum(p, q)) as Number;
 		}
 
-		private static IReadOnlyList<MathObject> MergeSums(IReadOnlyList<MathObject> pElts, IReadOnlyList<MathObject> qElts)
+		private static MathObject CombineNumbers(IReadOnlyList<Number> numbers)
 		{
-			if (pElts.Count == 0) return qElts;
-			if (qElts.Count == 0) return pElts;
+			if (numbers.OfType<Fraction>().Any(f => f.Denominator == 0)) return undef;
 
-			var p = pElts[0];
-			var ps = pElts.Skip(1).ToList();
-
-			var q = qElts[0];
-			var qs = qElts.Skip(1).ToList();
-
-			var res = RecursiveSimplify(new List<MathObject> {p, q});
-
-			if (res.Count == 0) return MergeSums(ps, qs);
-
-			if (res.Count == 1) return MergeSums(ps, qs).Cons(res[0]);
-
-			if (res.SequenceEqual(new[] {p, q})) return MergeSums(ps, qElts).Cons(p);
-
-			if (res.SequenceEqual(new[] {q, p})) return MergeSums(pElts, qs).Cons(q);
-
-			throw new Exception();
+			return numbers.Aggregate<Number, Number>(new Integer(0), CombineTwoNumbers);
 		}
 
-		private static IReadOnlyList<MathObject> SimplifyDoubleNumberSum(DoubleFloat a, Number b)
+		public override MathObject Simplify()
 		{
-			double val = 0.0;
+			if (Elements.Count == 1) return Elements[0].Simplify();
 
-			var d = b as DoubleFloat;
-			if (d != null) val = a.Value + d.Value;
+			var expanded = Expand();
+			var sExpanded = expanded as Sum;
 
-			var integer = b as Integer;
-			if (integer != null) val = a.Value + integer.Value;
+			if (sExpanded == null) return expanded.Simplify();
 
-			var fraction = b as Fraction;
-			if (fraction != null) val = a.Value + fraction.ToDouble().Value;
+			if (sExpanded.Elements.Count == 1) return sExpanded.Elements[0].Simplify();
 
-			if (val == 0.0) return new List<MathObject>();
-
-			return new List<MathObject> {new DoubleFloat(val)};
-		}
-
-		private static IReadOnlyList<MathObject> RecursiveSimplify(IReadOnlyList<MathObject> elts)
-		{
-			var p = elts[0];
-			var q = elts[1];
-
-			Sum sp = p as Sum, sq = q as Sum;
-
-			if (elts.Count == 2)
+			var numbers = sExpanded.Elements.OfType<Number>().ToList();
+			if (numbers.Count != 0)
 			{
+				var constant = CombineNumbers(numbers);
+				if (constant == undef) return undef;
 
-				if (sp != null && sq != null)
-					return MergeSums(sp._elements, sq._elements);
+				// .Except() applies .Distinct(); we want duplicates, if any.
+				var rest = sExpanded.Elements.Where(elt => !(elt is Number)).ToList();
 
-				if (sp != null)
-					return MergeSums(sp._elements, new List<MathObject> {q});
+				if (rest.Count == 0) return constant;
 
-				if (sq != null)
-					return MergeSums(new List<MathObject> {p}, sq._elements);
+				rest.Insert(0, constant);
 
-				//////////////////////////////////////////////////////////////////////
-
-				DoubleFloat dp = p as DoubleFloat, dq = q as DoubleFloat;
-				Number np = p as Number, nq = q as Number;
-
-				if (dp != null && nq != null)
-					return SimplifyDoubleNumberSum(dp, nq);
-
-				if (np != null && dq != null)
-					return SimplifyDoubleNumberSum(dq, np);
-
-				//////////////////////////////////////////////////////////////////////
-
-				Integer ip = p as Integer, iq = q as Integer;
-				Fraction fp = p as Fraction, fq = q as Fraction;
-
-				if ((ip != null || fp != null) &&
-					(iq != null || fq != null))
-				{
-					var P = Rational.SimplifyRNE(new Sum(p, q));
-
-					if (P == 0) return new List<MathObject>();
-
-					return new List<MathObject> {P};
-				}
-
-				if (p == 0) return new List<MathObject> {q};
-
-				if (q == 0) return new List<MathObject> {p};
-
-				var pTerm = Term(p);
-				if (pTerm == Term(q))
-				{
-					var res = pTerm*(p.Coefficient() + q.Coefficient());
-
-					if (res == 0) return new List<MathObject>();
-
-					return new List<MathObject> {res};
-				}
-
-				if (q.ComesBefore(p)) return new List<MathObject> {q, p};
-
-				return new List<MathObject> {p, q};
+				sExpanded = new Sum(rest);
 			}
 
-			if (sp != null)
-				return MergeSums(sp._elements, RecursiveSimplify(elts.Skip(1).ToList()));
+			var previous = sExpanded.Elements;
+			List<MathObject> combined;
+			do
+			{
+				combined = previous.GroupBy(elt => elt.Term())
+				                   .Select(g => (new Sum(g.Select(elt => elt.Coefficient())).Simplify()*g.Key).Simplify())
+				                   .Where(elt => elt.Coefficient() != 0)
+				                   .ToList();
+				previous = GetAllTerms(combined).ToList();
+			} while (!combined.SetEqual(previous));
+			var sum = combined.Where(elt => elt.Coefficient() > 0).ToList();
+			var difference = combined.Except(sum)
+			                         .Select(elt => (-1*elt).Simplify())
+									 .ToList();
 
-			return MergeSums(new List<MathObject> {p}, RecursiveSimplify(elts.Skip(1).ToList()));
+			if (!sum.Any() && !difference.Any()) return 0;
+			if (!sum.Any()) return new Difference(difference);
+			if (!difference.Any())
+			{
+				if (sum.Count == 1) return sum[0];
+
+				return new Sum(sum);
+			}
+
+			if (sum.Count == 1)
+			{
+				difference.Insert(0, sum[0]);
+
+				return new Difference(difference);
+			}
+
+			sum.Add(new Difference(difference));
+
+			return new Sum(sum);
 		}
 
-		public MathObject Simplify()
+		private static IEnumerable<MathObject> GetAllTerms(IEnumerable<MathObject> elts, bool expand = false)
 		{
-			if (Elements.Count() == 1) return _elements[0];
+			var elements = new List<MathObject>();
 
-			var res = RecursiveSimplify(_elements);
+			foreach (var elt in elts)
+			{
+				var sum = (expand ? elt.Expand() : elt) as Sum;
+				if (sum != null)
+					elements.AddRange(GetAllTerms(sum.Elements.Select(e => e.Expand())));
+				else
+					elements.Add(elt);
+			}
+
+			return elements;
+		}
+
+		internal override MathObject Expand()
+		{
+			var res = GetAllTerms(Elements, true).ToList();
 
 			if (res.Count == 0) return 0;
 			if (res.Count == 1) return res[0];
@@ -168,27 +147,13 @@ namespace Symbolism
 			return new Sum(res);
 		}
 
-		public override string FullForm() => string.Join(" + ", _elements.Select(elt => elt.Precedence < Precedence
-			                                                                                ? $"({elt})"
-			                                                                                : $"{elt}"));
-
-		public override string StandardForm()
+		public override string ToString()
 		{
-			var result = string.Join(" ", _elements.Select(elt =>
-				{
-					var elt_ = elt.Coefficient() < 0 ? elt*-1 : elt;
-
-					var elt__ = elt.Coefficient() < 0 && elt_ is Sum || (elt is Power && (elt as Power).Exponent != new Fraction(1, 2))
-						            ? $"({elt_})"
-						            : $"{elt_}";
-
-					return elt.Coefficient() < 0 ? $"- {elt__}" : $"+ {elt__}";
-				}));
+			var result = string.Join(" + ", Elements.Select((elt, i) => elt is IAdditiveOperation && i != 0 &&
+			                                                            !(elt is Function)
+				                                                            ? $"({elt})"
+				                                                            : $"{elt}"));
 			
-			if (result.StartsWith("+ ")) return result.Remove(0, 2); // "+ x + y"   ->   "x + y"
-
-			if (result.StartsWith("- ")) return result.Remove(1, 1); // "- x + y"   ->   "-x + y"
-
 			return result;
 		}
 	}

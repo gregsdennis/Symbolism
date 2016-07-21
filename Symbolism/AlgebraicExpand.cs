@@ -16,7 +16,7 @@ namespace Symbolism
 
 			var sum = u as Sum;
 			if (sum != null)
-				return new Sum(sum.Elements.Select(elt => elt.AlgebraicExpand())).Simplify();
+				return new Sum(sum.Elements.Select(elt => elt.AlgebraicExpand()));
 
 			var product = u as Product;
 			if (product != null)

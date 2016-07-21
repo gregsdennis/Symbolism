@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace Symbolism
 {
-	[DebuggerDisplay("{StandardForm()}")]
 	public class Or : Function
 	{
 		private static MathObject OrProc(params MathObject[] ls)
@@ -15,7 +13,7 @@ namespace Symbolism
 			// 10 || false || 20   ->   10 || 20
 
 			if (ls.Any(elt => elt == false))
-				return new Or(ls.Where(elt => elt != false).ToList()).Simplify();
+				return new Or(ls.Where(elt => elt != false).ToList());
 
 			if (ls.Any(elt => (elt as Bool)?.Value ?? false)) return true;
 
@@ -31,7 +29,7 @@ namespace Symbolism
 					else parameters.Add(elt);
 				}
 
-				return new Or(parameters).Simplify();
+				return new Or(parameters);
 			}
 
 			return new Or(ls);
@@ -42,6 +40,6 @@ namespace Symbolism
 		public Or(IEnumerable<MathObject> ls)
 			: base("or", OrProc, ls) {}
 
-		public override MathObject Map(Func<MathObject, MathObject> map) => new Or(Parameters.Select(map)).Simplify();
+		public override MathObject Map(Func<MathObject, MathObject> map) => new Or(Parameters.Select(map));
 	}
 }

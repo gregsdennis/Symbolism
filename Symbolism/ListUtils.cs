@@ -10,5 +10,17 @@ namespace Symbolism
 			res.Insert(0, elt);
 			return res;
 		}
+		public static int GetCollectionHashCode<T>(this IEnumerable<T> collection)
+		{
+			var value = 0;
+			unchecked
+			{
+				foreach (var item in collection)
+				{
+					value = value*397 + value.GetHashCode();
+				}
+			}
+			return value;
+		}
 	}
 }

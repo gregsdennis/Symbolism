@@ -37,8 +37,8 @@ namespace Symbolism
 			if (fraction != null)
 			{
 				var u_ = fraction;
-				var n = u_.numerator.Value;
-				var d = u_.denominator.Value;
+				var n = u_.Numerator.Value;
+				var d = u_.Denominator.Value;
 
 				if (Rem(n, d) == 0) return new Integer(Div(n, d));
 
@@ -65,7 +65,7 @@ namespace Symbolism
 
 			var fraction = u as Fraction;
 			if (fraction != null)
-				return new Integer(Numerator(fraction.numerator).Value*Denominator(fraction.denominator).Value);
+				return new Integer(Numerator(fraction.Numerator).Value*Denominator(fraction.Denominator).Value);
 
 			throw new Exception();
 		}
@@ -82,7 +82,7 @@ namespace Symbolism
 
 			var fraction = u as Fraction;
 			if (fraction != null)
-				return new Integer(Denominator(fraction.numerator).Value*Numerator(fraction.denominator).Value);
+				return new Integer(Denominator(fraction.Numerator).Value*Numerator(fraction.Denominator).Value);
 
 			throw new Exception();
 		}

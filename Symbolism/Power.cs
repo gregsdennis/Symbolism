@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Linq;
 
 namespace Symbolism
 {
-	[DebuggerDisplay("{StandardForm()}")]
-	public class Power : MathObject, IEquatable<Power>
+	internal class Power : MathObject, IEquatable<Power>
 	{
 		public MathObject Base { get; }
 		public MathObject Exponent { get; }
@@ -16,15 +15,7 @@ namespace Symbolism
 			Exponent = b;
 		}
 
-		public override string FullForm() =>
-			// ReSharper disable once UseStringInterpolation
-			// NOTE: Ignoring for readability.
-			string.Format("{0} ^ {1}",
-			              Base.Precedence < Precedence ? $"({Base})" : $"{Base}",
-			              Exponent.Precedence < Precedence ? $"({Exponent})" : $"{Exponent}");
-
-
-		public override string StandardForm()
+		public override string ToString()
 		{
 			// x ^ 1/2   ->   sqrt(x)
 
@@ -50,16 +41,19 @@ namespace Symbolism
 			return Base == obj.Base && Exponent == obj.Exponent;
 		}
 
-		public MathObject Simplify()
+		public override MathObject Simplify()
 		{
-			DoubleFloat bd = Base as DoubleFloat, ed = Exponent as DoubleFloat;
-			Integer bi = Base as Integer, ei = Exponent as Integer;
-			Fraction bf = Base as Fraction, ef = Exponent as Fraction;
+			var simpleBase = Base.Simplify();
+			var simpleExp = Exponent.Simplify();
 
-			if (Base == 0) return 0;
-			if (Base == 1) return 1;
-			if (Exponent == 0) return 1;
-			if (Exponent == 1) return Base;
+			DoubleFloat bd = simpleBase as DoubleFloat, ed = simpleExp as DoubleFloat;
+			Integer bi = simpleBase as Integer, ei = simpleExp as Integer;
+			Fraction bf = simpleBase as Fraction, ef = simpleExp as Fraction;
+
+			if (simpleBase == 0) return 0;
+			if (simpleBase == 1) return 1;
+			if (simpleExp == 0) return 1;
+			if (simpleExp == 1) return simpleBase;
 
 			// Logic from MPL/Scheme:
 			//
@@ -77,7 +71,7 @@ namespace Symbolism
 			//            (int)Math.Pow(((Integer)v).val, ((Integer)w).val));
 
 			if ((bi != null || bf != null) && ei != null)
-				return Rational.SimplifyRNE(new Power(Base, Exponent));
+				return Rational.SimplifyRNE(new Power(simpleBase, simpleExp));
 
 			if (bd != null && ei != null)
 				return new DoubleFloat(Math.Pow(bd.Value, ei.Value));
@@ -91,40 +85,30 @@ namespace Symbolism
 			if (bf != null && ed != null)
 				return new DoubleFloat(Math.Pow(bf.ToDouble().Value, ed.Value));
 
-			var bpow = Base as Power;
+			var bpow = simpleBase as Power;
 			if (bpow != null && ei != null)
-				return bpow.Base ^ (bpow.Exponent*Exponent);
+				return (bpow.Base ^ (bpow.Exponent*simpleExp).Simplify()).Simplify();
 
-			var bprod = Base as Product;
+			var bprod = simpleBase as Product;
 			if (bprod != null && ei != null)
 			{
 				var list = new List<MathObject>();
 
 				foreach (var elt in bprod.Elements)
-					list.Add(elt ^ Exponent);
+					list.Add(elt ^ simpleExp);
 
 				return new Product(list).Simplify();
 			}
 
-			return new Power(Base, Exponent);
+			return new Power(Base, simpleExp);
 		}
 
-		public override MathObject Numerator()
+		internal override MathObject Expand()
 		{
-			if (Exponent is Integer && Exponent < 0) return 1;
-
-			if (Exponent is Fraction && Exponent < 0) return 1;
+			var bPower = Base.Expand() as Product;
+			if (bPower != null) return new Product(bPower.Elements.Select(elt => elt ^ Exponent));
 
 			return this;
-		}
-
-		public override MathObject Denominator()
-		{
-			if (Exponent is Integer && Exponent < 0) return this ^ -1;
-
-			if (Exponent is Fraction && Exponent < 0) return this ^ -1;
-
-			return 1;
 		}
 
 		public override int GetHashCode() => new {Bas = Base, Exp = Exponent}.GetHashCode();

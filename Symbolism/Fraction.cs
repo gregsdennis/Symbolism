@@ -1,33 +1,33 @@
-using System.Diagnostics;
+using System;
 
 namespace Symbolism
 {
-	[DebuggerDisplay("{StandardForm()}")]
-	public class Fraction : Number
+	public class Fraction : Number, IEquatable<Fraction>
 	{
-		// TODO: encapsulate these (conflict with MathObject.Numerator() and MathObject.Denominator())
-		public readonly Integer numerator;
-		public readonly Integer denominator;
+		public Integer Numerator { get; }
+		public Integer Denominator { get; }
 
 		public Fraction(Integer a, Integer b)
 		{
-			numerator = a; denominator = b;
+			Numerator = a;
+			Denominator = b;
 		}
 
-		public override string FullForm() => numerator + "/" + denominator;
+		public override string ToString() => Numerator + "/" + Denominator;
 
-		public override DoubleFloat ToDouble() => new DoubleFloat((double)numerator.Value / denominator.Value);
-		//////////////////////////////////////////////////////////////////////
+		public override DoubleFloat ToDouble() => new DoubleFloat((double)Numerator.Value / Denominator.Value);
 		
-		public override bool Equals(object obj) =>
-			numerator == (obj as Fraction)?.numerator
-			&&
-			denominator == (obj as Fraction)?.denominator;            
-		
-		public override int GetHashCode() => new { numerator, denominator }.GetHashCode();
-		
-		public override MathObject Numerator() => numerator;
+		public override bool Equals(object obj) => Equals(obj as Fraction);
 
-		public override MathObject Denominator() => denominator;
+		public bool Equals(Fraction obj)
+		{
+			if (ReferenceEquals(null, obj)) return false;
+			if (ReferenceEquals(this, obj)) return true;
+
+			// TODO: this doesn't consider equivalent fractions (1/2 vs 2/4)
+			return Numerator == obj.Numerator && Denominator == obj.Denominator;
+		}
+
+		public override int GetHashCode() => new { Numerator, Denominator }.GetHashCode();
 	}
 }

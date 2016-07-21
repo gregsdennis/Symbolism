@@ -1,9 +1,7 @@
 using System;
-using System.Diagnostics;
 
 namespace Symbolism
 {
-	[DebuggerDisplay("{StandardForm()}")]
 	public class Tan : Function
 	{
 		private static MathObject TanProc(params MathObject[] ls)
@@ -18,6 +16,6 @@ namespace Symbolism
 		public Tan(MathObject param)
 			: base("tan", TanProc, param) {}
 
-		public override MathObject Map(Func<MathObject, MathObject> map) => new Tan(map(Parameters[0])).Simplify();
+		public override MathObject Map(Func<MathObject, MathObject> map) => new Tan(map(Parameters[0]));
 	}
 }

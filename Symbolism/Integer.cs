@@ -10,7 +10,7 @@ namespace Symbolism
 
 		public Integer(int n) { Value = n; }
 		
-		public override string FullForm() => Value.ToString();
+		public override string ToString() => Value.ToString();
 
 		public override bool Equals(object obj) => Equals(obj as Integer);
 

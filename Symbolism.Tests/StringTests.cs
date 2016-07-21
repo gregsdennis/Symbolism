@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using static Symbolism.Functions;
 using static Symbolism.Tests.Symbols;
@@ -8,283 +9,250 @@ namespace Symbolism.Tests
 	[TestClass]
 	public class StringTests
 	{
-		private void AssertToString(MathObject obj, string str) => Assert.AreEqual(str, obj.ToString());
+		private void Run(MathObject obj, string normal, string simplified)
+		{
+			Assert.AreEqual(normal, obj.ToString());
+			Assert.AreEqual(simplified, obj.Simplify().ToString());
+			Console.Write($"{normal} => {simplified}");
+		}
 
 		[TestMethod]
-		[Ignore] // this should work when the extraneous .Simplify() calls are removed.
-		public void Full_Numbers()
+		public void Numbers()
 		{
-			MathObject.ToStringForm = ToStringForms.Full;
-			AssertToString(new Integer(4) + 5, "4 + 5");
+			Run(new Integer(4) + 5, "4 + 5", "9");
 		}
 		[TestMethod]
-		public void Full_Add3()
+		public void Add3()
 		{
-			MathObject.ToStringForm = ToStringForms.Full;
-			AssertToString(x + y + z, "x + y + z");
+			Run(x + y + z, "x + y + z", "x + y + z");
 		}
 		[TestMethod]
-		public void Full_AddAndMultiply()
+		public void AddAndMultiply()
 		{
-			MathObject.ToStringForm = ToStringForms.Full;
-			AssertToString(x + y * z, "x + y * z");
+			Run(x + y*z, "x + y * z", "x + y * z");
 		}
 		[TestMethod]
-		public void Full_AddThenMultiply()
+		public void AddThenMultiply()
 		{
-			MathObject.ToStringForm = ToStringForms.Full;
-			AssertToString((x + y) * z, "(x + y) * z");
+			Run((x + y)*z, "(x + y) * z", "(x + y) * z");
 		}
 		[TestMethod]
-		public void Full_MultiplyFunctions()
+		public void MultiplyFunctions()
 		{
-			MathObject.ToStringForm = ToStringForms.Full;
-			AssertToString(sin(x)*cos(y), "cos(y) * sin(x)");
+			Run(sin(x)*cos(y), "sin(x) * cos(y)", "cos(y) * sin(x)");
 		}
 		[TestMethod]
-		public void Full_MultiParameterFunction()
+		public void MultiParameterFunction()
 		{
-			MathObject.ToStringForm = ToStringForms.Full;
-			AssertToString(and(x, y, z), "and(x, y, z)");
+			Run(and(x, y, z), "and(x, y, z)", "and(x, y, z)");
 		}
 		[TestMethod]
-		public void Full_Exponent()
+		public void Exponent()
 		{
-			MathObject.ToStringForm = ToStringForms.Full;
-			AssertToString(x ^ y, "x ^ y");
+			Run(x ^ y, "x ^ y", "x ^ y");
 		}
 		[TestMethod]
-		public void Full_Precedence()
+		public void Precedence()
 		{
-			MathObject.ToStringForm = ToStringForms.Full;
-			AssertToString((x * y) ^ (x + z), "(x * y) ^ (x + z)");
+			Run((x*y) ^ (x + z), "(x * y) ^ (x + z)", "(x * y) ^ (x + z)");
 		}
 		[TestMethod]
-		public void Full_ExpandSubstraction()
+		public void ExpandSubtraction()
 		{
-			MathObject.ToStringForm = ToStringForms.Full;
-			AssertToString(x - y , "x + -1 * y");
+			Run(x - y, "x + -1 * y", "x + -1 * y");
 		}
 		[TestMethod]
-		public void Full_ExpandAllSubstraction()
+		public void ExpandAllSubtraction()
 		{
-			MathObject.ToStringForm = ToStringForms.Full;
-			AssertToString(x - y - z , "x + -1 * y + -1 * z");
+			Run(x - y - z, "x - y - z", "x - y - z");
 		}
 		[TestMethod]
-		public void Full_ExpandDivision()
+		public void ExpandDivision()
 		{
-			MathObject.ToStringForm = ToStringForms.Full;
-			AssertToString(x / y , "x * y ^ -1");
+			Run(x/y, "x * y ^ -1", "x * y ^ -1");
 		}
 		[TestMethod]
-		public void Full_ExpandSubstraction2()
+		public void ExpandSubtraction2()
 		{
-			MathObject.ToStringForm = ToStringForms.Full;
-			AssertToString(x - (y - z), "x + -1 * (y + -1 * z)");
+			Run(x - (y - z), "x + -1 * (y + -1 * z)", "x + -1 * (y + -1 * z)");
 		}
 		[TestMethod]
-		public void Standard_Add2()
+		public void Add2()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(x + y, "x + y");
+			Run(x + y, "x + y", "x + y");
 		}
 		[TestMethod]
-		public void Standard_Subtract2()
+		public void Subtract2()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(x - y, "x - y");
+			Run(x - y, "x - y", "x - y");
 		}
 		[TestMethod]
-		public void Standard_Subtract3()
+		public void Subtract3()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(x - y - z, "x - y - z");
+			Run(x - y - z, "x - y - z", "x - y - z");
 		}
 		[TestMethod]
-		public void Standard_Subtract3_Again()
+		public void Subtract3_Again()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(-x - y - z, "-x - y - z");
+			Run(-x - y - z, "-x - y - z", "-x - y - z");
 		}
 		[TestMethod]
-		public void Standard_MultipleTerms()
+		public void MultipleTerms()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(2 * x - 3 * y - 4 * z, "2 * x - 3 * y - 4 * z");
+			Run(2*x - 3*y - 4*z, "2 * x - 3 * y - 4 * z", "2 * x + -1 * 3 * y + -1 * 4 * z");
 		}
 		[TestMethod]
-		public void Standard_MaintainGrouping()
+		public void MaintainGrouping()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(x - (y - z), "x - (y - z)");
+			Run(x - (y - z), "x - (y - z)", "x - (y - z)");
 		}
 		[TestMethod]
-		public void Standard_AddAndSubtract()
+		public void AddAndSubtract()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(x - y + z, "x - y + z");
+			Run(x - y + z, "x - y + z", "x - y + z");
 		}
 		[TestMethod]
-		public void Standard_Negative()
+		public void Negative()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(-x, "-x");
+			Run(-x, "-x", "-x");
 		}
 		[TestMethod]
-		public void Standard_Division()
+		public void Division()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(x / y, "x / y");
+			Run(x/y, "x / y", "x / y");
 		}
 		[TestMethod]
-		public void Standard_Division_Complex()
+		public void Division_Complex()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(x / (y + z), "x / (y + z)");
+			Run(x/(y + z), "x / (y + z)", "x / (y + z)");
 		}
 		[TestMethod]
-		public void Standard_Division_MoreComplex()
+		public void Division_MoreComplex()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString((x + y) / (x + z), "(x + y) / (x + z)");
+			Run((x + y)/(x + z), "(x + y) / (x + z)", "(x + y) / (x + z)");
 		}
 		[TestMethod]
-		public void Standard_MultiplyWithNegative()
+		public void MultiplyWithNegative()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(-x * y, "-x * y");
+			Run(-x*y, "-x * y", "-x * y");
 		}
 		[TestMethod]
-		public void Standard_MultiplyByNegativeTransfersNegative()
+		public void MultiplyByNegative()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(x * -y, "-x * y");
+			Run(x*-y, "x * -y", "-x * y");
 		}
 		[TestMethod]
-		public void Standard_FunctionWithDivision()
+		public void FunctionWithDivision()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(sin(x / y), "sin(x / y)");
+			Run(sin(x/y), "sin(x / y)", "sin(x / y)");
 		}
 		[TestMethod]
-		public void Standard_VeryComplex()
+		public void VeryComplex()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(x == -sqrt(2*y*(-z*a + y*(b ^ 2)/2 - c*y*d + c*y*z*sin(x)))/y,
-			               "x == -sqrt(2 * y * ((b ^ 2) * y / 2 - c * d * y - a * z + c * sin(x) * y * z)) / y");
+			Run(x == -sqrt(2*y*(-z*a + y*(b ^ 2)/2 - c*y*d + c*y*z*sin(x)))/y,
+			               "x == -sqrt(2 * y * (-z * a + y * b ^ 2 / 2 - c * y * d + c * y * z * sin(x))) / y",
+			                       "x == -sqrt(2 * y * (b ^ 2 * y / 2 - c * d * y - a * z + c * sin(x) * y * z)) / y");
 		}
 		[TestMethod]
-		public void Standard_MultiplyByPower()
+		public void MultiplyByPower()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(x * (y ^ z), "x * (y ^ z)");
+			Run(x*(y ^ z), "x * y ^ z", "x * y ^ z");
 		}
 		[TestMethod]
-		public void Standard_AddByPower()
+		public void AddByPower()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(x + (y ^ z), "x + (y ^ z)");
+			Run(x + (y ^ z), "x + y ^ z", "x + y ^ z");
 		}
 		[TestMethod]
-		public void Standard_Function()
+		public void Function()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(sqrt(x), "sqrt(x)");
+			Run(sqrt(x), "sqrt(x)", "sqrt(x)");
 		}
 		[TestMethod]
-		public void Standard_SqrtFullForm()
+		public void Sqrt()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			Assert.AreEqual("x ^ 1/2", sqrt(x).FullForm());
+			Run(sqrt(x), "x ^ 1/2", "x ^ 1/2");
 		}
 		[TestMethod]
-		public void Standard_PowerOfFraction()
+		public void PowerOfFraction()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(x ^ (new Integer(1)/3), "x ^ 1/3");
+			Run(x ^ (new Integer(1)/3), "x ^ 1/3", "x ^ 1/3");
 		}
 		[TestMethod]
-		[Ignore] // should And automatically simplify?
-		public void Standard_NestedAnd()
+		public void NestedAnd()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(and(and(x, y), and(x, z)), "and(and(x, y), and(x, z))");
+			Run(and(and(x, y), and(x, z)), "and(and(x, y), and(x, z))", "and(x, y, z)");
 		}
 		[TestMethod]
-		public void Standard_VeryComplex2()
+		public void VeryComplex2()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(x == sqrt(2 * (y * z - cos(a) * y * z)), "x == sqrt(2 * (y * z - cos(a) * y * z))");
+			Run(x == sqrt(2*(y*z - cos(a)*y*z)), "x == sqrt(2 * (y * z - cos(a) * y * z))", "x == sqrt(2 * (y * z - cos(a) * y * z))");
 		}
 		[TestMethod]
-		public void Standard_VeryComplex3()
+		public void VeryComplex3()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(a == (-c * cos(d) - b * c * sin(d) + x * y + b * x * z) / (-y - z),
-			               "a == (-c * cos(d) - b * c * sin(d) + x * y + b * x * z) / (-y - z)");
+			Run(a == (-c*cos(d) - b*c*sin(d) + x*y + b*x*z)/(-y - z),
+			               "a == (-c * cos(d) - b * c * sin(d) + x * y + b * x * z) / (-y - z)",
+			                       "a == (-c * cos(d) - b * c * sin(d) + x * y + b * x * z) / (-y - z)");
 		}
 		[TestMethod]
-		public void Standard_VeryComplex4()
+		public void VeryComplex4()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(x == -(sin(y) / cos(y) + sqrt((sin(y) ^ 2) / (cos(y) ^ 2))) * (z ^ 2) / a,
-			               "x == -(sin(y) / cos(y) + sqrt((sin(y) ^ 2) / (cos(y) ^ 2))) * (z ^ 2) / a");
+			Run(x == -(sin(y)/cos(y) + sqrt((sin(y) ^ 2)/(cos(y) ^ 2)))*(z ^ 2)/a,
+			               "x == -(sin(y) / cos(y) + sqrt((sin(y) ^ 2) / (cos(y) ^ 2))) * (z ^ 2) / a",
+			                       "x == -(sin(y) / cos(y) + sqrt((sin(y) ^ 2) / (cos(y) ^ 2))) * (z ^ 2) / a");
 		}
 		[TestMethod]
-		public void Standard_MultiplyByFunction()
+		public void MultiplyByFunction()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(x * sqrt(y), "x * sqrt(y)");
+			Run(x*sqrt(y), "x * sqrt(y)", "x * sqrt(y)");
 		}
 		[TestMethod]
-		public void Standard_DivideByFunction()
+		public void DivideByFunction()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(x / sqrt(y), "x / sqrt(y)");
+			Run(x/sqrt(y), "x / sqrt(y)", "x / sqrt(y)");
 		}
 		[TestMethod]
-		public void Standard_FunctionDivideByX()
+		public void FunctionDivideByX()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(sqrt(y) / x, "sqrt(y) / x");
+			Run(sqrt(y)/x, "sqrt(y) / x", "sqrt(y) / x");
 		}
 		[TestMethod]
-		public void Standard_ExpressionRatio()
+		public void ExpressionRatio()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString((x ^ 2) / (y ^ 3), "(x ^ 2) / (y ^ 3)");
+			Run((x ^ 2)/(y ^ 3), "(x ^ 2) / (y ^ 3)", "(x ^ 2) / (y ^ 3)");
 		}
 		[TestMethod]
-		public void Standard_VeryComplex5()
+		public void VeryComplex5()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(x == y*sqrt(-8*a/(y*(z ^ 2)))*(z ^ 2)/(4*a),
-			               "x == y * sqrt(-8 * a / (y * (z ^ 2))) * (z ^ 2) / (4 * a)");
+			Run(x == y*sqrt(-8*a/(y*(z ^ 2)))*(z ^ 2)/(4*a),
+			               "x == y * sqrt(-8 * a / (y * (z ^ 2))) * (z ^ 2) / (4 * a)",
+			                       "x == y * sqrt(-8 * a / (y * (z ^ 2))) * (z ^ 2) / (4 * a)");
 		}
 		[TestMethod]
-		public void Standard_NegativeExpression()
+		public void NegativeExpression()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(-(-1 + x), "-(-1 + x)");
+			Run(-(-1 + x), "-(-1 + x)", "1 + x");
 		}
 		[TestMethod]
-		public void Standard_Equation()
+		public void Equation()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(x == y, "x == y");
+			Run(x == y, "x == y", "x == y");
 		}
 		[TestMethod]
-		public void Standard_Inequality()
+		public void Inequality()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(x != y, "x != y");
+			Run(x != y, "x != y", "x != y");
 		}
 		[TestMethod]
-		public void Standard_EmptyFunction()
+		public void EmptyFunction()
 		{
-			MathObject.ToStringForm = ToStringForms.Standard;
-			AssertToString(new And(), "and()");
+			Run(new And(), "and()", "True");
+		}
+		[TestMethod]
+		public void CombineTerms()
+		{
+			Run(x + x, "x + x", "2 * x");
 		}
 	}
 }

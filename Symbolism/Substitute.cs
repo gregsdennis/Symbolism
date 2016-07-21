@@ -16,13 +16,13 @@ namespace Symbolism
 				switch (equation.Operator)
 				{
 					case Equation.Operators.Equal:
-						return (equation.a.Substitute(a, b) == equation.b.Substitute(a, b)).Simplify();
+						return (equation.a.Substitute(a, b) == equation.b.Substitute(a, b));
 					case Equation.Operators.NotEqual:
-						return (equation.a.Substitute(a, b) != equation.b.Substitute(a, b)).Simplify();
+						return (equation.a.Substitute(a, b) != equation.b.Substitute(a, b));
 					case Equation.Operators.LessThan:
-						return (equation.a.Substitute(a, b) < equation.b.Substitute(a, b)).Simplify();
+						return (equation.a.Substitute(a, b) < equation.b.Substitute(a, b));
 					case Equation.Operators.GreaterThan:
-						return (equation.a.Substitute(a, b) > equation.b.Substitute(a, b)).Simplify();
+						return (equation.a.Substitute(a, b) > equation.b.Substitute(a, b));
 					default:
 						throw new ArgumentOutOfRangeException(nameof(equation.Operator));
 				}
@@ -33,11 +33,11 @@ namespace Symbolism
 
 			var product = obj as Product;
 			if (product != null)
-				return new Product(product.Elements.Select(elt => elt.Substitute(a, b))).Simplify();
+				return new Product(product.Elements.Select(elt => elt.Substitute(a, b)));
 
 			var sum = obj as Sum;
 			if (sum != null)
-				return new Sum(sum.Elements.Select(elt => elt.Substitute(a, b))).Simplify();
+				return new Sum(sum.Elements.Select(elt => elt.Substitute(a, b)));
 
 			var function = obj as Function;
 			if (function != null)

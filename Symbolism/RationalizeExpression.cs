@@ -31,7 +31,7 @@ namespace Symbolism
 			var product = u as Product;
 			if (product != null)
 				return
-					new Product(product.Elements.Select(elt => elt.RationalizeExpression())).Simplify();
+					new Product(product.Elements.Select(elt => elt.RationalizeExpression()));
 
 			var sum = u as Sum;
 			if (sum != null)

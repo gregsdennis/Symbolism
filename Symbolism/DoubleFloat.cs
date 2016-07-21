@@ -12,7 +12,7 @@ namespace Symbolism
 
 		public DoubleFloat(double n) { Value = n; }
 
-		public override string FullForm() => Value.ToString("R");
+		public override string ToString() => Value.ToString("R");
 
 		//public bool EqualWithinTolerance(DoubleFloat obj)
 		//{

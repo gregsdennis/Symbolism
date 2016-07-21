@@ -1,10 +1,8 @@
 using System;
-using System.Diagnostics;
 
 namespace Symbolism
 {
 	// TODO: Add Acos
-	[DebuggerDisplay("{StandardForm()}")]
 	public class Asin : Function
 	{
 		private static MathObject AsinProc(params MathObject[] ls)
@@ -19,6 +17,6 @@ namespace Symbolism
 		public Asin(MathObject param)
 			: base("asin", AsinProc, param) {}
 
-		public override MathObject Map(Func<MathObject, MathObject> map) => new Asin(map(Parameters[0])).Simplify();
+		public override MathObject Map(Func<MathObject, MathObject> map) => new Asin(map(Parameters[0]));
 	}
 }

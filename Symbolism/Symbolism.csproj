@@ -56,11 +56,14 @@
     <Compile Include="Equation.cs" />
     <Compile Include="Fraction.cs" />
     <Compile Include="Function.cs" />
+    <Compile Include="IAdditiveOperation.cs" />
+    <Compile Include="IMultiplicativeOperation.cs" />
     <Compile Include="Integer.cs" />
     <Compile Include="ListUtils.cs" />
     <Compile Include="MathObject.cs" />
     <Compile Include="Number.cs" />
     <Compile Include="Or.cs" />
+    <Compile Include="Sqrt.cs" />
     <Compile Include="TermSequencer.cs" />
     <Compile Include="Power.cs" />
     <Compile Include="Product.cs" />
@@ -69,7 +72,6 @@
     <Compile Include="RationalizeExpression.cs" />
     <Compile Include="Sum.cs" />
     <Compile Include="Symbol.cs" />
-    <Compile Include="ToStringForms.cs" />
     <Compile Include="Asin.cs" />
     <Compile Include="Atan.cs" />
     <Compile Include="Atan2.cs" />

@@ -10,6 +10,8 @@ namespace Symbolism
 		}
 		private Undefined() {}
 
+		internal override MathObject Expand() => this;
+		
 		public override string ToString()
 		{
 			return "undef";

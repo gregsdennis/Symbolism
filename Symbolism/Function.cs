@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace Symbolism
 {
-	[DebuggerDisplay("{StandardForm()}")]
 	public class Function : MathObject, IEquatable<Function>
 	{
 		public string Name { get; }
@@ -37,20 +35,28 @@ namespace Symbolism
 				   Parameters.SequenceEqual(obj.Parameters);
 		}
 
-		public MathObject Simplify() => Procedure == null ? this : Procedure(Parameters.ToArray());
-		
-		public override string FullForm() => $"{Name}({string.Join(", ", Parameters)})";
-		
-		public MathObject Clone() => MemberwiseClone() as MathObject;
+		public override MathObject Simplify() => Procedure == null ? this : Procedure(Parameters.Select(p => p.Simplify()).ToArray());
+
+		// TODO: the expand/simply split needs to happen with Procedure
+		internal override MathObject Expand() => this;
+
+		public override string ToString() => $"{Name}({string.Join(", ", Parameters)})";
+
 		public virtual MathObject Map(Func<MathObject, MathObject> map)
 		{
 			// This is a minor hack since it can only be caught at run-time,
 			// but it allows Parameters to be read only.
 			if (GetType() != typeof(Function))
 				throw new NotImplementedException($"Function.Map() must be overridden to return type {GetType()}");
-			return new Function(Name, Procedure, Parameters.Select(map)).Simplify();
+			return new Function(Name, Procedure, Parameters.Select(map));
 		}
 
-		public override int GetHashCode() => new { Name, Arguments = Parameters }.GetHashCode();
+		public override int GetHashCode()
+		{
+			unchecked
+			{
+				return Parameters.GetCollectionHashCode() * 397 + Name.GetHashCode();
+			}
+		}
 	}
 }

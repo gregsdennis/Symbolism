@@ -1,9 +1,7 @@
 using System;
-using System.Diagnostics;
 
 namespace Symbolism
 {
-	[DebuggerDisplay("{StandardForm()}")]
 	public class Equation : MathObject, IEquatable<Equation>
 	{
 		public enum Operators
@@ -25,13 +23,13 @@ namespace Symbolism
 			b = y;
 			Operator = op;
 		}
-		
-		public override string FullForm()
+
+		public override string ToString()
 		{
-			if (Operator == Operators.Equal) return a + " == " + b;
-			if (Operator == Operators.NotEqual) return a + " != " + b;
-			if (Operator == Operators.LessThan) return a + " < " + b;
-			if (Operator == Operators.GreaterThan) return a + " > " + b;
+			if (Operator == Operators.Equal) return $"{a} == {b}";
+			if (Operator == Operators.NotEqual) return $"{a} != {b}";
+			if (Operator == Operators.LessThan) return $"{a} < {b}";
+			if (Operator == Operators.GreaterThan) return $"{a} > {b}";
 			throw new Exception();
 		}
 
@@ -50,31 +48,22 @@ namespace Symbolism
 		private bool ToBoolean()
 		{
 			// ReSharper disable CanBeReplacedWithTryCastAndCheckForNull
-			if (a is Bool && b is Bool) return ((Bool) a).Equals(b);
-
-			if (a is Equation && b is Equation) return ((Equation) a).Equals(b);
-
-			if (a is Integer && b is Integer) return ((Integer)a).Equals(b);
-			if (a is DoubleFloat && b is DoubleFloat) return ((DoubleFloat)a).Equals(b);
-			if (a is Symbol && b is Symbol) return ((Symbol)a).Equals(b);
-			if (a is Sum && b is Sum) return ((Sum)a).Equals(b);
-			if (a is Product && b is Product) return ((Product)a).Equals(b);
-			if (a is Fraction && b is Fraction) return ((Fraction)a).Equals(b);
-			if (a is Power && b is Power) return ((Power)a).Equals(b);
-			if (a is Function && b is Function) return ((Function)a).Equals(b);
+			//if (a is Bool && b is Bool) return ((Bool) a).Equals(b);
+			//if (a is Equation && b is Equation) return ((Equation) a).Equals(b);
+			//if (a is Integer && b is Integer) return ((Integer)a).Equals(b);
+			//if (a is DoubleFloat && b is DoubleFloat) return ((DoubleFloat)a).Equals(b);
+			//if (a is Symbol && b is Symbol) return ((Symbol)a).Equals(b);
+			//if (a is Sum && b is Sum) return ((Sum)a).Equals(b);
+			//if (a is Product && b is Product) return ((Product)a).Equals(b);
+			//if (a is Fraction && b is Fraction) return ((Fraction)a).Equals(b);
+			//if (a is Power && b is Power) return ((Power)a).Equals(b);
+			//if (a is Function && b is Function) return ((Function)a).Equals(b);
 			// ReSharper restore CanBeReplacedWithTryCastAndCheckForNull
 
-			if (((object)a == null) && ((object)b == null)) return true;
+			if (ReferenceEquals(null, a) && ReferenceEquals(null, b)) return true;
+			if (ReferenceEquals(null, a) || ReferenceEquals(null, b)) return false;
 
-			if ((object)a == null) return false;
-
-			if ((object)b == null) return false;
-
-			if (a.GetType() != b.GetType()) return false;
-
-			Console.WriteLine("" + a.GetType() + " " + b.GetType());
-
-			throw new Exception();
+			return Equals(a.Simplify(), b.Simplify());
 		}
 		
 		public static implicit operator bool(Equation eq)
@@ -103,13 +92,12 @@ namespace Symbolism
 
 			throw new Exception();
 		}
-		
-		public MathObject Simplify()
-		{
-			if (a is Number && b is Number) return (bool)this;
 
-			return this;
+		public override MathObject Simplify()
+		{
+			return new Equation(a.Simplify(), b.Simplify(), Operator);
 		}
+		internal override MathObject Expand() => new Equation(a.Expand(), b.Expand(), Operator);
 
 		public override int GetHashCode() => new { a, b }.GetHashCode();
 		

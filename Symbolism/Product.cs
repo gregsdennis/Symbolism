@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
+
+using static Symbolism.Constants;
 
 namespace Symbolism
 {
-	[DebuggerDisplay("{StandardForm()}")]
-	public class Product : MathObject, IEquatable<Product>
+	internal class Product : MathObject, IEquatable<Product>, IMultiplicativeOperation
 	{
 		public IReadOnlyList<MathObject> Elements { get; }
 
@@ -14,41 +14,16 @@ namespace Symbolism
 			: this((IEnumerable<MathObject>) ls) {}
 		public Product(IEnumerable<MathObject> ls)
 		{
-			Elements = ls.ToList();
+			Elements = GetAllElements(ls).ToList();
 		}
 
-		public override string FullForm() =>
-			string.Join(" * ", Elements.Select(elt => elt.Precedence < Precedence ? $"({elt})" : $"{elt}"));
-
-		public override string StandardForm()
+		public override int GetHashCode()
 		{
-			var expr_b = Denominator();
-
-			if (expr_b == 1)
+			unchecked
 			{
-				var coefficient = this.Coefficient();
-				if (coefficient < 0 && this/coefficient is Sum) return $"-({this*-1})";
-
-				if (coefficient < 0) return $"-{this*-1}";
-
-				return string.Join(" * ",
-				                   // ReSharper disable once TryCastAlwaysSucceeds
-				                   // NOTE: elt is less likely to be a power, so we allow the precedence to try to handle it without casting first
-				                   Elements.Select(elt => elt.Precedence < Precedence || (elt is Power && (elt as Power).Exponent != new Integer(1)/2)
-					                                          ? $"({elt})"
-					                                          : $"{elt}"));
+				return Elements.GetCollectionHashCode()*397 + typeof(Product).GetHashCode();
 			}
-
-			var expr_a = Numerator();
-
-			var expr_a_ = expr_a is Sum || (expr_a is Power && (expr_a as Power).Exponent != new Integer(1)/2) ? $"({expr_a})" : $"{expr_a}";
-
-			var expr_b_ = expr_b is Sum || expr_b is Product || (expr_b is Power && (expr_b as Power).Exponent != new Integer(1)/2) ? $"({expr_b})" : $"{expr_b}";
-
-			return $"{expr_a_} / {expr_b_}";
 		}
-
-		public override int GetHashCode() => Elements.GetHashCode();
 
 		public override bool Equals(object obj) => Equals(obj as Product);
 
@@ -57,153 +32,146 @@ namespace Symbolism
 			if (ReferenceEquals(null, obj)) return false;
 			if (ReferenceEquals(this, obj)) return true;
 
-			// TODO: does this need to require sequence equality or just set equality?
-			return Elements.SequenceEqual(obj.Elements);
+			return Elements.SetEqual(obj.Elements);
 		}
 
-		private static IReadOnlyList<MathObject> MergeProducts(IReadOnlyList<MathObject> pElts, IReadOnlyList<MathObject> qElts)
+		// guaranteed:  all numbers are definable.  i.e. no fractions with 0 denominator
+		private static Number CombineTwoNumbers(Number p, Number q)
 		{
-			if (pElts.Count == 0) return qElts;
-			if (qElts.Count == 0) return pElts;
+			if (p == 1) return q;
+			if (q == 1) return p;
 
-			var p = pElts[0];
-			var ps = pElts.Skip(1).ToList();
+			DoubleFloat dp = p as DoubleFloat, dq = q as DoubleFloat;
 
-			var q = qElts[0];
-			var qs = qElts.Skip(1).ToList();
+			if (dp != null || dq != null)
+				return new DoubleFloat(p.ToDouble().Value * q.ToDouble().Value);
 
-			var res = RecursiveSimplify(new List<MathObject> {p, q});
-
-			if (res.Count == 0) return MergeProducts(ps, qs);
-
-			if (res.Count == 1) return MergeProducts(ps, qs).Cons(res[0]);
-
-			if (res.SequenceEqual(new [] {p, q})) return MergeProducts(ps, qElts).Cons(p);
-
-			if (res.SequenceEqual(new [] {q, p})) return MergeProducts(pElts, qs).Cons(q);
-
-			throw new Exception();
+			return Rational.SimplifyRNE(new Product(p, q)) as Number;
 		}
 
-		private static List<MathObject> SimplifyDoubleNumberProduct(DoubleFloat a, Number b)
+		private static MathObject CombineNumbers(IReadOnlyList<Number> numbers)
 		{
-			double val = 0.0;
+			if (numbers.OfType<Fraction>().Any(f => f.Denominator == 0)) return undef;
+			if (numbers.Any(n => n == 0)) return 0;
 
-			var d = b as DoubleFloat;
-			if (d != null) val = a.Value * d.Value;
-
-			var i = b as Integer;
-			if (i != null) val = a.Value * i.Value;
-
-			var f = b as Fraction;
-			if (f != null) val = a.Value * f.ToDouble().Value;
-
-			if (val == 1.0) return new List<MathObject>();
-
-			return new List<MathObject> {new DoubleFloat(val)};
+			return numbers.Aggregate<Number, Number>(new Integer(1), CombineTwoNumbers);
 		}
 
-		private static MathObject Base(MathObject u)
+		private static MathObject NegateIfNecessary(MathObject u, bool negate)
 		{
-			var power = u as Power;
-			return power != null ? power.Base : u;
+			return negate ? new Difference(u) : u;
 		}
 
-		private static MathObject Exponent(MathObject u)
+		public override MathObject Simplify()
 		{
-			var power = u as Power;
-			return power != null ? power.Exponent : 1;
-		}
+			if (Elements.Count == 1) return Elements[0].Simplify();
 
-		private static IReadOnlyList<MathObject> RecursiveSimplify(IReadOnlyList<MathObject> elts)
-		{
-			Product prod0 = elts[0] as Product, prod1 = elts[1] as Product;
-			DoubleFloat df0 = elts[0] as DoubleFloat, df1 = elts[1] as DoubleFloat;
-			Number n0 = elts[0] as Number, n1 = elts[1] as Number;
-			Integer i0 = elts[0] as Integer, i1 = elts[1] as Integer;
-			Fraction f0 = elts[0] as Fraction, f1 = elts[1] as Fraction;
+			var expanded = Expand();
+			var pExpanded = expanded as Product;
 
-			if (elts.Count == 2)
+			if (pExpanded == null) return expanded.Simplify();
+
+			if (pExpanded.Elements.Count == 1) return pExpanded.Elements[0].Simplify();
+
+			var numbers = pExpanded.Elements.OfType<Number>().ToList();
+			var negate = false;
+			if (numbers.Count != 0)
 			{
-				if (prod0 != null && prod1 != null)
-					return MergeProducts(prod0.Elements, prod1.Elements);
+				var constant = CombineNumbers(numbers);
+				if (constant == undef) return undef;
 
-				if (prod0 != null) return MergeProducts(prod0.Elements, new List<MathObject> { elts[1]});
+				// .Except() applies .Distinct(); we want duplicates, if any.
+				var rest = pExpanded.Elements.Where(elt => !(elt is Number)).ToList();
 
-				if (prod1 != null) return MergeProducts(new List<MathObject> {elts[0]}, prod1.Elements);
+				if (rest.Count == 0) return constant;
 
-				//////////////////////////////////////////////////////////////////////
-
-				if (df0 != null && n1 != null)
-					return SimplifyDoubleNumberProduct(df0, n1);
-
-				if (n0 != null && df1 != null)
-					return SimplifyDoubleNumberProduct(df1, n0);
-
-				//////////////////////////////////////////////////////////////////////
-
-				if ((i0 != null || f0 != null) &&
-					(i1 != null || f1 != null))
+				if (constant == 0) return 0;
+				if (constant != 1)
 				{
-					var P = Rational.SimplifyRNE(new Product(elts[0], elts[1]));
-
-					if (P == 1) return new List<MathObject>();
-
-					return new List<MathObject> {P};
+					if (constant == -1)
+						negate = true;
+					else
+						rest.Insert(0, constant);
 				}
 
-				if (elts[0] == 1) return new List<MathObject> {elts[1]};
-				if (elts[1] == 1) return new List<MathObject> {elts[0]};
-
-				var p = elts[0];
-				var q = elts[1];
-
-				if (Base(p) == Base(q))
-				{
-					var res = Base(p) ^ (Exponent(p) + Exponent(q));
-
-					if (res == 1) return new List<MathObject>();
-
-					return new List<MathObject> {res};
-				}
-
-				if (q.ComesBefore(p)) return new List<MathObject> {q, p};
-
-				return new List<MathObject> {p, q};
+				pExpanded = new Product(rest);
 			}
 
-			if (prod0 != null)
-				return MergeProducts(prod0.Elements,
-									 RecursiveSimplify(elts.Skip(1).ToList()));
+			var previous = pExpanded.Elements;
+			List<MathObject> combined;
+			do
+			{
+				combined = previous.GroupBy(elt => elt.Base())
+				                   .Select(g => (g.Key ^ new Sum(g.Select(elt => elt.Exponent())).Simplify()).Simplify())
+				                   .Where(elt => elt != 1 && elt.Exponent() != 0)
+				                   .ToList();
+				previous = GetAllElements(combined).ToList();
+			} while (!combined.SetEqual(previous));
 
-			return MergeProducts(new List<MathObject> {elts[0]},
-								 RecursiveSimplify(elts.Skip(1).ToList()));
+			var product = combined.Where(elt => elt.Exponent() > 0).ToList();
+			var quotient = combined.Except(product)
+			                       .Select(elt => (elt ^ -1).Simplify())
+			                       .ToList();
+
+			if (!product.Any() && !quotient.Any()) return 1;
+			if (!product.Any()) return NegateIfNecessary(new Quotient(quotient), negate);
+			if (!quotient.Any())
+			{
+				if (product.Count == 1) return NegateIfNecessary(product[0], negate);
+
+				return NegateIfNecessary(new Product(product), negate);
+			}
+
+			if (product.Count == 1)
+			{
+				quotient.Insert(0, product[0]);
+
+				return NegateIfNecessary(new Quotient(quotient), negate);
+			}
+
+			product.Add(new Quotient(quotient));
+
+			return NegateIfNecessary(new Product(product), negate);
 		}
 
-		public MathObject Simplify()
+		private static IEnumerable<MathObject> GetAllElements(IEnumerable<MathObject> elts, bool expand = false)
 		{
-			if (Elements.Count == 1) return Elements[0];
+			var elements = new List<MathObject>();
 
-			if (Elements.Any(elt => elt == 0)) return 0;
+			foreach (var elt in elts)
+			{
+				var product = (expand ? elt.Expand() : elt) as Product;
+				if (product != null)
+					elements.AddRange(GetAllElements(product.Elements.Select(e => e.Expand())));
+				else
+					elements.Add(elt);
+			}
 
-			var res = RecursiveSimplify(Elements);
+			return elements;
+		}
 
-			if (!res.Any()) return 1;
+		internal override MathObject Expand()
+		{
+			var res = GetAllElements(Elements, true).ToList();
 
+			if (res.Count == 0) return 0;
 			if (res.Count == 1) return res[0];
-
-			// Without the below, the following throws an exception:
-			// sqrt(a * b) * (sqrt(a * b) / a) / c
-
-			if (res.OfType<Product>().Any()) return new Product(res).Simplify();
 
 			return new Product(res);
 		}
 
-		public override MathObject Numerator() => 
-			new Product(Elements.Select(elt => elt.Numerator()).ToList()).Simplify();
+		public override string ToString()
+		{
+			var result = string.Join(" * ", Elements.Select(elt =>
+			{
+				var operation = elt as IAdditiveOperation;
+				return operation != null && operation.Elements.Count != 1 &&
+					   !(elt is Function)
+						   ? $"({elt})"
+						   : $"{elt}";
+			}));
 
-		public override MathObject Denominator() =>
-			new Product(Elements.Select(elt => elt.Denominator()).ToList()).Simplify();
+			return result;
+		}
 	}
 }

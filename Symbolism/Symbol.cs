@@ -8,7 +8,9 @@ namespace Symbolism
 
 		public Symbol(string str) { Name = str; }
 
-		public override string FullForm() => Name;
+		internal override MathObject Expand() => this;
+
+		public override string ToString() => Name;
 
 		public override int GetHashCode() => Name.GetHashCode();
 

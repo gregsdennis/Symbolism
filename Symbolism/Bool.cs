@@ -9,9 +9,11 @@ namespace Symbolism
 		public bool Value { get; }
 
 		public Bool(bool b) { Value = b; }
-        
-		public override string FullForm() => Value.ToString();
-        
+
+		internal override MathObject Expand() => this;
+
+		public override string ToString() => Value.ToString();
+		
 		public override bool Equals(object obj) => Equals(obj as Bool);
 
 		public bool Equals(Bool obj)
@@ -21,7 +23,7 @@ namespace Symbolism
 
 			return Value == obj.Value;
 		}
-        
+		
 		public override int GetHashCode() => Value.GetHashCode();
 	}
 }

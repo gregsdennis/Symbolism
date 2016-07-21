@@ -1,9 +1,7 @@
 using System;
-using System.Diagnostics;
 
 namespace Symbolism
 {
-	[DebuggerDisplay("{StandardForm()}")]
 	public class Atan2 : Function
 	{
 		private static MathObject Atan2Proc(params MathObject[] ls)
@@ -40,6 +38,6 @@ namespace Symbolism
 		public Atan2(MathObject a, MathObject b)
 			: base("atan2", Atan2Proc, a, b) {}
 
-		public override MathObject Map(Func<MathObject, MathObject> map) => new Atan2(map(Parameters[0]), map(Parameters[1])).Simplify();
+		public override MathObject Map(Func<MathObject, MathObject> map) => new Atan2(map(Parameters[0]), map(Parameters[1]));
 	}
 }
