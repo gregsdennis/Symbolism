@@ -40,26 +40,12 @@ namespace Symbolism
 			if (ReferenceEquals(null, obj)) return false;
 			if (ReferenceEquals(this, obj)) return true;
 
-			return a.Equals(obj.a) &&
-			       b.Equals(obj.b) &&
+			return a.Equals(obj.a) && b.Equals(obj.b) &&
 			       Operator == obj.Operator;
 		}
 
-		private bool ToBoolean()
+		private bool CheckComponentEquality()
 		{
-			// ReSharper disable CanBeReplacedWithTryCastAndCheckForNull
-			//if (a is Bool && b is Bool) return ((Bool) a).Equals(b);
-			//if (a is Equation && b is Equation) return ((Equation) a).Equals(b);
-			//if (a is Integer && b is Integer) return ((Integer)a).Equals(b);
-			//if (a is DoubleFloat && b is DoubleFloat) return ((DoubleFloat)a).Equals(b);
-			//if (a is Symbol && b is Symbol) return ((Symbol)a).Equals(b);
-			//if (a is Sum && b is Sum) return ((Sum)a).Equals(b);
-			//if (a is Product && b is Product) return ((Product)a).Equals(b);
-			//if (a is Fraction && b is Fraction) return ((Fraction)a).Equals(b);
-			//if (a is Power && b is Power) return ((Power)a).Equals(b);
-			//if (a is Function && b is Function) return ((Function)a).Equals(b);
-			// ReSharper restore CanBeReplacedWithTryCastAndCheckForNull
-
 			if (ReferenceEquals(null, a) && ReferenceEquals(null, b)) return true;
 			if (ReferenceEquals(null, a) || ReferenceEquals(null, b)) return false;
 
@@ -68,29 +54,29 @@ namespace Symbolism
 		
 		public static implicit operator bool(Equation eq)
 		{
-			if (eq.Operator == Operators.Equal)
-				return (eq.a == eq.b).ToBoolean();
+			Number nA, nB;
 
-			if (eq.Operator == Operators.NotEqual)
-				return !(eq.a == eq.b).ToBoolean();
-
-			if (eq.Operator == Operators.LessThan)
+			switch (eq.Operator)
 			{
-				var nA = eq.a as Number;
-				var nB = eq.b as Number;
-				if (nA != null && nB != null)
-					return nA.ToDouble().Value < nB.ToDouble().Value;
+				case Operators.Equal:
+					return (eq.a == eq.b).CheckComponentEquality();
+				case Operators.NotEqual:
+					return !(eq.a == eq.b).CheckComponentEquality();
+				case Operators.LessThan:
+					nA = eq.a as Number;
+					nB = eq.b as Number;
+					if (nA != null && nB != null)
+						return nA.ToDouble().Value < nB.ToDouble().Value;
+					throw new InvalidOperationException("Cannot perform comparisons of expressions that do not evaluate to numbers.");
+				case Operators.GreaterThan:
+					nA = eq.a as Number;
+					nB = eq.b as Number;
+					if (nA != null && nB != null)
+						return nA.ToDouble().Value > nB.ToDouble().Value;
+					throw new InvalidOperationException("Cannot perform comparisons of expressions that do not evaluate to numbers.");
+				default:
+					throw new ArgumentOutOfRangeException(nameof(Operator));
 			}
-
-			if (eq.Operator == Operators.GreaterThan)
-			{
-				var nA = eq.a as Number;
-				var nB = eq.b as Number;
-				if (nA != null && nB != null)
-					return nA.ToDouble().Value > nB.ToDouble().Value;
-			}
-
-			throw new Exception();
 		}
 
 		public override MathObject Simplify()
@@ -99,7 +85,6 @@ namespace Symbolism
 		}
 		internal override MathObject Expand() => new Equation(a.Expand(), b.Expand(), Operator);
 
-		public override int GetHashCode() => new { a, b }.GetHashCode();
-		
+		public override int GetHashCode() => new {a, b}.GetHashCode();
 	}
 }

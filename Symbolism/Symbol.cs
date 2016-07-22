@@ -2,7 +2,7 @@ using System;
 
 namespace Symbolism
 {
-	public class Symbol : MathObject, IEquatable<Symbol>
+	public class Symbol : MathObject, IEquatable<Symbol>, INamedMathObject
 	{
 		public string Name { get; }
 

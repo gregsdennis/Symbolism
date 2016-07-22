@@ -101,10 +101,12 @@ namespace Symbolism
 			List<MathObject> combined;
 			do
 			{
-				combined = previous.GroupBy(elt => elt.Base())
+				combined = previous.Select(elt => elt.Simplify())
+								   .GroupBy(elt => elt.Base())
 				                   .Select(g => (g.Key ^ new Sum(g.Select(elt => elt.Exponent())).Simplify()).Simplify())
 				                   .Where(elt => elt != 1 && elt.Exponent() != 0)
-				                   .ToList();
+								   .OrderBy(elt => elt.Term(), TermComparer.Instance)
+								   .ToList();
 				previous = GetAllElements(combined).ToList();
 			} while (!combined.SetEqual(previous));
 
@@ -113,25 +115,21 @@ namespace Symbolism
 			                       .Select(elt => (elt ^ -1).Simplify())
 			                       .ToList();
 
-			if (!product.Any() && !quotient.Any()) return 1;
-			if (!product.Any()) return NegateIfNecessary(new Quotient(quotient), negate);
+			// 1
+			if (!product.Any() && !quotient.Any()) return negate ? -1 : 1;
+			// 1/(x * y)
+			if (!product.Any()) return new Quotient(negate ? -1 : 1, new Product(quotient));
 			if (!quotient.Any())
 			{
+				// x
 				if (product.Count == 1) return NegateIfNecessary(product[0], negate);
-
+				// x * y
 				return NegateIfNecessary(new Product(product), negate);
 			}
-
-			if (product.Count == 1)
-			{
-				quotient.Insert(0, product[0]);
-
-				return NegateIfNecessary(new Quotient(quotient), negate);
-			}
-
-			product.Add(new Quotient(quotient));
-
-			return NegateIfNecessary(new Product(product), negate);
+			// x * y / z
+			if (quotient.Count == 1) return new Quotient(NegateIfNecessary(new Product(product), negate), quotient[0]);
+			// x * y / (z * t)
+			return new Quotient(NegateIfNecessary(new Product(product), negate), new Product(quotient));
 		}
 
 		private static IEnumerable<MathObject> GetAllElements(IEnumerable<MathObject> elts, bool expand = false)

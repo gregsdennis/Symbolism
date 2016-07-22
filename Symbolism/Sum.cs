@@ -89,26 +89,33 @@ namespace Symbolism
 			List<MathObject> combined;
 			do
 			{
-				combined = previous.GroupBy(elt => elt.Term())
-				                   .Select(g => (new Sum(g.Select(elt => elt.Coefficient())).Simplify()*g.Key).Simplify())
+				combined = previous.Select(elt => elt.Simplify())
+				                   .GroupBy(elt => elt.Term())
+				                   .Select(g => (new Sum(g.Select(elt => elt.Coefficient()))*g.Key).Simplify())
 				                   .Where(elt => elt.Coefficient() != 0)
+								   .OrderBy(elt => elt.Term(), TermComparer.Instance)
 				                   .ToList();
 				previous = GetAllTerms(combined).ToList();
 			} while (!combined.SetEqual(previous));
+
 			var sum = combined.Where(elt => elt.Coefficient() > 0).ToList();
 			var difference = combined.Except(sum)
 			                         .Select(elt => (-1*elt).Simplify())
 									 .ToList();
 
+			// 0
 			if (!sum.Any() && !difference.Any()) return 0;
+			// -x, -x - y
 			if (!sum.Any()) return new Difference(difference);
 			if (!difference.Any())
 			{
+				// x
 				if (sum.Count == 1) return sum[0];
-
+				// x + y
 				return new Sum(sum);
 			}
 
+			// x - y
 			if (sum.Count == 1)
 			{
 				difference.Insert(0, sum[0]);
@@ -116,9 +123,17 @@ namespace Symbolism
 				return new Difference(difference);
 			}
 
-			sum.Add(new Difference(difference));
+			// x + y - z, x - y + z
+			return combined.Skip(1)
+			               .Aggregate(combined[0], (current, elt) =>
+				               {
+					               if (elt.Coefficient() < 0) return current - (-1*elt).Simplify();
+					               return current + elt;
+				               });
 
-			return new Sum(sum);
+			difference.Insert(0, new Sum(sum));
+
+			return new Difference(difference);
 		}
 
 		private static IEnumerable<MathObject> GetAllTerms(IEnumerable<MathObject> elts, bool expand = false)

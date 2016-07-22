@@ -41,6 +41,10 @@ namespace Symbolism
 			if (product != null)
 				return new Product(product.Elements.Where(elt => !(elt is Number))).Simplify();
 
+			var difference = u as Difference;
+			if (difference != null && difference.Elements.Count == 1)
+				return difference.Elements[0];
+
 			return u;
 		}
 

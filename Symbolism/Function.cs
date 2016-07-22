@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Symbolism
 {
-	public class Function : MathObject, IEquatable<Function>
+	public class Function : MathObject, IEquatable<Function>, INamedMathObject
 	{
 		public string Name { get; }
 

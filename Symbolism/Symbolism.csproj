@@ -58,13 +58,14 @@
     <Compile Include="Function.cs" />
     <Compile Include="IAdditiveOperation.cs" />
     <Compile Include="IMultiplicativeOperation.cs" />
+    <Compile Include="INamedMathObject.cs" />
     <Compile Include="Integer.cs" />
     <Compile Include="ListUtils.cs" />
     <Compile Include="MathObject.cs" />
     <Compile Include="Number.cs" />
     <Compile Include="Or.cs" />
     <Compile Include="Sqrt.cs" />
-    <Compile Include="TermSequencer.cs" />
+    <Compile Include="TermComparer.cs" />
     <Compile Include="Power.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Quotient.cs" />

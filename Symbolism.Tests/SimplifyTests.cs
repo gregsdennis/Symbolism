@@ -73,7 +73,7 @@ namespace Symbolism.Tests
 		[TestMethod]
 		public void RemoveExtra1()
 		{
-			Run(x * (new Integer(1) / 3), x / 3);
+			Run(x*(new Integer(1)/3), new Fraction(1, 3)*x);
 		}
 		[TestMethod]
 		public void CombineConstants_Divide()
@@ -135,10 +135,10 @@ namespace Symbolism.Tests
 			Run(1 * x - 2 * x + 5 * x, 4 * x);
 		}
 		[TestMethod]
-		[Ignore]
+		//[Ignore]
 		public void CombineTerms_FractionalCoefficients()
 		{
-			Run(new Integer(1) / 2 * x + new Integer(3) / 4 * x, new Integer(5) / 4 * x);
+			Run(new Integer(1)/2*x + new Integer(3)/4*x, new Fraction(5, 4)*x);
 		}
 		[TestMethod]
 		public void CombineCoefficients_DoubleAndInt()
@@ -168,17 +168,6 @@ namespace Symbolism.Tests
 		public void CombineTermsAndSort_Double()
 		{
 			Run(3.4*x*1.2*y, 4.08*x*y);
-		}
-		[TestMethod]
-		public void Reflexive()
-		{
-			Run(a == b, a == b);
-		}
-		[TestMethod]
-		[Ignore] // maybe need an ".Equivalent(MathObject)
-		public void Symmetric()
-		{
-			Run(a == b, b == a);
 		}
 		[TestMethod]
 		public void Commutative_Sum()
@@ -299,6 +288,21 @@ namespace Symbolism.Tests
 		public void LogicalRemoveDuplicates()
 		{
 			Run(and(a, b, c, a), and(a, b, c));
+		}
+		[TestMethod]
+		public void TermSequencing_Sum()
+		{
+			Run(x + z - y, x - y + z);
+		}
+		[TestMethod]
+		public void TermSequencing_Product()
+		{
+			Run(z/y*x, x*z/y);
+		}
+		[TestMethod]
+		public void QuotientGrouping()
+		{
+			Run(x*y/z/a, x*y/(z*a));
 		}
 	}
 }
