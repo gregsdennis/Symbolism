@@ -15,27 +15,29 @@ namespace Symbolism
 
 		public int Compare(MathObject x, MathObject y)
 		{
+			// For some reason, LINQ calls this when x === y.  Who knew?!
+			if (ReferenceEquals(x, y)) return 0;
 			return DoCompare(x, y);
 		}
 
 		private static int DoCompare(MathObject x, MathObject y)
 		{
 			return Compare(x as Number, y as Number) ??
-			       Compare(x as INamedMathObject, y as INamedMathObject) ??
-			       Compare(x as Number) ??
-			       Compare(x as Symbol) ??
-			       Compare(x as Function) ??
-			       Compare(x as IAdditiveOperation, y) ??
-			       Compare(x as IMultiplicativeOperation, y) ?? 0;
+				   Compare(x as INamedMathObject, y as INamedMathObject) ??
+				   Compare(x as Number) ??
+				   Compare(x as Symbol) ??
+				   Compare(x as Function) ??
+				   Compare(x as IAdditiveOperation, y) ??
+				   Compare(x as IMultiplicativeOperation, y) ?? 0;
 		}
 
 		private static int? SimpleCompare(MathObject x, MathObject y)
 		{
 			return Compare(x as Number, y as Number) ??
-			       Compare(x as INamedMathObject, y as INamedMathObject) ??
-			       Compare(x as Number) ??
-			       Compare(x as Symbol) ??
-			       Compare(x as Function);
+				   Compare(x as INamedMathObject, y as INamedMathObject) ??
+				   Compare(x as Number) ??
+				   Compare(x as Symbol) ??
+				   Compare(x as Function);
 		}
 
 		private static int? Compare<T>(T x)

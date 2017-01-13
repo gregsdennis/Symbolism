@@ -89,12 +89,12 @@ namespace Symbolism
 			List<MathObject> combined;
 			do
 			{
-				combined = previous.Select(elt => elt.Simplify())
-				                   .GroupBy(elt => elt.Term())
-				                   .Select(g => (new Sum(g.Select(elt => elt.Coefficient()))*g.Key).Simplify())
-				                   .Where(elt => elt.Coefficient() != 0)
-								   .OrderBy(elt => elt.Term(), TermComparer.Instance)
-				                   .ToList();
+			    combined = previous.Select(elt => elt.Simplify())
+			                       .GroupBy(elt => elt.Term())
+			                       .Select(g => (new Sum(g.Select(elt => elt.Coefficient()))*g.Key).Simplify())
+			                       .Where(elt => elt.Coefficient() != 0)
+			                       .OrderBy(elt => elt.Term(), TermComparer.Instance)
+			                       .ToList();
 				previous = GetAllTerms(combined).ToList();
 			} while (!combined.SetEqual(previous));
 

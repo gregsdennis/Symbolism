@@ -304,5 +304,26 @@ namespace Symbolism.Tests
 		{
 			Run(x*y/z/a, x*y/(z*a));
 		}
+		[TestMethod]
+		public void NegativeProductMinusSomething()
+		{
+			Run(-x*cos(y) - z, -(cos(y)*x) - z);
+		}
+		[TestMethod]
+		public void NegativeProduct()
+		{
+			Run(-x*y, -(x*y));
+		}
+		[TestMethod]
+		public void SortingWithNegative()
+		{
+			Run(-x*cos(y), -(x*cos(y)));
+		}
+
+	    [TestMethod]
+	    public void DifferenceAllCoefficientNegativeOne()
+	    {
+	        Run(-y - x, -x - y);
+	    }
 	}
 }

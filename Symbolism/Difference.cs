@@ -69,7 +69,7 @@ namespace Symbolism
 			if (_elements.Count == 1) return -1*_elements[0].Expand();
 			// -x - y
 			if (Elements[0].Coefficient() < 0)
-				return new Sum(Elements.Skip(1).Select(elt => Negate(elt.Expand())));
+				return new Sum(Elements.Select(elt => Negate(elt.Expand())));
 			// x - y
 			return Elements[0] + new Sum(Elements.Skip(1).Select(elt => Negate(elt.Expand())));
 		}
